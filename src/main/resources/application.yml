@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://codechefdb.czywaum4cloy.ap-northeast-2.rds.amazonaws.com/codechefdb
+    username: codechef
+    password: codechef1234
+  sql:
+    init:
+      mode: never
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
