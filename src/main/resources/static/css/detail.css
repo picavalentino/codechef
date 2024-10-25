@@ -1,0 +1,198 @@
+/* 배너 이미지 컨테이너 크기 조정 */
+.banner-container {
+    width: 1116px;
+    height: 250px;
+    margin: 0 auto; /* 중앙 정렬 */
+    margin-top: 50px;
+
+    position: relative;
+}
+
+/* 배너 이미지 스타일링 */
+.banner-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+}
+
+/* 식당 이름 스타일 */
+.restaurant-name {
+    width: 100%;
+    height: 100px;
+    background-color: #000000;
+    border: none;
+    border-radius: 8px;
+    display: flex; /* Flexbox 적용 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+
+}
+.restaurant-name h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* 리뷰 영역 스타일 */
+.review-section {
+    margin-bottom: 30px;
+}
+
+.review-section .icon-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.review-section p {
+    font-size: 1.2rem;
+    color: #404040;
+}
+.review-icon {
+    width: 20px;  /* 아이콘 크기 */
+    height: 20px;
+    margin-right: 3px;  /* 텍스트와의 간격 */
+}
+
+.review-section .btn {
+    width: 100%;
+    background-color: #E9E9E9;
+    color: #000000;
+    border: none;
+}
+
+.review-section .btn:hover {
+    background-color: #d1d1d1;
+}
+
+/* 예약하기 버튼 스타일 */
+.reservation-section .btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.5rem;
+    background-color: #E0E0E0;
+    border: 3px solid #bababa;
+    border-radius: 12px;
+    color: #000;
+    font-weight: bold;
+}
+
+.reservation-section .btn:hover {
+    background-color: #d1d1d1;
+}
+
+/* 매장 정보 스타일 */
+.store-info h5 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 15px;
+}
+
+/* 매장 정보 - 설명 */
+div.store-info .store-description {
+    font-size: 1.25rem;
+    color: #000;
+    font-weight: normal; /* 가는 폰트 */
+}
+
+div.store-info p {
+    font-size: 1rem;  /* 폰트 크기 설정 */
+    color: #000;
+    font-weight: normal; /* 가는 폰트 */
+    display: flex; /* 아이콘과 텍스트를 가로로 배치 */
+    align-items: center; /* 아이콘과 텍스트를 수직 중앙 정렬 */
+}
+
+.info-icon {
+    width: 20px;  /* 아이콘 크기 */
+    height: 20px;
+    margin-right: 5px;  /* 텍스트와의 간격 */
+}
+
+/* 위치 섹션 스타일 */
+.location h5 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 15px;
+}
+
+.location iframe {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+div.location p {
+    font-size: 1.25rem;  /* 폰트 크기 설정 */
+    color: #000;
+}
+.location-icon {
+    width: 30px;  /* 아이콘 크기 */
+    height: 30px;
+    margin-right: 5px;  /* 텍스트와의 간격 */
+}
+
+/* 메뉴 아이템 스타일 */
+.menu-item {
+    border: 3px solid #C3C3C3; /* 테두리 */
+    border-radius: 16px; /* 둥근 테두리 */
+    padding: 15px; /* 내부 여백 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    box-sizing: border-box; /* padding과 border를 요소 크기에 포함시킴 */
+    overflow: hidden; /* 자식 요소가 잘리지 않도록 함 */
+}
+
+/* 메뉴 상세 정보 스타일 */
+.menu-details {
+    flex: 1;
+    margin-right: 15px; /* 이미지와의 간격 */
+    margin-left: 35px
+}
+
+/* 메뉴 제목 스타일 */
+.menu-title {
+    font-size: 1.4rem;
+    font-weight: normal;
+    color: #333;
+}
+
+/* 메뉴 설명 스타일 */
+.menu-description {
+    font-size: 1rem;
+    color: #999;
+    margin-bottom:10px;
+}
+
+/* 메뉴 가격 스타일 */
+.menu-price {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #000;
+}
+
+/* 메뉴 이미지 스타일 */
+.menu-image {
+    width: 222px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin-right: 35px;
+}
+
+/* 메뉴 섹션 제목 스타일 */
+.menu-section h5 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #000;
+}
+
+/* 메뉴 아이템 간격 설정 */
+.menu-item {
+    padding: 10px 0;
+}
