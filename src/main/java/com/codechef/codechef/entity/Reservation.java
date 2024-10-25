@@ -24,4 +24,8 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "chef_no")
     private Restaurant restaurant;
+
+    @OneToOne(mappedBy = "reservation")
+    private Review review;
+
 }
