@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<!--security 적용 후 아래 코드로 변경해주세요-->
+<!--<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">-->
+
+<meta charset="UTF-8">
+<title>CodeChef</title>
+
+<!-- 메인에 적용될 CSS -->
+<th:block layout:fragment="css"></th:block>
+<!-- 메인에 적용될 스크립트 -->
+<th:block layout:fragment="script"></th:block>
+
+<body>
+<div layout:fragment="content" class="content">
+    <!-- content 부분을 벗어나면 css 적용안됨 -->
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <!-- 검색 영역 -->
+    <section class="py-4 text-center container">
+      <div class="row py-lg-5">
+        <div class="col-lg-9 col-md-8 mx-auto">
+          <input class="form-control form-control-lg" type="text" id="search" placeholder="검색어를 입력하세요">
+        </div>
+        <div class="col-lg-3 col-md-8 mx-auto">
+          <a href="#" class="btn btn-search">검색</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 카테고리 영역 -->
+    <section class="py-5 text-center container">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 식당 영역 -->
+    <div class="album py-5">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="/images/main/samplechef.jpg">
+              <div class="card-body">
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </div>
+                  <small class="text-muted">9 mins</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="/images/main/samplechef.jpg">
+              <div class="card-body">
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </div>
+                  <small class="text-muted">9 mins</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="/images/main/samplechef.jpg">
+              <div class="card-body">
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </div>
+                  <small class="text-muted">9 mins</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</body>
+</html>

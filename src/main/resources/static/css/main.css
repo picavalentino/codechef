@@ -1,0 +1,25 @@
+/* 메인 css 적용 */
+#search {
+    border-radius: 8px;
+    border: none;
+    background: url(/images/main/loc.png) no-repeat 18px #F5F5F5;
+    padding-left: 40px;
+    font-size: 17px;
+}
+
+#search input::placeholder {
+	color: #9E9E9E;
+}
+
+.btn-search {
+   /* width: 260px; */
+    width: 137px;
+    height: 49px;
+    background-color: #404040;
+    color: #FFFFFF;
+    padding: 10px;
+}
+
+.btn-search:hover {
+    background-color: #F5F5F5;
+}
