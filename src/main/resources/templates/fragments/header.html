@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<!--security 적용 후 아래 코드로 변경해주세요-->
+<!--<html xmlns:th="www.thymeleaf.org" xmlns:sec="www.thymeleaf.org/extras/spring-security">-->
+
+<!-- header라는 이름으로 선언-->
+<div th:fragment="header">
+    <div class="navbar shadow-sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4" id="logo">
+                    <a th:href="@{/main}" class="navbar-brand d-flex align-items-center">
+                        <img src="/images/common/logo.png">
+                        <h4>code<span>chef</span></h4>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <a th:href="@{/login}" class="btn btn-light">
+                    <img src="/images/common/login.png">Login</a>
+                <a th:href="@{/login}" class="btn btn-light">
+                    <img src="/images/common/mypage.png">MyPage</a>
+            </div>
+        </div>
+    </div>
+</div>
