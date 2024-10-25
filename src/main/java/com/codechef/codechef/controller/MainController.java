@@ -2,6 +2,7 @@ package com.codechef.codechef.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class MainController {
@@ -33,5 +34,20 @@ public class MainController {
     @GetMapping("/review-create")
     public String reviewCreate() {
         return "/codechef/reviewCreate";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "/codechef/login";
+    }
+
+    @GetMapping("/insert")
+    public String insert() {
+        return "/codechef/join";
+    }
+
+    @PostMapping("/insert")
+    public String insertMember() {
+        return "/codechef/main";
     }
 }

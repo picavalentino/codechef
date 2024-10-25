@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<!--security 적용 후 아래 코드로 변경해주세요-->
+<!--<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">-->
+<head>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <meta charset="UTF-8">
+    <title>CodeChef</title>
+</head>
+
+<!-- 전체 적용될 CSS -->
+<th:block layout:fragment="css"></th:block>
+<!-- 전체 적용될 스크립트 -->
+<th:block layout:fragment="script"></th:block>
+
+<!-- 우리가 작업할 공간 -->
+<body>
+<div layout:fragment="content" class="content">
+<div class="login_form">
+    <div class="login">
+        <p class="login_name">로그인</p>
+    </div>
+    <br>
+    <br>
+    <div class="login_layout">
+        <form>
+            <div class="emailbox">
+                <label class="email_name">이메일</label>
+                <input type="email" id="email" placeholder="Enter your Email">
+            </div>
+            <br>
+            <div class="password_box">
+                <label class="password_name">비밀번호</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <br>
+            <div >
+                <button type="submit" class="login_btn"><p id="login_btn">로그인</p></button>
+            </div>
+        </form>
+        <div>
+            <a th:href="@{/insert}"><button class="insert_btn">회원가입</button></a>
+        </div>
+    </div>
+</div>
+
+
+
+</div>
+
+</body>
+</html>
