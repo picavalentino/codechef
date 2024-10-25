@@ -16,4 +16,22 @@ public class MainController {
     public String main() {
         return "/codechef/main";
     }
+
+    // 검색 페이지
+    @GetMapping("/search")
+    public String search() {
+        return "/codechef/search";
+    }
+
+    // 상세 페이지
+    @GetMapping("/detail")
+    public String detail() {
+        return "/codechef/detail";
+    }
+
+    // 리뷰 작성 페이지
+    @GetMapping("/review-create")
+    public String reviewCreate() {
+        return "/codechef/reviewCreate";
+    }
 }

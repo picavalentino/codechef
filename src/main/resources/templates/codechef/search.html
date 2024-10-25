@@ -13,9 +13,8 @@
 
 <body>
   <div layout:fragment="content" class="content">
-
     <!-- content 부분을 벗어나면 css 적용안됨 -->
-    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/search.css}">
 
     <!-- 검색 영역 -->
     <section class="py-4 text-center container">
@@ -35,24 +34,20 @@
     <section class="py-3 text-center container">
       <div class="row">
         <ul class="col-lg-9 col-md-6 mx-auto category">
-          <li><a href=""><img src="/images/main/korean.png"><span>한 식</span></a></li>
-          <li><a href=""><img src="/images/main/chinese.png"><span>중 식</span></a></li>
-          <li><a href=""><img src="/images/main/japanese.png"><span>일 식</span></a></li>
-          <li><a href=""><img src="/images/main/western.png"><span>양 식</span></a></li>
-          <li><a href=""><img src="/images/main/allmenu.png"><span>전 체</span></a></li>
+          <li><a href=""><img src="/images/main/korean.png"><span>한식</span></a></li>
+          <li><a href=""><img src="/images/main/chinese.png"><span>중식</span></a></li>
+          <li><a href=""><img src="/images/main/japanese.png"><span>일식</span></a></li>
+          <li><a href=""><img src="/images/main/western.png"><span>양식</span></a></li>
+          <li><a href=""><img src="/images/main/allmenu.png"><span>전체</span></a></li>
         </ul>
-        <div class="col-lg-3 col-md-6 mx-auto">
-          <h4 class="date" th:text="${#dates.format(#calendars.createNow(), 'yyyy.MM.dd')}"></h4>
-          <a href="" class="btn btn-login">로그인</a>
-          <a href="" class="btn btn-signup">회원가입</a>
-        </div>
       </div>
+      <hr>
     </section>
 
     <!-- 식당 영역 -->
     <section class="py-4 container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="col" th:each="num : ${#numbers.sequence(1,3)}">
+        <div class="col" th:each="num : ${#numbers.sequence(1,6)}">
           <div class="card">
             <img src="/images/main/samplechef.jpg">
             <p>Cheese Burger</p>
@@ -64,6 +59,23 @@
         </div>
       </div>
     </section>
+
+    <!-- 페이지 영역 -->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">></a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </body>
 </html>
