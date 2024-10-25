@@ -1,6 +1,6 @@
-/* 메인 css 적용 */
+/* 검색 css 적용 */
 /* btn 공통 */
-.btn-search, .btn-login, .btn-signup {
+.btn-search {
     width: 137px;
     height: 49px;
     background-color: #404040;
@@ -28,52 +28,40 @@
 
 /* 카테고리 영역 */
 .category {
-    padding-top: 31px;
-    background-image: linear-gradient(to left, #2E2D2D, #BFBFBF);
+    background-image: linear-gradient(to left, #000000, #666666);
     border-radius: 10px;
-    width: 820px;
-    height: 234px;
+    width: 1100px;
+    height: 98px;
 }
 
 .category > li {
     display: inline-block;
-    position: relative;
 }
 
 .category > li > a {
     display:block;
     position:relative;
-    padding-bottom:19px;
     margin: 10px;
 }
 
 .category > li > a > img {
-    margin-left: 8px;
+    margin: 0px 18px;
+    width: 90px;
+    opacity: 0.7;
 }
 
 .category > li > a > span {
     position:absolute;
-    bottom:0;
-    left:50%;
-    color:#ffffff;
-    transform:translate(-50%, 0);
+    top: 30%;
+    left: 48%;
+    color: #ffffff;
+    transform: translate(-50%, 0);
 }
 
-.date {
-    font-family: "Pretendard";
-    font-weight: bold;
-    margin: 20px 0 20px 0;
-}
-
-.btn-login, .btn-signup {
-    width: 250px;
-    height: 59px;
-    margin: 15px 0 10px 0;
-    padding: 15px;
-}
-
-.btn-signup {
-    background-color: #D9D9D9;
+hr {
+    margin-left: auto;
+    margin-right: auto;
+    width: 840px;
 }
 
 /* 식당 영역 */
@@ -103,4 +91,25 @@
     flex: 1 1 auto;
 }
 
+/* 페이지 영역 */
+.pagination {
+    margin-top: 50px;
+}
 
+.page-link {
+    color: #1c1c1c;
+    border-radius: 6px;
+    padding: 7px 16px 10px;
+    margin-right: 16px;
+    border-color: #1c1c1c;
+    font-family: 'Pretendard';
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.page-link:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: #1c1c1c;
+    border-color: #1c1c1c;
+}
