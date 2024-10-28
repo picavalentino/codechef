@@ -62,4 +62,23 @@ public class MainController {
     public String visitCompletion() {
         return "/codechef/visit_completion";
     }
+
+    //마이페이지
+    @GetMapping("/mypage")
+    public String mypage() {
+        return "/codechef/mypage";
+    }
+
+    //리뷰 보기 페이지
+    @GetMapping("/reviewView")
+    public String reviewView() {
+        return "/codechef/reviewView";
+    }
+
+    // 프로필 수정 페이지
+    @GetMapping("/profileEdit")
+    public String profileEdit(){
+        return "/codechef/profileEdit";
+    }
+
 }
