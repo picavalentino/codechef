@@ -1,0 +1,134 @@
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<!--security 적용 후 아래 코드로 변경해주세요-->
+<!--<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">-->
+
+<meta charset="UTF-8">
+<title>CodeChef</title>
+<!-- 전체 적용될 CSS -->
+<th:block layout:fragment="css">
+  <style>
+       a { text-decoration: none; color: black; } a:visited {color:black}
+       a:hover { text-decoration: none; }    a:focus { text-decoration: none; }    a:hover, a:active { text-decoration: none; }
+
+        .content ul {width: 500px;display: block;}
+        .content ul li {display: flex; width: 100%;    margin: 10px;}
+        /* 첫번째 영역 */
+        .content ul li .f {width: 80%;display: flex;border-radius: 20px;border: 1px solid #000;padding: 10px;}
+        .content ul li .f img {width: 100%;border-radius: 10px;display: block;}
+        .content ul li .f p {font-size: 14px;padding: 0;margin: 0;}
+        .content ul li .f p2 {display: block;}
+        /* 두번째 영역 */
+        .content ul li .r {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
+        font-size: 12px;background: #000;border-radius: 20px;color: #fff;text-decoration: none;margin-left: 5px;}
+        .content ul li .r img {width: 10%;display: block;}
+        .content ul li .r p3 {}
+        .content ul li .r a {display: flex;flex-direction: column;align-items: center;}
+  </style>
+</th:block>
+<!-- 전체 적용될 스크립트 -->
+<th:block layout:fragment="script"></th:block>
+<link rel="stylesheet" th:href="@{/css/visit_completion.css}">
+<!-- 우리가 작업할 공간 -->
+<body>
+<div layout:fragment="content" class="content">
+
+  <div> <!-- 전체 -->
+
+    <div style="text-align: center;">
+      <p4 style="padding:5px 10px; border-radius: 20px; margin-top: 70px; border: 1px solid #000; display: inline-block;">
+        방문완료</p4>
+    </div>
+
+    <div style="margin-top: 50px; display: flex; justify-content: center">
+
+      <ul>
+        <li>
+          <!-- 첫번째 박스 -->
+          <div class="f">
+            <!-- 이미지 -->
+            <div style="width: 40%;"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MTJfMTYg%2FMDAxNjYwMzEwNDE5MDk3.sQR5UgAp-MquDpX_Xj25PLC85cLEy7n_B3dSJYKX1Lkg.5AbmasPWvwweMn5_tbuCeP8NEIH99OaIrH4blzr3pTQg.JPEG.amy9412%2F20220809%25A3%25DF202318.jpg&type=a340"></div>
+
+            <!-- 문구 -->
+            <div style="padding-left: 5px;display: flex; border-width:60%; align-items: flex-start;flex-direction: column;align-content: center;justify-content: center;">
+              <!-- 큰글자 -->
+              <p>비아 톨레도 파스타바</p>
+              <!-- 작은글자 -->
+              <div style="font-size: 11px;padding-top: 10px;">
+                <p2>2024.10.22 - 14:02</p2>
+                <p2>방문완료</p2>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- 두번째 박스 -->
+          <button class="r" style="flex-direction: column;">
+            <!-- 이미지 -->
+            <img style="width: 40%" th:src="@{/images/visit_completion/mingcute_pencil-fill.png}">
+            <!-- 리뷰작성 -->
+            <p>리뷰작성</p>
+          </button>
+        </li>
+        <li>
+          <!-- 첫번째 박스 -->
+          <div class="f">
+            <!-- 이미지 -->
+            <div style="width: 40%;"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MTJfMTYg%2FMDAxNjYwMzEwNDE5MDk3.sQR5UgAp-MquDpX_Xj25PLC85cLEy7n_B3dSJYKX1Lkg.5AbmasPWvwweMn5_tbuCeP8NEIH99OaIrH4blzr3pTQg.JPEG.amy9412%2F20220809%25A3%25DF202318.jpg&type=a340"></div>
+            <!-- 문구 -->
+            <div style="padding-left: 5px;display: flex;align-items: flex-start;flex-direction: column;align-content: center;justify-content: center;">
+              <!-- 큰글자 -->
+              <p>비아 톨레도 파스타바</p>
+              <!-- 작은글자 -->
+              <div style="font-size: 11px;padding-top: 10px;">
+                <p2>2024.10.22 - 14:02</p2>
+                <p2>방문완료</p2>
+                <img style="width: 15%" th:src="@{/images/visit_completion/ic_round-star.png}">
+                <span>4.8</span>
+              </div>
+
+            </div>
+          </div>
+          <!-- 두번째 박스 -->
+          <div class="r" style="flex-direction: column;">
+          <!-- 이미지 -->
+          <img style="width: 40%" th:src="@{/images/visit_completion/solar_heart-bold.png}">
+          <h4>완료</h4>
+    </div>
+        </li>
+
+
+
+      </ul>
+
+
+
+    </div>
+
+
+
+    <nav aria-label="Page navigation example" style="display: flex; justify-content: center">
+      <ul class="pagination" style="display: flex;">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
+</div>
+</body>
+</html>

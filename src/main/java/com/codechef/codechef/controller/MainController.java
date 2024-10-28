@@ -50,4 +50,16 @@ public class MainController {
     public String insertMember() {
         return "/codechef/main";
     }
+
+    // 방문예약 리스트 페이지
+    @GetMapping("/visit-expected")
+    public String visitExpected() {
+        return "/codechef/visit_expected";
+    }
+
+    // 방문완료 리스트 페이지
+    @GetMapping("/visit-completion")
+    public String visitCompletion() {
+        return "/codechef/visit_completion";
+    }
 }
