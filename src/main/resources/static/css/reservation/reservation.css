@@ -1,0 +1,36 @@
+.reservation_content {
+    width: 992px;
+    height: 480px;
+    margin: 0 50px 0 50px;
+}
+
+.left_top {
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+.time_select {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-top: 100px;
+}
+
+.time_btn {
+    background-color: #4d4c4c;
+    color: white;
+}
+
+.bottom_right {
+    margin-top: 230px;
+}
+
+.select_num_people {
+    border: 1px solid gray;
+    background-color: #ebe8e8;
+}
+
+.reservation_btn {
+    padding: 7px 70px 7px 70px;
+    margin-left: 120px;
+}
