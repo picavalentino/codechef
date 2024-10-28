@@ -25,4 +25,8 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "mem_no")
     private Member member;
+
+    @OneToOne
+    @JoinColumn(name = "reservation_no")
+    private Reservation reservation;
 }

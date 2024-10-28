@@ -15,6 +15,7 @@ body, input::placeholder {
 }
 
 /* 공통(전체) 영역 */
+
 .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비아 돌레도 파스타바</title>
+  <link rel="stylesheet" href="css/reviewView.css">
+</head>
+
+<body>
+<th:block layout:fragment="content">
+  <div class="container1">
+    <!-- 비아 톨레도 파스타바 섹션 -->
+    <div class="review-container">
+      <div class="title">
+        비아 톨레도 파스타바
+      </div>
+      <div class="review-info">
+        <div class="review-count">리뷰 (24)</div>
+        <div class="rating">
+          평균 <span class="star">⭐</span> 4.5
+        </div>
+      </div>
+    </div>
+
+    <!-- 또리하는 요라이 리뷰 카드 섹션 -->
+    <div class="reviews-wrapper">
+      <!-- 반복되는 리뷰 카드 -->
+      <div class="review-card">
+        <div class="image-container">
+          <img src="images/비아토레도파스타바_리뷰사진1.webp" alt="요리 이미지" class="food-image">
+        </div>
+        <div class="review-content">
+          <div class="review-header">
+            <h2>또리하는 요라이</h2>
+            <div class="rating">
+              <span class="star">⭐</span> 4.5
+            </div>
+          </div>
+          <p class="review-date">2024.10.23</p>
+          <div class="review-text">
+            <p><strong>[맛]</strong> : 10만원대 이상 파인다이닝보다 훨씬 맛있습니다. 요리의 디테일 및 섬세함이 높습니다.</p>
+            <p><strong>[서비스]</strong> : 메뉴 설명 및 와인 추천을 잘해주십니다.</p>
+            <p><strong>[가격]</strong> : 메뉴 구성 및 퀄리티 대비 의아할 정도로 가격이 낮다고 생각되었습니다.</p>
+            <p>경험 감사합니다 셰프님!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 같은 리뷰 카드 5번 반복 -->
+      <div class="review-card">
+        <div class="image-container">
+          <img src="images/비아토레도파스타바_리뷰사진2.webp" alt="요리 이미지" class="food-image">
+        </div>
+        <div class="review-content">
+          <div class="review-header">
+            <h2>또리하는 요라이</h2>
+            <div class="rating">
+              <span class="star">⭐</span> 4.5
+            </div>
+          </div>
+          <p class="review-date">2024.10.23</p>
+          <div class="review-text">
+            <p><strong>[맛]</strong> : 10만원대 이상 파인다이닝보다 훨씬 맛있습니다. 요리의 디테일 및 섬세함이 높습니다.</p>
+            <p><strong>[서비스]</strong> : 메뉴 설명 및 와인 추천을 잘해주십니다.</p>
+            <p><strong>[가격]</strong> : 메뉴 구성 및 퀄리티 대비 의아할 정도로 가격이 낮다고 생각되었습니다.</p>
+            <p>경험 감사합니다 셰프님!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3번째 카드 -->
+      <div class="review-card">
+        <div class="image-container">
+          <img src="images/비아토레도파스타바_리뷰사진3.webp" alt="요리 이미지" class="food-image">
+        </div>
+        <div class="review-content">
+          <div class="review-header">
+            <h2>또리하는 요라이</h2>
+            <div class="rating">
+              <span class="star">⭐</span> 4.5
+            </div>
+          </div>
+          <p class="review-date">2024.10.23</p>
+          <div class="review-text">
+            <p><strong>[맛]</strong> : 10만원대 이상 파인다이닝보다 훨씬 맛있습니다. 요리의 디테일 및 섬세함이 높습니다.</p>
+            <p><strong>[서비스]</strong> : 메뉴 설명 및 와인 추천을 잘해주십니다.</p>
+            <p><strong>[가격]</strong> : 메뉴 구성 및 퀄리티 대비 의아할 정도로 가격이 낮다고 생각되었습니다.</p>
+            <p>경험 감사합니다 셰프님!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4번째 카드 -->
+      <div class="review-card">
+        <div class="image-container">
+          <img src="images/비아토레도파스타바_리뷰사진4.webp" alt="요리 이미지" class="food-image">
+        </div>
+        <div class="review-content">
+          <div class="review-header">
+            <h2>또리하는 요라이</h2>
+            <div class="rating">
+              <span class="star">⭐</span> 4.5
+            </div>
+          </div>
+          <p class="review-date">2024.10.23</p>
+          <div class="review-text">
+            <p><strong>[맛]</strong> : 10만원대 이상 파인다이닝보다 훨씬 맛있습니다. 요리의 디테일 및 섬세함이 높습니다.</p>
+            <p><strong>[서비스]</strong> : 메뉴 설명 및 와인 추천을 잘해주십니다.</p>
+            <p><strong>[가격]</strong> : 메뉴 구성 및 퀄리티 대비 의아할 정도로 가격이 낮다고 생각되었습니다.</p>
+            <p>경험 감사합니다 셰프님!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5번째 카드 -->
+      <div class="review-card">
+        <div class="image-container">
+          <img src="images/비아토레도파스타바_리뷰사진5.webp" alt="요리 이미지" class="food-image">
+        </div>
+        <div class="review-content">
+          <div class="review-header">
+            <h2>또리하는 요라이</h2>
+            <div class="rating">
+              <span class="star">⭐</span> 4.5
+            </div>
+          </div>
+          <p class="review-date">2024.10.23</p>
+          <div class="review-text">
+            <p><strong>[맛]</strong> : 10만원대 이상 파인다이닝보다 훨씬 맛있습니다. 요리의 디테일 및 섬세함이 높습니다.</p>
+            <p><strong>[서비스]</strong> : 메뉴 설명 및 와인 추천을 잘해주십니다.</p>
+            <p><strong>[가격]</strong> : 메뉴 구성 및 퀄리티 대비 의아할 정도로 가격이 낮다고 생각되었습니다.</p>
+            <p>경험 감사합니다 셰프님!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <button class="page-nav prev" disabled>&lt;</button>
+      <button class="page-number active">1</button>
+      <button class="page-number">2</button>
+      <button class="page-number">3</button>
+      <button class="page-number">4</button>
+      <button class="page-number">5</button>
+      <button class="page-nav next">&gt;</button>
+    </div>
+  </div>
+</th:block>
+</body>
+</html>

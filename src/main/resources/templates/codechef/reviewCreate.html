@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<!--security 적용 후 아래 코드로 변경해주세요-->
+<!--<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">-->
+
+<meta charset="UTF-8">
+<title>CodeChef</title>
+<!-- 전체 적용될 CSS -->
+<th:block layout:fragment="css"></th:block>
+<!-- 전체 적용될 스크립트 -->
+<th:block layout:fragment="script"></th:block>
+
+<!-- 우리가 작업할 공간 -->
+<body>
+<div layout:fragment="content" class="content">
+    <!-- content 부분을 벗어나면 css 적용안됨 -->
+    <link rel="stylesheet" th:href="@{/css/reviewCreate.css}">
+
+    <!-- 방문 정보 배너 영역 -->
+    <section class="text-center container mt-4">
+        <div class="row">
+            <div class="col-lg-12 mx-auto visit-info">
+                <div class="visit-image-container">
+                    <img src="/images/reviewCreate/네기다이닝라운지_4.webp" alt="방문 이미지" class="visit-image">
+                </div>
+                <div class="visit-details">
+                    <h3>키보 에다마메</h3>
+                    <p><span>2024.03.29</span> / <span>19:00</span> / <span>3명</span></p>
+                    <p class="visit-status">방문완료</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 점수 창 -->
+    <section class="score-section container mt-5">
+        <div class="row justify-content-center score-container">
+            <div class="col-md-4 text-center">
+                <label for="taste-score">맛</label>
+                <div class="input-group">
+                    <input type="number" id="taste-score" min="0" max="5" value="0">
+                    <span>/ 5</span>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <label for="mood-score">분위기</label>
+                <div class="input-group">
+                    <input type="number" id="mood-score" min="0" max="5" value="0">
+                    <span>/ 5</span>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <label for="service-score">서비스</label>
+                <div class="input-group">
+                    <input type="number" id="service-score" min="0" max="5" value="0">
+                    <span>/ 5</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 리뷰 작성 영역 -->
+    <section class="review-section container mt-5">
+        <h5>어떤 점이 좋았나요?</h5>
+        <textarea rows="7" placeholder="최소 10자 이상 입력해주세요." maxlength="1000"></textarea>
+        <p class="text-right">최대 1000자</p>
+    </section>
+
+    <!-- 버튼 및 사진 미리보기 영역 -->
+    <section class="actions-section container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6 d-flex justify-content-between action-buttons-container">
+                <!-- 사진 첨부하기 버튼과 미리보기 이미지 그룹화 -->
+                <div class="photo-section">
+                    <button class="btn btn-photo">사진 첨부하기</button>
+                    <div class="image-preview mt-2">
+                        <img src="/images/reviewCreate/image.png" alt="첨부된 이미지 미리보기" class="preview-image">
+                        <p>사진 미리보기</p>
+                    </div>
+                </div>
+                <button class="btn btn-submit">작성 완료</button>
+            </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

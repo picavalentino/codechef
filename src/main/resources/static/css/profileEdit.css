@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+       font-family: 'Pretendard', sans-serif;
+       background-color: #f4f4f4;
+       overflow-x: hidden; /* 가로 스크롤 방지 */
+
+
+}
+
+
+.container2 {
+      width: 90%; /* 화면 너비의 90%를 사용하도록 설정 */
+         max-width: 600px;
+         margin: 0 auto;
+         background-color: #f4f4f4;
+         padding: 20px;
+         border-radius: 10px;
+         overflow-y: auto; /* 세로 스크롤 허용 */
+         position: relative; /* 고정된 위치에 머물도록 설정 */
+}
+
+h1 {
+  display: block;
+     padding: 9px 20px;
+     width : 120px;
+     font-size: 20px;
+     font-weight: bold;
+     color: black;
+     border: 3px solid #444444;
+     border-radius: 17px;
+     background-color: transparent;
+     text-align: center; /* 텍스트 중앙 정렬 */
+     margin: 0 auto; /* h1 요소 자체를 중앙으로 정렬 */
+}
+
+.profile-email {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.profile {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ddd;
+    margin-right: 15px;
+}
+
+.profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.email-group {
+    flex: 1;
+    text-align: left;
+    margin-left: 0px;
+}
+.image_button input {
+    margin-top : 10px;
+}
+.email-group label {
+    font-size: 14px;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.email-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: 600;
+}
+
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+input::placeholder {
+    color: #ccc;
+}
+
+small {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    margin: 10px 0 7px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    background-color: #555;
+}
+
+

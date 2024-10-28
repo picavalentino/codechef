@@ -1,0 +1,167 @@
+  input::placeholder {
+            color: #D9D9D9;
+            width: auto;
+            height: 13px;
+            font-family: "Source Sans Pro";
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 13px;
+            white-space: nowrap;
+        }
+
+        .login_form {
+            flex-direction: column;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 100px;
+        }
+
+        .login {
+            box-sizing: border-box;
+            position: relative;
+            width: 107px;
+            height: 43px;
+            justify-content: center;
+            border: 2px solid #595959;
+            border-radius: 16px;
+        }
+
+        .login_name {
+            position: absolute;
+            width: auto;
+            height: 24px;
+            left: 32px;
+            top: 9px;
+        }
+
+        .login_layout {
+            position : relative;
+            width: 404px;
+            height: 252px;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .emailbox {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0px;
+            gap: 5px;
+            position: absolute;
+            width: 404px;
+            height: 54px;
+            left: 0px;
+            top: 0px;
+        }
+
+        .email_name {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 0px;
+            gap: 10px;
+            width: 37px;
+            height: 17px;
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            white-space: nowrap;
+        }
+
+        #email {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 10px 0px 10px 10px;
+            gap: 10px;
+            width: 404px;
+            height: 32px;
+            border: 1px solid #D9D9D9;
+            border-radius: 10px;
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+        }
+
+        .password_box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0px;
+            gap: 5px;
+            position: absolute;
+            width: 404px;
+            height: 54px;
+            left: 0px;
+            top: 84px;
+        }
+
+        .password_name {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 0px;
+            gap: 10px;
+            width: 49px;
+            height: 17px;
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            white-space: nowrap;
+        }
+
+        #password {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 10px 0px 10px 10px;
+            gap: 10px;
+            width: 404px;
+            height: 32px;
+            border: 1px solid #D9D9D9;
+            border-radius: 10px;
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+        }
+
+        .login_btn {
+            position: absolute;
+            width: 404px;
+            height: 35.02px;
+            left: 0px;
+            top: 188px;
+            background: #595959;
+            border-radius: 10px;
+        }
+
+        #login_btn {
+            position: absolute;
+            width: 37px;
+            height: 17px;
+            left: calc(50% - 37px/2 + 1.5px);
+            top: calc(50% - 17px/2 + 0.99px);
+            font-family: 'Pretendard';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 17px;
+            color: #FFFFFF;
+        }
+
+        .insert_btn{
+            position: absolute;
+            width: 404px;
+            height: 35.02px;
+            left: 0px;
+            top: 238.02px;
+            background: #FFFFFF;
+            border-radius: 10px;
+            border-color: #FFFFFF;
+        }
