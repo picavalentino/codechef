@@ -7,9 +7,9 @@
     justify-content: space-between;
     background-color: #333; /* 검은색 배경 */
     border-radius: 16px;
-    padding: 70px;
-    padding-left:80px;
-    padding-right:80px;
+    padding: 50px;
+    padding-left:60px;
+    padding-right:60px;
     margin: 0 auto; /* 중앙 정렬 */
     color: #fff; /* 텍스트 색상 */
 }
@@ -34,6 +34,7 @@
     flex-direction: column;
     justify-content: center;
     text-align: left;
+    margin-left:10px;
 }
 
 .visit-details h3 {
