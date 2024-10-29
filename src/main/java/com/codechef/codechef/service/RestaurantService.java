@@ -1,6 +1,5 @@
 package com.codechef.codechef.service;
 
-import com.codechef.codechef.dao.RestaurantDAO;
 import com.codechef.codechef.dto.RestaurantDTO;
 import com.codechef.codechef.entity.Restaurant;
 import com.codechef.codechef.repository.RestaurantRepository;

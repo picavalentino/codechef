@@ -75,6 +75,7 @@
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" data-value="인원 수">인원수</a></li>
                                     <li><a class="dropdown-item" data-value="1">1</a></li>
                                     <li><a class="dropdown-item" data-value="2">2</a></li>
                                     <li><a class="dropdown-item" data-value="3">3</a></li>
@@ -87,6 +88,41 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title text-muted" id="confirmModalLabel">방문 일정을 다시 한번 확인해 주세요.</h6>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align: center; font-size: 25px;">Pimfy 이태원</div>
+                    <div style="text-align: center; font-size: 15px; color: gray;">이태원.이탈리아음식</div>
+                    <div class="reservation-container">
+                        <div class="reservation-item">
+                            <img style="width: 30px; padding-bottom: 10px;" src="/images/reservation/calendar.svg">
+                            <br>
+                            <small id="reservation_date"></small>
+                        </div>
+                        <div class="reservation-item">
+                            <img style="width: 30px; padding-bottom: 10px;" src="/images/reservation/clock.svg">
+                            <br>
+                            <small id="reservation_time">오후 5:00</small>
+                        </div>
+                        <div class="reservation-item">
+                            <img style="width: 30px; padding-bottom: 10px;" src="/images/reservation/person.svg">
+                            <br>
+                            <small id="reservation_num"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary w-100" id="cancelButton">취소</button>
+                    <button type="button" class="btn btn-primary w-100" id="confirmButton">확인</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="/js/reservation/reservation.js"></script>

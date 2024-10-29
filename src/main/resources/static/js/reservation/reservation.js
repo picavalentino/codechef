@@ -24,12 +24,15 @@ $(document).ready(function() {
 
                     // endDate를 다음 달의 마지막 날로 설정
                     endDate.setDate(endDate.getDate() + 1);
-                    // endDate.setHours(0, 0, 0, 0); // 시간 초기화
                 }
 
                 let previousDate = new Date(currentDate); // 원본 날짜를 복사
                 previousDate.setDate(previousDate.getDate() - 1); // 하루 빼기
 
+                console.log(data.week)
+
+                let emptyDay = getEmptyDay(data.week);
+                $('.calendar').append(emptyDay);
                 daysInMonth.forEach(function(day) {
                     let dayDate = new Date(year, month - 1, day); // month - 1 (0-indexed)
                     let dayElement = $('<div class="day" onclick="toggleDate(this)" name="' + day + '"><span>' + day + '</span></div>');
@@ -46,6 +49,28 @@ $(document).ready(function() {
                 console.error("Error loading calendar", err);
             }
         });
+    }
+
+    function getEmptyDay(week) {
+        let emptyDays = '';
+        let emptyDay = '<div class="day" style="cursor: auto;"><span></span></div>';
+
+        switch(week){
+            case "SATURDAY":
+                emptyDays += emptyDay;
+            case "FRIDAY":
+                emptyDays += emptyDay;
+            case "THURSDAY":
+                emptyDays += emptyDay;
+            case "WEDNESDAY":
+                emptyDays += emptyDay;
+            case "TUESDAY":
+                emptyDays += emptyDay;
+            case "MONDAY":
+                emptyDays += emptyDay;
+        }
+
+        return emptyDays;
     }
 
     // 이전 및 다음 달 버튼 클릭 이벤트
@@ -77,9 +102,9 @@ $(document).ready(function() {
     });
 
     $('#reservation_btn').click(function() {
-        let selectedDay = '';
+        let selectedDay = null;
+        let reservation_num = $('#numPeople').val();
 
-        // 모든 .day 요소를 가져오기
         const days = document.querySelectorAll('.day');
 
         // 각 요소를 순회하면서 lightgray 색상이 적용된 요소의 name 속성을 가져오기
@@ -89,10 +114,38 @@ $(document).ready(function() {
             }
         });
 
+        if(selectedDay == null){
+            alert("날짜를 선택해 주세요");
+            return;
+        }
+        else if(reservation_num == "" || reservation_num == "인원 수"){
+            alert("인원을 선택해 주세요");
+            return;
+        }
+
         let date = new Date(currentYear, currentMonth - 1, selectedDay);
 
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+        const weekday = weekdays[date.getDay()];
+
+        const formattedDate = `${month}.${day}(${weekday})`;
+
+        $('#reservation_date').html(formattedDate);
+        $('#reservation_num').html(reservation_num + "명");
         $('#selectedDay').val(date);
+        $('#confirmModal').modal('show');
+    });
+
+    $('#confirmButton').click(function() {
+        $('#confirmModal').modal('hide'); // 모달 닫기
+
         $('#reservationForm').submit();
+    });
+
+     $('#cancelButton').on('click', function() {
+        $('#confirmModal').modal('hide');
     });
 });
 

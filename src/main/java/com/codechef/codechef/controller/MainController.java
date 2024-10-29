@@ -156,6 +156,7 @@ public class MainController {
         response.put("year", currentDate.getYear());
         response.put("month", Month.of(currentDate.getMonthValue()).toString());
         response.put("days", DateUtil.daysInMonth(currentDate.getMonthValue(), currentDate.getYear()));
+        response.put("week", currentDate.getDayOfWeek());
 
         return response;
     }
