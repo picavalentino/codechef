@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<!--security 적용 후 아래 코드로 변경해주세요-->
+<!--<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">-->
+
+<meta charset="UTF-8">
+<title>CodeChef</title>
+<!-- 전체 적용될 CSS -->
+<th:block layout:fragment="css"></th:block>
+<!-- 전체 적용될 스크립트 -->
+<th:block layout:fragment="script"></th:block>
+
+<!-- 우리가 작업할 공간 -->
+<head>
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="/css/reservation/calendar.css">
+    <link rel="stylesheet" href="/css/reservation/reservation.css">
+</head>
+<body>
+<div layout:fragment="content" class="content">
+    <div class="py-5">
+        <div class="container">
+            <form th:href="@{/reservation}" id="reservationForm" method="get">
+                <div class="row reservation_content">
+                    <div class="col-6">
+                        <div class="text-center">
+                            <span class="badge text-bg-dark left_top">날짜와 시간을 선택해주세요</span>
+                        </div>
+                        <div class="calendar_border">
+                            <div class="mt-4">
+                                <div class="row align-items-center calendar_inside_content1">
+                                    <h3 class="header text-start col-9 date_info">[[ ${monthName} ]] [[ ${year} ]]</h3>
+                                    <div class="header text-end col-3 d-flex justify-content-end">
+                                        <img class="rounded left_arrow arrow" src="/images/reservation/arrow-left-circle-fill.svg" alt="left_arrow" id="prevMonth">
+                                        <img class="rounded right_arrow arrow" src="/images/reservation/arrow-right-circle-fill.svg" alt="right_arrow" id="nextMonth">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="border-color: gray;">
+                            <div class="calendar">
+                                <div class="weekday">Sun</div>
+                                <div class="weekday">Mon</div>
+                                <div class="weekday">Tue</div>
+                                <div class="weekday">Wed</div>
+                                <div class="weekday">Thu</div>
+                                <div class="weekday">Fri</div>
+                                <div class="weekday">Sat</div>
+                                <div th:each="day : ${days}" class="day" onclick="toggleDate(this)">
+                                    <span th:text="${day}"></span>
+                                </div>
+                            </div>
+                            <input type="hidden" name="selectedDay" id="selectedDay" value="">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="time_select">
+                            <button type="button" class="btn time_btn">10:00</button>
+                            <button type="button" class="btn time_btn">10:00</button>
+                            <button type="button" class="btn time_btn">10:00</button>
+                            <button type="button" class="btn time_btn">10:00</button>
+                            <button type="button" class="btn time_btn">10:00</button>
+                            <button type="button" class="btn time_btn">10:00</button>
+                            <button type="button" class="btn time_btn">10:00</button>
+                            <button type="button" class="btn time_btn">10:00</button>
+                            <button type="button" class="btn time_btn">10:00</button>
+                            <button type="button" class="btn time_btn">10:00</button>
+                            <button type="button" class="btn time_btn">10:00</button>
+                            <button type="button" class="btn time_btn">10:00</button>
+                        </div>
+                        <div class="bottom_right">
+                            <label><b>인원 수</b></label> &nbsp;
+                            <div class="btn-group select_num_people">
+                                <button type="button" class="btn"><b><small>인원 수</small></b></button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" data-value="1">1</a></li>
+                                    <li><a class="dropdown-item" data-value="2">2</a></li>
+                                    <li><a class="dropdown-item" data-value="3">3</a></li>
+                                    <li><a class="dropdown-item" data-value="4">4</a></li>
+                                </ul>
+                            </div>
+                            <input type="hidden" name="numPeople" id="numPeople" value="">
+                            <button type="button" class="btn btn-dark reservation_btn" id="reservation_btn">예약하기</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="/js/reservation/reservation.js"></script>
+</div>
+</body>
+</html>
