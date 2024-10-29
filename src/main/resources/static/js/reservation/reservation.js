@@ -29,8 +29,6 @@ $(document).ready(function() {
                 let previousDate = new Date(currentDate); // 원본 날짜를 복사
                 previousDate.setDate(previousDate.getDate() - 1); // 하루 빼기
 
-                console.log(data.week)
-
                 let emptyDay = getEmptyDay(data.week);
                 $('.calendar').append(emptyDay);
                 daysInMonth.forEach(function(day) {
@@ -164,9 +162,39 @@ function toggleDate(element) {
             // 다른 날짜를 클릭하면 이전 선택 해제
             selectedDay.classList.remove('selected');
             element.classList.add('selected');
+            select_day(element);
         }
     } else {
         // 아무 것도 선택되지 않은 상태에서 클릭
         element.classList.add('selected');
+        select_day(element);
     }
 }
+
+function select_day(element) {
+    const dateInfo = $('.date_info').text() + " " + element.textContent;
+    const koreanDayOfWeek = getKoreanDayOfWeek(dateInfo);
+
+    const queryParams = {
+        chef_no: 1, // 변경필요
+        koreanDayOfWeek: koreanDayOfWeek
+    };
+
+    $.getJSON('/reservation/timeSlot', queryParams, function(data){
+//        console.log(data.myData);
+    });
+}
+
+function getKoreanDayOfWeek(dateString) {
+    const date = new Date(dateString);
+
+    // 요일 배열 (한국어)
+    const daysInKorean = ['일', '월', '화', '수', '목', '금', '토'];
+
+    // 요일 인덱스 가져오기
+    const dayOfWeekIndex = date.getDay();
+
+    // 한국어 요일 반환
+    return daysInKorean[dayOfWeekIndex];
+}
+

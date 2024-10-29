@@ -3,6 +3,7 @@ package com.codechef.codechef.controller;
 import com.codechef.codechef.dto.MemberDto;
 import com.codechef.codechef.dto.RestaurantDTO;
 import com.codechef.codechef.dto.ReviewCreateDTO;
+import com.codechef.codechef.dto.TimeSlotDTO;
 import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.service.*;
 import com.codechef.codechef.util.DateUtil;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,11 +32,13 @@ public class MainController {
     private final CodeChefService codeChefService;
     private final ReservationService reservationService;
     private final ReviewService reviewService;
+    private final TimeSlotService timeSlotService;
 
-    public MainController(CodeChefService codeChefService, ReservationService reservationService, ReviewService reviewService) {
+    public MainController(CodeChefService codeChefService, ReservationService reservationService, ReviewService reviewService, TimeSlotService timeSlotService) {
         this.codeChefService = codeChefService;
         this.reservationService = reservationService;
         this.reviewService = reviewService;
+        this.timeSlotService = timeSlotService;
     }
 
     @Autowired
@@ -197,6 +201,7 @@ public class MainController {
         return "/codechef/reservation";
     }
 
+    // 다음달 이동 기능
     @GetMapping("/reservation/ajax")
     @ResponseBody
     public Map<String, Object> reservationAjax(@RequestParam(value = "month") int month,
@@ -210,5 +215,20 @@ public class MainController {
         response.put("week", currentDate.getDayOfWeek());
 
         return response;
+    }
+
+    // 날짜일 선택 기능
+    @GetMapping("/reservation/timeSlot")
+    public ResponseEntity<Map<String, String>> getTimeSlot(@RequestParam String selectedDay,
+                                                           @RequestParam Long chef_no) {
+        Map<String, String> response = new HashMap<>();
+
+//        !!
+//        System.out.println(selectedDay + " " + chef_no);
+
+        List<TimeSlotDTO> timeSlotDTOS = timeSlotService.findTimeSlotByChefNo(1);
+
+        response.put("myData", "Hello, World!");
+        return ResponseEntity.ok(response);
     }
 }
