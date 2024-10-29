@@ -72,11 +72,11 @@
       <!-- 식당 검색 결과가 있으면 -->
       <div class="col" th:each="res : ${resultLists}">
         <div class="card">
-          <img th:src="@{'/images/main/' + ${res.main_image}}" alt="식당사진">
-          <p th:text="${res.res_name}">식당명</p>
+          <img th:src="@{${res.mainImage}}" alt="식당사진">
+          <p th:text="${res.resName}">식당명</p>
           <div class="d-flex justify-content-between align-items-center">
             <p class="star" th:text="${res.reviewRating}">평점</p>
-            <p class="loc" th:text="${res.local_area}">위치</p>
+            <p class="loc" th:text="${res.localArea}">위치</p>
           </div>
         </div>
       </div>

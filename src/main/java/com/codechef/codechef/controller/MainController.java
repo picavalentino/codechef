@@ -1,6 +1,8 @@
 package com.codechef.codechef.controller;
 
+import com.codechef.codechef.dto.MemberDto;
 import com.codechef.codechef.dto.RestaurantDTO;
+import com.codechef.codechef.service.CodeChefService;
 import com.codechef.codechef.service.PagenationService;
 import com.codechef.codechef.service.RestaurantService;
 import com.codechef.codechef.util.DateUtil;
@@ -25,6 +27,13 @@ import java.util.Map;
 
 @Controller
 public class MainController {
+    // 서비스 연결
+    private final CodeChefService codeChefService;
+
+    public MainController(CodeChefService codeChefService) {
+        this.codeChefService = codeChefService;
+    }
+
     @Autowired
     RestaurantService restaurantService;
 
@@ -79,20 +88,40 @@ public class MainController {
         return "/codechef/reviewCreate";
     }
 
+    // 로그인 페이지
     @GetMapping("/login")
-    public String login() {
+    public String loginPage() {
         return "/codechef/login";
     }
 
-    @GetMapping("/insert")
-    public String insert() {
+//    @PostMapping("/loginMember")
+//    public String login(MemberDTO memberDTO) {
+//        codeChefService.loginservice(memberDTO);
+//        return "redirect:/main";
+//    }
+
+    // 회원가입 페이지
+    @GetMapping("/join")
+    public String join() {
         return "/codechef/join";
     }
 
-    @PostMapping("/insert")
-    public String insertMember() {
+    // 회원가입 저장
+    @PostMapping("/joinMember")
+    public String joinMember(MemberDto memberDTO) {
+        codeChefService.joinMember(memberDTO);
         return "/codechef/main";
     }
+
+    // 로그아웃
+//    @GetMapping("/logout")
+//    public String logout(HttpServletRequest request, HttpServletResponse response) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (!ObjectUtils.isEmpty(authentication)) {
+//            new SecurityContextLogoutHandler().logout(request, response, authentication);
+//        }
+//        return "redirect:/main";
+//    }
 
     // 방문예약 리스트 페이지
     @GetMapping("/visit-expected")

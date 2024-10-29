@@ -11,22 +11,22 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewDTO {
-    private Long review_no;
-    private String review_image;
+    private Long reviewNo;
+    private String reviewImage;
     private Date date;
-    private int taste_point;
-    private int mood_point;
-    private int serve_point;
+    private int tastePoint;
+    private int moodPoint;
+    private int servePoint;
     private String contents;
 
     public static ReviewDTO fromEntity(Review review){
         return new ReviewDTO(
-                review.getReview_no(),
-                review.getReview_image(),
+                review.getReviewNo(),
+                review.getReviewImage(),
                 review.getDate(),
-                review.getTaste_point(),
-                review.getMood_point(),
-                review.getServe_point(),
+                review.getTastePoint(),
+                review.getMoodPoint(),
+                review.getServePoint(),
                 review.getContents()
         );
     }

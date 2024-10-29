@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     // 식당 3개 랜덤 출력
-    @Query(value = "SELECT * FROM Restaurant ORDER BY RAND() limit 3" , nativeQuery = true)
+    @Query(value = "SELECT * FROM Restaurant ORDER BY RANDOM() limit 3" , nativeQuery = true)
     List<Restaurant> getRandRestaurant();
 
     // 키워드 혹은 카테고리 별 식당 조회

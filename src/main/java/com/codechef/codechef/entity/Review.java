@@ -10,25 +10,29 @@ import java.util.Date;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long review_no;
-    @Column(length = 100)
-    private String review_image;
-    private Date date;
-    private int taste_point;
-    private int mood_point;
-    private int serve_point;
+    private Long reviewNo;
     @Column(length = 1000)
+    private String reviewImage;
+    private Date date;
+    private int tastePoint;
+    private int moodPoint;
+    private int servePoint;
+    @Column(length = 2000)
     private String contents;
+    @Column(length = 500)
+    private String reviewUpImgName;
+    @Column(length = 500)
+    private String reviewDownImgName;
 
     @ManyToOne
-    @JoinColumn(name = "chef_no")
+    @JoinColumn(name = "chefNo")
     private Restaurant restaurant;
 
     @ManyToOne
-    @JoinColumn(name = "mem_no")
+    @JoinColumn(name = "memNo")
     private Member member;
 
     @OneToOne
-    @JoinColumn(name = "reservation_no")
+    @JoinColumn(name = "reservationNo")
     private Reservation reservation;
 }
