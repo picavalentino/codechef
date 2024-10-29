@@ -6,17 +6,17 @@ import jakarta.persistence.*;
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long menu_no;
+    private Long menuNo;
     @Column(length = 50)
-    private String menu_name;
-    @Column(length = 100)
-    private String menu_image;
-    @Column(length = 100)
-    private String menu_price;
+    private String menuName;
     @Column(length = 500)
-    private String menu_explain;
+    private String menuImage;
+    @Column(length = 100)
+    private String menuPrice;
+    @Column(length = 500)
+    private String menuExplain;
 
     @ManyToOne
-    @JoinColumn(name = "chef_no")
+    @JoinColumn(name = "chefNo")
     private Restaurant restaurant;
 }

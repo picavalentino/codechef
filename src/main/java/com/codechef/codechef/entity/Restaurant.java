@@ -15,31 +15,31 @@ import java.util.List;
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long chef_no;
+    private Long chefNo;
     @Column(length = 10)
-    private String chef_name;
+    private String chefName;
     @Column(length = 20)
-    private String chef_nickname;
+    private String chefNickname;
     @Column(length = 20)
-    private String res_name;
-    @Column(length = 100)
-    private String main_image;
-    @Column(length = 100)
-    private String banner_image;
-    @Column(length = 12)
-    private String res_phone_no;
+    private String resName;
+    @Column(length = 500)
+    private String mainImage;
+    @Column(length = 500)
+    private String bannerImage;
+    @Column(length = 20)
+    private String resPhoneNo;
     @Column(length = 100)
     private String address;
-    @Column(length = 100)
-    private String biz_hour;
+    @Column(length = 200)
+    private String bizHour;
     @Column(length = 10)
     private String category;
     @Column(length = 10)
-    private String local_area;
+    private String localArea;
     @Column(length = 1000)
-    private String res_explain;
+    private String resExplain;
     @Column(length = 2000)
-    private String res_mpa;
+    private String resMap;
 
     @OneToMany(mappedBy = "restaurant")
     private List<Review> reviewList = new ArrayList<>();
