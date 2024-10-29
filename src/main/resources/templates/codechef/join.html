@@ -3,7 +3,7 @@
 <!--security 적용 후 아래 코드로 변경해주세요-->
 <!--<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">-->
 <head>
-    <link rel="stylesheet" th:href="@{/css/insert.css}">
+    <link rel="stylesheet" th:href="@{/css/join.css}">
     <meta charset="UTF-8">
     <title>CodeChef</title>
 </head>
@@ -22,29 +22,30 @@
         </div>
         <br>
         <br>
-        <form th:action="@{/insert}" method="post">
+        <form th:action="@{/joinMember}" method="post">
             <div class="insert_layout">
                 <div class="emailbox">
-                    <label class="email_name">이메일</label>
-                    <input type="email" id="email" placeholder="이메일을 입력해주세요">
+                    <label for="email" class="email_name">이메일</label>
+                    <input type="email" id="email" name="email" placeholder="이메일을 입력해주세요">
+                    <button class="duplicate_btn">중복확인</button>
                 </div>
                 <div class="password_box">
-                    <label class="password_name">비밀번호</label>
+                    <label for="password" class="password_name">비밀번호</label>
                     <span class="comment">비밀번호는 6자리 이상으로 입력해주세요</span>
-                    <input type="password" id="password" placeholder="비밀번호를 입력해주세요">
+                    <input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요">
                 </div>
                 <div class="repassword_box">
-                    <label class="repassword_name">비밀번호 확인</label>
-                    <input type="password" id="repassword" placeholder="비밀번호를 다시 입력해주세요">
+                    <label for="passwordCheck" class="repassword_name">비밀번호 확인</label>
+                    <input type="password" id="passwordCheck" name="passwordCheck" placeholder="비밀번호를 다시 입력해주세요">
                 </div>
                 <div class="phone_box">
-                    <label class="phone_no">전화번호</label>
+                    <label for="phoneNo" class="phone_no">전화번호</label>
                     <span class="comment">전화번호는 01012345678 형식으로 입력해주세요</span>
-                    <input type="text" id="phone_no" placeholder="전화번호를 입력해주세요">
+                    <input type="text" id="phoneNo" name="phoneNo" placeholder="전화번호를 입력해주세요">
                 </div>
                 <div class="nicknamebox">
                     <label class="nickname">닉네임</label>
-                    <input type="text" id="nickname" placeholder="닉네임을 입력해주세요">
+                    <input type="text" id="nickname" name="nickname" placeholder="닉네임을 입력해주세요">
                 </div>
                 <div>
                     <button type="submit" class="insert_btn"><span id="insert_btn">회원가입</span></button>
@@ -53,5 +54,6 @@
         </form>
     </div>
 </div>
+
 </body>
 </html>

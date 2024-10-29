@@ -9,20 +9,20 @@ import java.util.Date;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reservation_no;
-    private Date reservation_date;
-    private int member_count;
+    private Long reservationNo;
+    private Date reservationDate;
+    private int memberCount;
     @ColumnDefault("false")
-    private Boolean review_ox;
+    private Boolean reviewOx;
     @ColumnDefault("false")
-    private Boolean visit_ox;
+    private Boolean visitOx;
 
     @ManyToOne
-    @JoinColumn(name = "mem_no")
+    @JoinColumn(name = "memNo")
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "chef_no")
+    @JoinColumn(name = "chefNo")
     private Restaurant restaurant;
 
     @OneToOne(mappedBy = "reservation")
