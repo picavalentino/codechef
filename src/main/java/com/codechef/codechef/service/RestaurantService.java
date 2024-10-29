@@ -18,9 +18,6 @@ import java.util.List;
 @Service
 public class RestaurantService {
     @Autowired
-    RestaurantDAO resDAO;
-
-    @Autowired
     RestaurantRepository resRepository;
 
     // 식당 3개 랜덤 조회
