@@ -12,70 +12,107 @@
 <th:block layout:fragment="script"></th:block>
 
 <body>
-  <div layout:fragment="content" class="content">
-    <!-- content 부분을 벗어나면 css 적용안됨 -->
-    <link rel="stylesheet" th:href="@{/css/search.css}">
+<div layout:fragment="content" class="content">
+  <!-- content 부분을 벗어나면 css 적용안됨 -->
+  <link rel="stylesheet" th:href="@{/css/search.css}">
 
-    <!-- 검색 영역 -->
-    <section class="py-4 text-center container">
-      <div class="row py-lg-4">
-        <div class="col-lg-9 col-md-8 mx-auto">
-          <input class="form-control form-control-lg" type="text" id="search" placeholder="검색어를 입력하세요">
-        </div>
-        <div class="col-lg-3 col-md-8 mx-auto">
-          <a href="#" class="btn btn-search">
-            <img src="/images/main/search.png">&nbsp검색
-          </a>
-        </div>
+  <!-- 검색 영역 -->
+  <section class="py-4 text-center container">
+    <div class="row py-lg-4">
+      <div class="col-lg-9 col-md-8 mx-auto">
+        <input class="form-control form-control-lg" type="text" id="search" placeholder="검색어를 입력하세요">
       </div>
-    </section>
-
-    <!-- 카테고리 영역 -->
-    <section class="py-3 text-center container">
-      <div class="row">
-        <ul class="col-lg-9 col-md-6 mx-auto category">
-          <li><a href=""><img src="/images/main/korean.png"><span>한식</span></a></li>
-          <li><a href=""><img src="/images/main/chinese.png"><span>중식</span></a></li>
-          <li><a href=""><img src="/images/main/japanese.png"><span>일식</span></a></li>
-          <li><a href=""><img src="/images/main/western.png"><span>양식</span></a></li>
-          <li><a href=""><img src="/images/main/allmenu.png"><span>전체</span></a></li>
-        </ul>
+      <div class="col-lg-3 col-md-8 mx-auto">
+        <a href="#" class="btn btn-search">
+          <img src="/images/main/search.png">&nbsp검색
+        </a>
       </div>
-      <hr>
-    </section>
+    </div>
+  </section>
 
-    <!-- 식당 영역 -->
-    <section class="py-4 container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="col" th:each="num : ${#numbers.sequence(1,6)}">
-          <div class="card">
-            <img src="/images/main/samplechef.jpg">
-            <p>Cheese Burger</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <p class="star">4.6</p>
-              <p class="loc">연남</p>
-            </div>
+  <!-- 카테고리 영역 -->
+  <section class="py-3 text-center container">
+    <div class="row">
+      <ul class="col-lg-9 col-md-6 mx-auto category">
+        <li>
+          <!-- 참고: /search?category=한식&keyword= -->
+          <a th:href="@{/search(category=한식, keyword='')}">
+            <img src="/images/main/korean.png"><span>한 식</span></a>
+        </li>
+        <li>
+          <a th:href="@{/search(category=중식, keyword='')}">
+            <img src="/images/main/chinese.png"><span>중 식</span></a>
+        </li>
+        <li>
+          <a th:href="@{/search(category=일식, keyword='')}">
+            <img src="/images/main/japanese.png"><span>일 식</span></a>
+        </li>
+        <li>
+          <a th:href="@{/search(category=양식, keyword='')}">
+            <img src="/images/main/western.png"><span>양 식</span></a>
+        </li>
+        <li>
+          <!--            <a th:href="@{/search(keyword='')}">-->
+          <a th:href="@{/search(category='', keyword='')}">
+            <img src="/images/main/allmenu.png"><span>전 체</span></a>
+        </li>
+      </ul>
+    </div>
+    <hr>
+  </section>
+
+  <!-- 식당 영역 -->
+  <section class="py-4 container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <!-- 식당 검색 결과가 없으면 -->
+      <!-- pageable 사용하는 경우, 객채 개수는 totalElements를 이용하여 확인  -->
+      <div th:if="${resultLists.totalElements == 0}">
+        <h5>검색 결과가 없습니다.</h5>
+      </div>
+      <!-- 식당 검색 결과가 있으면 -->
+      <div class="col" th:each="res : ${resultLists}">
+        <div class="card">
+          <img th:src="@{'/images/main/' + ${res.main_image}}" alt="식당사진">
+          <p th:text="${res.res_name}">식당명</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <p class="star" th:text="${res.reviewRating}">평점</p>
+            <p class="loc" th:text="${res.local_area}">위치</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 페이지 영역 -->
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-          <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">5</a></li>
+  <!-- 페이지 영역 -->
+  <nav aria-label="Page navigation example" th:unless="${resultLists.totalElements == 0}">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${resultLists.number}<=0 ? 'disabled'">
+        <a class="page-link" th:href="@{/search(category=${category},keyword=${keyword},page=${resultLists.number-1})}"><</a>
+      </li>
+      <th:block th:each="pageNumber : ${pageNum}">
         <li class="page-item">
-          <a class="page-link" href="#">></a>
+          <a class="page-link" th:href="@{/search(category=${category},keyword=${keyword},page=${pageNumber})}" th:text="${pageNumber+1}">
+          </a>
         </li>
-      </ul>
-    </nav>
-  </div>
+      </th:block>
+      <li class="page-item" th:classappend="${resultLists.number+1} == ${resultLists.totalPages} ? 'disabled'">
+        <a class="page-link" th:href="@{/search(category=${category},keyword=${keyword},page=${resultLists.number+1})}">></a>
+      </li>
+    </ul>
+  </nav>
+
+  <script th:inline="javascript">
+    // 키워드 검색
+    $(document).on("click", ".btn-search", function(){
+      let inputVal = $("#search").val();
+      if(inputVal == ""){
+        alert("검색어를 입력하세요");
+        $("#search").focus();
+        return;
+      }
+      location.href = "/search?category=&keyword=" + inputVal;
+    });
+  </script>
+</div>
 </body>
 </html>
