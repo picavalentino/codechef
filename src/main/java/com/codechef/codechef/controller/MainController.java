@@ -2,10 +2,11 @@ package com.codechef.codechef.controller;
 
 import com.codechef.codechef.dto.MemberDto;
 import com.codechef.codechef.dto.RestaurantDTO;
-import com.codechef.codechef.service.CodeChefService;
-import com.codechef.codechef.service.PagenationService;
-import com.codechef.codechef.service.RestaurantService;
+import com.codechef.codechef.dto.ReviewCreateDTO;
+import com.codechef.codechef.entity.Reservation;
+import com.codechef.codechef.service.*;
 import com.codechef.codechef.util.DateUtil;
+import groovy.util.logging.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -26,12 +24,17 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@Slf4j
 public class MainController {
     // 서비스 연결
     private final CodeChefService codeChefService;
+    private final ReservationService reservationService;
+    private final ReviewService reviewService;
 
-    public MainController(CodeChefService codeChefService) {
+    public MainController(CodeChefService codeChefService, ReservationService reservationService, ReviewService reviewService) {
         this.codeChefService = codeChefService;
+        this.reservationService = reservationService;
+        this.reviewService = reviewService;
     }
 
     @Autowired
@@ -83,9 +86,28 @@ public class MainController {
     }
 
     // 리뷰 작성 페이지
-    @GetMapping("/review-create")
-    public String reviewCreate() {
+    @GetMapping("/review-create/{reservationNo}")
+    public String reviewCreateView(@PathVariable("reservationNo") Long reservationNo, Model model) {
+        Reservation reservation = reservationService.getReservationById(reservationNo);
+        model.addAttribute("reservation", reservation);
+        model.addAttribute("member", reservation.getMember());
+        model.addAttribute("restaurant", reservation.getRestaurant());
+        log.info("================================="+reservation.getReservationDate());
+        log.info("================================="+reservation.getRestaurant().getResName());
         return "/codechef/reviewCreate";
+    }
+
+    //리뷰 저장 페이지
+    @PostMapping("/review-create")
+    public String reviewCreate(@ModelAttribute ReviewCreateDTO dto) {
+        try {
+            reviewService.createReview(dto);
+            reviewService.updateReviewOxByReservationNo(dto.getReservation().getReservationNo());
+        } catch (Exception e) {
+            log.error("리뷰 저장 중 오류 발생: {}", e.getMessage());
+            // 오류 페이지로 리다이렉트할 수도 있습니다.
+        }
+        return "/codechef/mypage";
     }
 
     // 로그인 페이지
