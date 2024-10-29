@@ -16,72 +16,119 @@
     <!-- content 부분을 벗어나면 css 적용안됨 -->
     <link rel="stylesheet" th:href="@{/css/reviewCreate.css}">
 
-    <!-- 방문 정보 배너 영역 -->
+    <!--방문 정보 배너 영역 -->
     <section class="text-center container mt-4">
         <div class="row">
             <div class="col-lg-12 mx-auto visit-info">
                 <div class="visit-image-container">
-                    <img src="/images/reviewCreate/네기다이닝라운지_4.webp" alt="방문 이미지" class="visit-image">
+                    <img th:src="@{${restaurant.mainImage}}" alt="방문 이미지" class="visit-image">
                 </div>
                 <div class="visit-details">
-                    <h3>키보 에다마메</h3>
-                    <p><span>2024.03.29</span> / <span>19:00</span> / <span>3명</span></p>
-                    <p class="visit-status">방문완료</p>
+                    <h3 th:text="${restaurant.resName}">매장 이름</h3>
+                    <p>
+                        <span th:text="${#dates.format(reservation.reservationDate, 'yyyy.MM.dd')}">예약일</span> /
+                        <span th:text="${#dates.format(reservation.reservationDate, 'HH:mm')}">예약 시간</span> /
+                        <span th:text="${reservation.memberCount}">인원수</span>
+                    </p>
+                    <p class="visit-status" th:text="${reservation.visitOx ? '방문 완료' : '방문 예정'}">방문 상태</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 점수 창 -->
-    <section class="score-section container mt-5">
-        <div class="row justify-content-center score-container">
-            <div class="col-md-4 text-center">
-                <label for="taste-score">맛</label>
-                <div class="input-group">
-                    <input type="number" id="taste-score" min="0" max="5" value="0">
-                    <span>/ 5</span>
-                </div>
-            </div>
-            <div class="col-md-4 text-center">
-                <label for="mood-score">분위기</label>
-                <div class="input-group">
-                    <input type="number" id="mood-score" min="0" max="5" value="0">
-                    <span>/ 5</span>
-                </div>
-            </div>
-            <div class="col-md-4 text-center">
-                <label for="service-score">서비스</label>
-                <div class="input-group">
-                    <input type="number" id="service-score" min="0" max="5" value="0">
-                    <span>/ 5</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 리뷰 작성 영역 -->
-    <section class="review-section container mt-5">
-        <h5>어떤 점이 좋았나요?</h5>
-        <textarea rows="7" placeholder="최소 10자 이상 입력해주세요." maxlength="1000"></textarea>
-        <p class="text-right">최대 1000자</p>
-    </section>
-
-    <!-- 버튼 및 사진 미리보기 영역 -->
-    <section class="actions-section container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-md-6 d-flex justify-content-between action-buttons-container">
-                <!-- 사진 첨부하기 버튼과 미리보기 이미지 그룹화 -->
-                <div class="photo-section">
-                    <button class="btn btn-photo">사진 첨부하기</button>
-                    <div class="image-preview mt-2">
-                        <img src="/images/reviewCreate/image.png" alt="첨부된 이미지 미리보기" class="preview-image">
-                        <p>사진 미리보기</p>
+    <form th:action="@{/review-create}" method="post" enctype="multipart/form-data">
+        <!-- 점수 창 -->
+        <section class="score-section container mt-5">
+            <div class="row justify-content-center score-container">
+                <div class="col-md-4 text-center">
+                    <label for="taste-score">맛</label>
+                    <div class="input-group">
+                        <input type="number" id="taste-score" name="tastePoint" min="0" max="5" value="0">
+                        <span>/ 5</span>
                     </div>
                 </div>
-                <button class="btn btn-submit">작성 완료</button>
+                <div class="col-md-4 text-center">
+                    <label for="mood-score">분위기</label>
+                    <div class="input-group">
+                        <input type="number" id="mood-score" name="moodPoint" min="0" max="5" value="0">
+                        <span>/ 5</span>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <label for="service-score">서비스</label>
+                    <div class="input-group">
+                        <input type="number" id="service-score" name="servePoint" min="0" max="5" value="0">
+                        <span>/ 5</span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- 리뷰 작성 영역 -->
+        <section class="review-section container mt-5">
+            <h5>어떤 점이 좋았나요?</h5>
+            <textarea name="contents" rows="7" placeholder="최소 10자 이상 입력해주세요." maxlength="1000"></textarea>
+            <p class="text-right">최대 1000자</p>
+        </section>
+
+        <!-- 숨겨진 필드 -->
+        <input type="hidden" name="restaurant.chefNo" th:value="${restaurant.chefNo}">
+        <input type="hidden" name="member.memNo" th:value="${member.memNo}">
+        <input type="hidden" name="reservation.reservationNo" th:value="${reservation.reservationNo}">
+        <input type="hidden" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}">
+
+        <!-- 버튼 및 사진 미리보기 영역 -->
+        <section class="actions-section container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-6 d-flex justify-content-between action-buttons-container">
+                    <!-- 사진 첨부하기 버튼과 미리보기 이미지 그룹화 -->
+                    <div class="photo-section">
+<!--                        <button class="btn btn-photo">사진 첨부하기</button>-->
+                        <input type="file" id="reviewImage" name="reviewImage" accept="image/*" class="btn">
+                        <div class="image-preview mt-2">
+                            <img id="preview" src="/images/reviewCreate/image.png" alt="첨부된 이미지 미리보기" class="preview-image">
+                            <p>사진 미리보기</p>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-submit">작성 완료</button>
+                </div>
+            </div>
+        </section>
+    </form>
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            $('#reviewImage').change(function() {
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#preview').attr('src', e.target.result); // 미리보기 이미지 업데이트
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    $('#preview').attr('src', "/images/reviewCreate/image.png"); // 파일이 선택되지 않은 경우 초기 이미지로 복원
+                }
+            });
+
+            $('form').on('submit', function(e) {
+                // 점수 필드 값 가져오기
+                var tasteScore = parseInt($('#taste-score').val());
+                var moodScore = parseInt($('#mood-score').val());
+                var serviceScore = parseInt($('#service-score').val());
+                var contents = $('textarea[name="contents"]').val().trim(); // 리뷰 내용
+
+                // 점수가 모두 1점 이상인지 확인
+                if (tasteScore < 1 || moodScore < 1 || serviceScore < 1) {
+                    alert('각 점수는 최소 1점 이상이어야 합니다.');
+                    e.preventDefault(); // 폼 제출 방지
+                } else if (contents.length < 10) {
+                    // 리뷰 내용이 10자 미만인지 확인
+                    alert('리뷰 내용은 최소 10자 이상 입력해야 합니다.');
+                    e.preventDefault(); // 폼 제출 방지
+                }
+            });
+        });
+    </script>
 
 </div>
 </body>
