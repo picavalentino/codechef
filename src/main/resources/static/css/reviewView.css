@@ -1,14 +1,12 @@
-
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "SourceSansPro", "Pretendard";
 }
 
 /* body 요소 상단 여백 제거 */
 body {
-    font-family: 'Pretendard', sans-serif;
     background-color: #f4f4f4;
     overflow-x: hidden; /* 가로 스크롤 방지 */
     margin-top: 0;

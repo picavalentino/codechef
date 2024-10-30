@@ -7,6 +7,7 @@ import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.service.*;
 import com.codechef.codechef.util.DateUtil;
 import groovy.util.logging.Slf4j;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,10 +35,12 @@ public class MainController {
     // 서비스 연결
     private final ReservationService reservationService;
     private final ReviewService reviewService;
+    private final MemberService memberService;
 
-    public MainController(ReservationService reservationService, ReviewService reviewService) {
+    public MainController(ReservationService reservationService, ReviewService reviewService, MemberService memberService) {
         this.reservationService = reservationService;
         this.reviewService = reviewService;
+        this.memberService = memberService;
     }
 
     @Autowired
@@ -42,6 +48,7 @@ public class MainController {
 
     @Autowired
     PagenationService pagenationService;
+
 
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
@@ -138,8 +145,66 @@ public class MainController {
 
     // 프로필 수정 페이지
     @GetMapping("/profileEdit")
-    public String profileEdit(){
-        return "/codechef/profileEdit";
+    public String getProfileEdit(Model model, HttpSession session) {
+//        // 로그인된 상태로만 접근 가능하도록 확인
+//        Long loggedInUserId = (Long) session.getAttribute("loggedInUser");
+//        if (loggedInUserId == null) {
+//            return "redirect:/login";
+//        }
+//
+//        // mem_no로 회원 정보 조회
+//        Member member = memberService.getMemberByMemNo(memNo);
+//        model.addAttribute("member", member);
+
+        // mem_no가 1인 회원 정보 조회
+        MemberDto dto = MemberDto.fromEntity(memberService.getMemberWithMemNoOne());
+        System.out.println("회원 번호 (mem_no): " + dto.getMemNo());
+        System.out.println("이메일 (email): " + dto.getEmail());
+        System.out.println("닉네임 (nickname): " + dto.getNickname());
+        System.out.println("전화번호 (phoneNo): " + dto.getPhoneNo());
+        System.out.println("프로필 이미지 (memImage): " + dto.getMemImage());
+
+        String imageData = null;
+        if (dto.getMemImage() != null) {
+            imageData = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(dto.getMemImage());
+        }
+
+        // 조회한 회원 정보를 모델에 추가하여 뷰로 전달
+        log.info("###########################dto : " + dto.toString());
+        model.addAttribute("member", dto);
+        model.addAttribute("imageData", imageData);
+        return "/codechef/profileEdit"; // 회원 정보 페이지로 이동 (member-info.html)
+
+    }
+
+    // 프로필 수정 처리
+    @PostMapping("/profileEdit")
+    public String updateMemberInfo(
+            HttpSession session,
+            @RequestParam("memNo") Long memNo,
+            @RequestParam(value ="password", required = false) String password,
+            @RequestParam(value ="passwordCheck", required = false) String passwordCheck,
+            @RequestParam(value ="phoneNo", required = false) String phoneNo,
+            @RequestParam(value ="nickname", required = false) String nickname,
+            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+            Model model) {
+
+        try {
+            byte[] imageBytes = null;
+            if (profileImage != null && !profileImage.isEmpty()) {
+                // 프로필 이미지 처리
+                imageBytes = profileImage.getBytes();
+            }
+
+            // 회원 정보 업데이트
+            memberService.updateMemberInfo(memNo, password,passwordCheck, phoneNo, nickname, imageBytes);
+            model.addAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
+            return "redirect:/mypage";
+        } catch (IOException e) {
+            e.printStackTrace();
+            model.addAttribute("error", "정보 업데이트 중 오류가 발생했습니다.");
+            return "/codechef/profileEdit";
+        }
     }
 
     // 예약 페이지
