@@ -290,20 +290,19 @@ public class MainController {
     }
 
     @PostMapping("/reservation")
-    public String reservationPost(@RequestParam(value = "chefNo") Long chefNo,
-                                  @RequestParam(value = "selectedDay") LocalDateTime selectedDay,
-                                  @RequestParam(value = "numPeople") int numPeople,
-                                  @RequestParam(value = "select_time") String select_time) {
+    public String reservationPost(@RequestParam(value = "selectedDay") LocalDateTime reservationDate,
+                                  @RequestParam(value = "numPeople") int memberCount,
+                                  @RequestParam(value = "chefNo") Long chefNo) {
 
-//        System.out.println("============================== "+chefNo);
-//        System.out.println("============================== "+selectedDay);
-//        System.out.println("============================== "+numPeople);
-//        System.out.println("============================== "+select_time);
+        System.out.println("============================== "+reservationDate);
+        System.out.println("============================== "+memberCount);
+        System.out.println("============================== "+chefNo);
 
-        System.out.println("============================== " + selectedDay);
+        // 예약정보 데이터베이스에 저장 (review_ox, visit_ox, mem_no 에 대한 정보가 필요함)
+        reservationService.insertReservationInfo(reservationDate, memberCount, false, false, 7, chefNo);
 
-//        reservationService.insertReservationInfo(numPeople, chefNo, selectedDay)
+//        timeSlotService.availableCheck();
 
-        return "/codechef/reservation";
+        return "redirect:/codechef/detail?chefNo="+chefNo;
     }
 }

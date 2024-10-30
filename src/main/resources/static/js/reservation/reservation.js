@@ -140,11 +140,12 @@ $(document).ready(function() {
         date.setHours(hours);
         date.setMinutes(minutes);
 
+        const localDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)); // UTC로 변환
+        $('#selectedDay').val(localDateTime.toISOString().slice(0, 19)); // "2024-10-30T19:00:00" 형식으로 설정
+
         $('#reservation_date').html(formattedDate);
         $('#reservation_time').html(reservation_time);
         $('#reservation_num').html(reservation_num + "명");
-        $('#selectedDay').val(date.toISOString());
-        $('#select_time').val(reservation_time);
 
         $('#confirmModal').modal('show');
     });
