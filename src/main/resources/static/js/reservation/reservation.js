@@ -24,12 +24,13 @@ $(document).ready(function() {
 
                     // endDate를 다음 달의 마지막 날로 설정
                     endDate.setDate(endDate.getDate() + 1);
-                    // endDate.setHours(0, 0, 0, 0); // 시간 초기화
                 }
 
                 let previousDate = new Date(currentDate); // 원본 날짜를 복사
                 previousDate.setDate(previousDate.getDate() - 1); // 하루 빼기
 
+                let emptyDay = getEmptyDay(data.week);
+                $('.calendar').append(emptyDay);
                 daysInMonth.forEach(function(day) {
                     let dayDate = new Date(year, month - 1, day); // month - 1 (0-indexed)
                     let dayElement = $('<div class="day" onclick="toggleDate(this)" name="' + day + '"><span>' + day + '</span></div>');
@@ -46,6 +47,28 @@ $(document).ready(function() {
                 console.error("Error loading calendar", err);
             }
         });
+    }
+
+    function getEmptyDay(week) {
+        let emptyDays = '';
+        let emptyDay = '<div class="day" style="cursor: auto;"><span></span></div>';
+
+        switch(week){
+            case "SATURDAY":
+                emptyDays += emptyDay;
+            case "FRIDAY":
+                emptyDays += emptyDay;
+            case "THURSDAY":
+                emptyDays += emptyDay;
+            case "WEDNESDAY":
+                emptyDays += emptyDay;
+            case "TUESDAY":
+                emptyDays += emptyDay;
+            case "MONDAY":
+                emptyDays += emptyDay;
+        }
+
+        return emptyDays;
     }
 
     // 이전 및 다음 달 버튼 클릭 이벤트
@@ -77,9 +100,10 @@ $(document).ready(function() {
     });
 
     $('#reservation_btn').click(function() {
-        let selectedDay = '';
+        let selectedDay = null;
+        let reservation_num = $('#numPeople').val();
+        let reservation_time = $('.time_btn.selected').text();
 
-        // 모든 .day 요소를 가져오기
         const days = document.querySelectorAll('.day');
 
         // 각 요소를 순회하면서 lightgray 색상이 적용된 요소의 name 속성을 가져오기
@@ -89,10 +113,44 @@ $(document).ready(function() {
             }
         });
 
+        if(selectedDay == null){
+            alert("날짜를 선택해 주세요");
+            return;
+        } else if(reservation_time === '') {
+            alert("시간을 선택해 주세요");
+            return;
+        }
+        else if(reservation_num == "" || reservation_num == "인원 수"){
+            alert("인원을 선택해 주세요");
+            return;
+        }
+
         let date = new Date(currentYear, currentMonth - 1, selectedDay);
 
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+        const weekday = weekdays[date.getDay()];
+
+        const formattedDate = `${month}.${day}(${weekday})`;
+
+        $('#reservation_date').html(formattedDate);
+        $('#reservation_time').html(reservation_time);
+        $('#reservation_num').html(reservation_num + "명");
         $('#selectedDay').val(date);
+        $('#select_time').val(reservation_time);
+
+        $('#confirmModal').modal('show');
+    });
+
+    $('#confirmButton').click(function() {
+        $('#confirmModal').modal('hide'); // 모달 닫기
+
         $('#reservationForm').submit();
+    });
+
+     $('#cancelButton').on('click', function() {
+        $('#confirmModal').modal('hide');
     });
 });
 
@@ -111,9 +169,92 @@ function toggleDate(element) {
             // 다른 날짜를 클릭하면 이전 선택 해제
             selectedDay.classList.remove('selected');
             element.classList.add('selected');
+            select_day(element);
         }
     } else {
         // 아무 것도 선택되지 않은 상태에서 클릭
         element.classList.add('selected');
+        select_day(element);
     }
 }
+
+function toggleTime(element) {
+    const selectedTime = document.querySelector('.time_btn.selected');
+
+    if (selectedTime) {
+        if (selectedTime === element) {
+            // 이미 선택된 시간을 클릭하면 해제
+            selectedTime.classList.remove('selected');
+        } else {
+            // 다른 시간을 클릭하면 이전 선택 해제
+            selectedTime.classList.remove('selected');
+            element.classList.add('selected');
+        }
+    } else {
+        element.classList.add('selected');
+    }
+}
+
+function select_day(element) {
+    const dateInfo = $('.date_info').text() + " " + element.textContent;
+    const koreanDayOfWeek = getKoreanDayOfWeek(dateInfo);
+    const chefNo = $('#chefNo').val();
+
+    const queryParams = {
+        chef_no: chefNo,
+        koreanDayOfWeek: koreanDayOfWeek
+    };
+
+    $.getJSON('/reservation/timeSlot', queryParams, function(data){
+        const str = data.timeSlotDTOS;
+        const timeSlots = parseTimeSlotDTO(str);
+
+        $('.time_select').html('');
+        for(let i = 0; i < timeSlots.length; i++){
+            if(timeSlots[i].available === "false" && timeSlots[i].time !== "휴무"){
+                $('.time_select').append('<button type="button" class="btn time_btn" onclick="toggleTime(this)">'+timeSlots[i].time+'</button>');
+            } else if (timeSlots[i].time === "휴무"){
+                $('.time_select').append('<button type="button" class="btn time_btn" disabled>'+timeSlots[i].time+'</button>');
+            } else {
+                $('.time_select').append('<button type="button" class="btn time_btn" disabled>'+timeSlots[i].time+'예약</button>');
+            }
+        }
+    });
+}
+
+function parseTimeSlotDTO(str) {
+    return str
+        .slice(1, -1) // 대괄호 제거
+        .split('), ') // 객체 분리
+        .map(slot => {
+            // 각 슬롯을 적절한 객체 형태로 변환
+            const properties = slot.replace('TimeSlotDTO(', '').split(', '); // 속성 분리
+            const obj = {};
+            properties.forEach(prop => {
+                const [key, value] = prop.split('='); // 키와 값 분리
+                obj[key.trim()] = value.trim().replace(/^(false|true)$/, (match) => match === 'true'); // boolean 변환
+
+                // 숫자 변환 및 ')' 제거
+                if (key.trim() === 'chefNo') {
+                    obj[key.trim()] = parseInt(value.trim().replace(/\D/g, '')); // 숫자로 변환하고 non-digit 제거
+                } else if (!isNaN(value)) {
+                    obj[key.trim()] = parseInt(value); // 숫자 변환
+                }
+            });
+            return obj;
+        });
+}
+
+function getKoreanDayOfWeek(dateString) {
+    const date = new Date(dateString);
+
+    // 요일 배열 (한국어)
+    const daysInKorean = ['일', '월', '화', '수', '목', '금', '토'];
+
+    // 요일 인덱스 가져오기
+    const dayOfWeekIndex = date.getDay();
+
+    // 한국어 요일 반환
+    return daysInKorean[dayOfWeekIndex];
+}
+
