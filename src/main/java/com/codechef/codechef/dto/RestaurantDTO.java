@@ -28,6 +28,7 @@ public class RestaurantDTO {
     private String resExplain;
     private String resMap;
     private List<ReviewDTO> reviews = new ArrayList<>();
+    private List<MenuDTO> menus = new ArrayList<>();
 
     // 리뷰 맛+분위기+서비스 전체 평점
     private String reviewRating;
@@ -49,6 +50,7 @@ public class RestaurantDTO {
                 restaurant.getResExplain(),
                 restaurant.getResMap(),
                 restaurant.getReviewList().stream().map(x->ReviewDTO.fromEntity(x)).toList(),
+                restaurant.getMenuList().stream().map(x->MenuDTO.fromEntity(x)).toList(),
                 // 리뷰 총합, 평점 구하기
                 reviewRating(restaurant.getReviewList())
         );
