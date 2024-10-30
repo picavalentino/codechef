@@ -2,8 +2,14 @@ package com.codechef.codechef.controller;
 
 import com.codechef.codechef.dto.MemberDto;
 import com.codechef.codechef.service.CodeChefService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,11 +31,10 @@ public class LoginController {
         return "/codechef/login";
     }
 
-    @PostMapping("/loginMember")
-    public String login(MemberDto memberDto) {
-        codeChefService.loginService(memberDto);
-        return "redirect:/main";
-    }
+//    @PostMapping("/loginMember")
+//    public String login(MemberDto memberDto) {
+//        return "redirect:/main";
+//    }
 
     // 회원가입 페이지
     @GetMapping("/join")
@@ -54,12 +59,12 @@ public class LoginController {
 
 
     // 로그아웃
-//    @GetMapping("/logout")
-//    public String logout(HttpServletRequest request, HttpServletResponse response) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (!ObjectUtils.isEmpty(authentication)) {
-//            new SecurityContextLogoutHandler().logout(request, response, authentication);
-//        }
-//        return "redirect:/main";
-//    }
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!ObjectUtils.isEmpty(authentication)) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
+        return "redirect:/main";
+    }
 }
