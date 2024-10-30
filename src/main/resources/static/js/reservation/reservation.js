@@ -211,8 +211,10 @@ function select_day(element) {
 
         $('.time_select').html('');
         for(let i = 0; i < timeSlots.length; i++){
-            if(timeSlots[i].available === "false"){
+            if(timeSlots[i].available === "false" && timeSlots[i].time !== "휴무"){
                 $('.time_select').append('<button type="button" class="btn time_btn" onclick="toggleTime(this)">'+timeSlots[i].time+'</button>');
+            } else if (timeSlots[i].time === "휴무"){
+                $('.time_select').append('<button type="button" class="btn time_btn" disabled>'+timeSlots[i].time+'</button>');
             } else {
                 $('.time_select').append('<button type="button" class="btn time_btn" disabled>'+timeSlots[i].time+'예약</button>');
             }

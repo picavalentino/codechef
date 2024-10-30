@@ -297,6 +297,8 @@ public class MainController {
         System.out.println("============================== "+numPeople);
         System.out.println("============================== "+select_time);
 
+//        reservationService.insertReservationInfo(numPeople, chefNo, selectedDay)
+
         return "/codechef/reservation";
     }
 }
