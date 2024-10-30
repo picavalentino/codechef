@@ -25,7 +25,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -288,14 +291,16 @@ public class MainController {
 
     @PostMapping("/reservation")
     public String reservationPost(@RequestParam(value = "chefNo") Long chefNo,
-                                  @RequestParam(value = "selectedDay") String selectedDay,
+                                  @RequestParam(value = "selectedDay") LocalDateTime selectedDay,
                                   @RequestParam(value = "numPeople") int numPeople,
                                   @RequestParam(value = "select_time") String select_time) {
 
-        System.out.println("============================== "+chefNo);
-        System.out.println("============================== "+selectedDay);
-        System.out.println("============================== "+numPeople);
-        System.out.println("============================== "+select_time);
+//        System.out.println("============================== "+chefNo);
+//        System.out.println("============================== "+selectedDay);
+//        System.out.println("============================== "+numPeople);
+//        System.out.println("============================== "+select_time);
+
+        System.out.println("============================== " + selectedDay);
 
 //        reservationService.insertReservationInfo(numPeople, chefNo, selectedDay)
 

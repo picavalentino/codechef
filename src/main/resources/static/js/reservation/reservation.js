@@ -134,10 +134,16 @@ $(document).ready(function() {
 
         const formattedDate = `${month}.${day}(${weekday})`;
 
+        const [hours, minutes] = reservation_time.split(":").map(Number);
+
+        // 주어진 날짜에 시간과 분을 설정합니다.
+        date.setHours(hours);
+        date.setMinutes(minutes);
+
         $('#reservation_date').html(formattedDate);
         $('#reservation_time').html(reservation_time);
         $('#reservation_num').html(reservation_num + "명");
-        $('#selectedDay').val(date);
+        $('#selectedDay').val(date.toISOString());
         $('#select_time').val(reservation_time);
 
         $('#confirmModal').modal('show');
