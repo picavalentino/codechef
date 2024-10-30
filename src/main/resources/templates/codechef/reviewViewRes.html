@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<!--security 적용 후 아래 코드로 변경해주세요-->
+<!--<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">-->
+
+<meta charset="UTF-8">
+<title>CodeChef</title>
+<!-- 전체 적용될 CSS -->
+<th:block layout:fragment="css"></th:block>
+<!-- 전체 적용될 스크립트 -->
+<th:block layout:fragment="script"></th:block>
+
+<!-- 우리가 작업할 공간 -->
+<body>
+<div layout:fragment="content" class="content">
+    <link rel="stylesheet" href="css/reviewViewRes.css">
+    <div class="container1">
+        <!-- 비아 톨레도 파스타바 섹션 -->
+        <div class="review-container">
+            <div class="title" th:text="${restaurant.resName}">식당 이름</div>
+            <div class="review-info">
+                <div class="review-count" th:text="'리뷰 (' + ${reviews.size()} + ')'">리뷰 (0)</div>
+                <div class="rating">
+                    평균 <span class="star">⭐</span> <span th:text="${restaurant.reviewRating}">4.5</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 또리하는 요라이 리뷰 카드 섹션 -->
+        <div class="reviews-wrapper">
+            <!-- 반복되는 리뷰 카드 -->
+            <div th:each="review : ${reviews}" class="review-card">
+                <div class="image-container">
+                    <img th:src="@{${review.reviewImage}}" alt="요리 이미지" class="food-image">
+                </div>
+                <div class="review-content">
+                    <div class="review-header">
+                        <h2 th:text="${review.member.nickname}">닉네임</h2>
+                        <div class="rating">
+                            <span class="star">⭐</span> <span th:text="${review.myReviewRating}">평균 점수</span>
+                        </div>
+                    </div>
+                    <p class="review-date" th:text="${#dates.format(review.date, 'yyyy-MM-dd')}">날짜</p>
+                    <div class="review-text">
+                        <p th:text="${review.contents}">내용</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 페이지 영역 -->
+    <div class="pagination" th:unless="${reviewsPage.totalElements == 0}">
+        <button class="page-nav prev" th:classappend="${reviewsPage.hasPrevious() ? '' : 'disabled'}">
+            <a th:href="@{/review-restaurant(chefNo=${restaurant.chefNo}, page=${reviewsPage.number - 1})}"><</a>
+        </button>
+
+        <!-- 페이지 번호 생성 -->
+        <th:block th:each="pageNum : ${#numbers.sequence(0, reviewsPage.totalPages - 1)}">
+            <button class="page-number" th:classappend="${pageNum == reviewsPage.number ? 'active' : ''}">
+                <a th:href="@{/review-restaurant(chefNo=${restaurant.chefNo}, page=${pageNum})}" th:text="${pageNum + 1}"></a>
+            </button>
+        </th:block>
+
+        <button class="page-nav next" th:classappend="${reviewsPage.hasNext() ? '' : 'disabled'}">
+            <a th:href="@{/review-restaurant(chefNo=${restaurant.chefNo}, page=${reviewsPage.number + 1})}">></a>
+        </button>
+    </div>
+
+</div>
+</body>
+</html>

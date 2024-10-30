@@ -3,6 +3,7 @@ package com.codechef.codechef.controller;
 import com.codechef.codechef.dto.MemberDto;
 import com.codechef.codechef.dto.RestaurantDTO;
 import com.codechef.codechef.dto.ReviewCreateDTO;
+import com.codechef.codechef.dto.ReviewDTO;
 import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.service.*;
 import com.codechef.codechef.util.DateUtil;
@@ -90,6 +91,28 @@ public class MainController {
     @GetMapping("/detail")
     public String detail() {
         return "/codechef/detail";
+    }
+
+    //리뷰 보기 페이지 - 식당 별 리뷰 보기 페이지
+    @GetMapping("/review-restaurant")
+    public String reviewViewRes(@RequestParam("chefNo") Long chefNo,
+                                @PageableDefault(size = 5) Pageable pageable,
+                                Model model) {
+        // chefNo로 식당 정보를 가져옵니다.
+        RestaurantDTO restaurantDTO = restaurantService.getRestaurantByChefNo(chefNo);
+
+        // 리뷰를 페이징하여 가져옵니다.
+        Page<ReviewDTO> reviewsPage = restaurantService.getReviewsByRestaurant(chefNo, pageable);
+
+        model.addAttribute("restaurant", restaurantDTO);
+        model.addAttribute("reviews", reviewsPage.getContent());
+        model.addAttribute("reviewsPage", reviewsPage);  // 페이지 정보 추가
+
+        // 현재 페이지 수와 총 페이지 수를 추가 (선택 사항)
+        model.addAttribute("totalPages", reviewsPage.getTotalPages());
+        model.addAttribute("currentPage", reviewsPage.getNumber());
+
+        return "/codechef/reviewViewRes";
     }
 
     // 리뷰 작성 페이지
