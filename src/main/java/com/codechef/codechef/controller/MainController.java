@@ -219,16 +219,17 @@ public class MainController {
 
     // 날짜일 선택 기능
     @GetMapping("/reservation/timeSlot")
-    public ResponseEntity<Map<String, String>> getTimeSlot(@RequestParam String selectedDay,
-                                                           @RequestParam Long chef_no) {
+    public ResponseEntity<Map<String, String>> getTimeSlot(@RequestParam("chef_no") int chefNo,
+                                                           @RequestParam("koreanDayOfWeek") String koreanDayOfWeek) {
         Map<String, String> response = new HashMap<>();
 
-//        !!
-//        System.out.println(selectedDay + " " + chef_no);
+//        System.out.println("================================= "+koreanDayOfWeek + " " + chefNo);
 
-        List<TimeSlotDTO> timeSlotDTOS = timeSlotService.findTimeSlotByChefNo(1);
+        List<TimeSlotDTO> timeSlotDTOS = timeSlotService.findTimeSlotByChefNo(1, koreanDayOfWeek);
 
-        response.put("myData", "Hello, World!");
+//        timeSlotDTOS.forEach(x-> System.out.println(x));
+
+        response.put("timeSlotDTOS", timeSlotDTOS.toString());
         return ResponseEntity.ok(response);
     }
 }

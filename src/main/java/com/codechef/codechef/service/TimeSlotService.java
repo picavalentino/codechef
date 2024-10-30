@@ -16,8 +16,8 @@ public class TimeSlotService {
     TimeSlotRepository timeSlotRepository;
 
     // 예약가능한 시간 가져오기
-    public List<TimeSlotDTO> findTimeSlotByChefNo(int chef_no) {
-        List<TimeSlot> timeSlots = timeSlotRepository.getTimeSlotByChefNo(chef_no);
+    public List<TimeSlotDTO> findTimeSlotByChefNo(int chef_no, String koreanDayOfWeek) {
+        List<TimeSlot> timeSlots = timeSlotRepository.getTimeSlotByChefNo(chef_no, koreanDayOfWeek);
         if(ObjectUtils.isEmpty(timeSlots)){
             return Collections.emptyList();
         }

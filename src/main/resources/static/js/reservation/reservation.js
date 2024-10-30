@@ -181,8 +181,28 @@ function select_day(element) {
     };
 
     $.getJSON('/reservation/timeSlot', queryParams, function(data){
-//        console.log(data.myData);
+        const str = data.timeSlotDTOS;
+        const timeSlots = parseTimeSlotDTO(str);
     });
+}
+
+function parseTimeSlotDTO(str) {
+    return str
+        .slice(1, -1) // 대괄호 제거
+        .split('), ') // 객체 분리
+        .map(slot => {
+            // 각 슬롯을 적절한 객체 형태로 변환
+            const properties = slot.replace('TimeSlotDTO(', '').split(', '); // 속성 분리
+            const obj = {};
+            properties.forEach(prop => {
+                const [key, value] = prop.split('='); // 키와 값 분리
+                obj[key.trim()] = value.trim().replace(/^(false|true)$/, (match) => match === 'true'); // boolean 변환
+                if (!isNaN(value)) {
+                    obj[key.trim()] = parseInt(value); // 숫자 변환
+                }
+            });
+            return obj;
+        });
 }
 
 function getKoreanDayOfWeek(dateString) {
