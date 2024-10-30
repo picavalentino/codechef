@@ -186,7 +186,7 @@
             white-space: nowrap;
         }
 
-        #repassword {
+        #passwordCheck {
             box-sizing: border-box;
             display: flex;
             flex-direction: row;
@@ -229,7 +229,7 @@
             white-space: nowrap;
         }
 
-        #phone_no {
+        #phoneNo {
             box-sizing: border-box;
             display: flex;
             flex-direction: row;

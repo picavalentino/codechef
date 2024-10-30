@@ -22,6 +22,7 @@ public class RestaurantDTO {
     private String resPhoneNo;
     private String address;
     private String bizHour;
+    private String closedDay;
     private String category;
     private String localArea;
     private String resExplain;
@@ -42,6 +43,7 @@ public class RestaurantDTO {
                 restaurant.getResPhoneNo(),
                 restaurant.getAddress(),
                 restaurant.getBizHour(),
+                restaurant.getClosedDay(),
                 restaurant.getCategory(),
                 restaurant.getLocalArea(),
                 restaurant.getResExplain(),

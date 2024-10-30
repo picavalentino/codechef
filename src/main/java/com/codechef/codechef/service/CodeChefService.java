@@ -14,7 +14,8 @@ public class CodeChefService {
     public void joinMember(MemberDto memberDTO) {
         Member data = new Member();
         data.setEmail(memberDTO.getEmail());
-        data.setPassword(memberDTO.getPassword()); // 자동으로 암호화해서 넣어줌
+        data.setPassword(memberDTO.getPassword());
+        data.setPasswordCheck(memberDTO.getPasswordCheck());
         data.setNickname(memberDTO.getNickname());
         data.setPhoneNo(memberDTO.getPhoneNo());
 
@@ -28,5 +29,9 @@ public class CodeChefService {
         if (isUser && isPassword) {
             return;
         };
+    }
+
+    public boolean isEmailDuplicated(String email) {
+        return memberRepository.existsByEmail(email);
     }
 }
