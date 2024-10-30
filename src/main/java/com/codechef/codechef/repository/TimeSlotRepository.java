@@ -10,5 +10,5 @@ import java.util.List;
 public interface TimeSlotRepository extends JpaRepository<TimeSlot, Long> {
     // 예약가능 시간 정보 가져오기
     @Query(value = "SELECT * FROM time_slot WHERE chef_no = :chefNo AND day = :koreanDayOfWeek", nativeQuery = true)
-    List<TimeSlot> getTimeSlotByChefNo(@Param("chefNo") int chefNo, @Param("koreanDayOfWeek") String koreanDayOfWeek);
+    List<TimeSlot> getTimeSlotByChefNo(@Param("chefNo") Long chefNo, @Param("koreanDayOfWeek") String koreanDayOfWeek);
 }

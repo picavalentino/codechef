@@ -20,7 +20,8 @@
 <div layout:fragment="content" class="content">
     <div class="py-5">
         <div class="container">
-            <form th:href="@{/reservation}" id="reservationForm" method="get">
+            <form th:action="@{/reservation}" id="reservationForm" method="post">
+                <input type="hidden" name="chefNo" id="chefNo" th:value="${chefNo}">
                 <div class="row reservation_content">
                     <div class="col-6">
                         <div class="text-center">
@@ -54,8 +55,8 @@
                     </div>
                     <div class="col-6">
                         <div class="time_select">
-                            <input type="hidden" name="select_time" id="select_time" value="">
                         </div>
+                        <input type="hidden" name="select_time" id="select_time" value="">
                         <div class="bottom_right">
                             <label><b>인원 수</b></label> &nbsp;
                             <div class="btn-group select_num_people">
@@ -98,7 +99,7 @@
                         <div class="reservation-item">
                             <img style="width: 30px; padding-bottom: 10px;" src="/images/reservation/clock.svg">
                             <br>
-                            <small id="reservation_time">오후 5:00</small>
+                            <small id="reservation_time"></small>
                         </div>
                         <div class="reservation-item">
                             <img style="width: 30px; padding-bottom: 10px;" src="/images/reservation/person.svg">

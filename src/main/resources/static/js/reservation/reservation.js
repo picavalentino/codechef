@@ -102,6 +102,7 @@ $(document).ready(function() {
     $('#reservation_btn').click(function() {
         let selectedDay = null;
         let reservation_num = $('#numPeople').val();
+        let reservation_time = $('.time_btn.selected').text();
 
         const days = document.querySelectorAll('.day');
 
@@ -114,6 +115,9 @@ $(document).ready(function() {
 
         if(selectedDay == null){
             alert("날짜를 선택해 주세요");
+            return;
+        } else if(reservation_time === '') {
+            alert("시간을 선택해 주세요");
             return;
         }
         else if(reservation_num == "" || reservation_num == "인원 수"){
@@ -131,8 +135,11 @@ $(document).ready(function() {
         const formattedDate = `${month}.${day}(${weekday})`;
 
         $('#reservation_date').html(formattedDate);
+        $('#reservation_time').html(reservation_time);
         $('#reservation_num').html(reservation_num + "명");
         $('#selectedDay').val(date);
+        $('#select_time').val(reservation_time);
+
         $('#confirmModal').modal('show');
     });
 
@@ -191,9 +198,10 @@ function toggleTime(element) {
 function select_day(element) {
     const dateInfo = $('.date_info').text() + " " + element.textContent;
     const koreanDayOfWeek = getKoreanDayOfWeek(dateInfo);
+    const chefNo = $('#chefNo').val();
 
     const queryParams = {
-        chef_no: 1, // 변경필요
+        chef_no: chefNo,
         koreanDayOfWeek: koreanDayOfWeek
     };
 

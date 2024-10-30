@@ -238,7 +238,8 @@ public class MainController {
     @GetMapping("/reservation")
     public String reservation(Model model,
                               @RequestParam(value = "month", required = false) Integer month,
-                              @RequestParam(value = "year", required = false) Integer year) {
+                              @RequestParam(value = "year", required = false) Integer year,
+                              @RequestParam(value = "chefNo") Long chefNo) {
         LocalDate currentDate;
 
         if (month != null && year != null) {
@@ -252,6 +253,7 @@ public class MainController {
         model.addAttribute("month", month);
         model.addAttribute("monthName", Month.of(month).toString());
         model.addAttribute("days", DateUtil.daysInMonth(month, currentDate.getYear()));
+        model.addAttribute("chefNo", chefNo);
 
         return "/codechef/reservation";
     }
@@ -274,17 +276,27 @@ public class MainController {
 
     // 날짜일 선택 기능
     @GetMapping("/reservation/timeSlot")
-    public ResponseEntity<Map<String, String>> getTimeSlot(@RequestParam("chef_no") int chefNo,
+    public ResponseEntity<Map<String, String>> getTimeSlot(@RequestParam("chef_no") Long chefNo,
                                                            @RequestParam("koreanDayOfWeek") String koreanDayOfWeek) {
         Map<String, String> response = new HashMap<>();
 
-//        System.out.println("================================= "+koreanDayOfWeek + " " + chefNo);
-
-        List<TimeSlotDTO> timeSlotDTOS = timeSlotService.findTimeSlotByChefNo(1, koreanDayOfWeek);
-
-//        timeSlotDTOS.forEach(x-> System.out.println(x));
+        List<TimeSlotDTO> timeSlotDTOS = timeSlotService.findTimeSlotByChefNo(chefNo, koreanDayOfWeek);
 
         response.put("timeSlotDTOS", timeSlotDTOS.toString());
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/reservation")
+    public String reservationPost(@RequestParam(value = "chefNo") Long chefNo,
+                                  @RequestParam(value = "selectedDay") String selectedDay,
+                                  @RequestParam(value = "numPeople") int numPeople,
+                                  @RequestParam(value = "select_time") String select_time) {
+
+        System.out.println("============================== "+chefNo);
+        System.out.println("============================== "+selectedDay);
+        System.out.println("============================== "+numPeople);
+        System.out.println("============================== "+select_time);
+
+        return "/codechef/reservation";
     }
 }
