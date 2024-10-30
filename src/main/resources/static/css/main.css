@@ -32,7 +32,8 @@
     background-image: linear-gradient(to left, #2E2D2D, #BFBFBF);
     border-radius: 10px;
     width: 820px;
-    height: 234px;
+    max-width: 100%;
+    height: auto;
 }
 
 .category > li {
@@ -81,11 +82,19 @@
     border: solid 0px;
 }
 
-.card > img {
+.card img {
     border-radius: 20px;
+    width: 353px;
+    max-width: 100%;
+    height: auto;
 }
 
-.card > p {
+.card a {
+    text-decoration: none;
+    color: #212529;
+}
+
+.card > a > p {
     font-size: 20px;
     margin: 10px;
 }

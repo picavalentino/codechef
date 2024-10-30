@@ -64,14 +64,13 @@ public class MainController {
     public String main(Model model) {
         // 식당 3개 랜덤 출력
         model.addAttribute("randLists", restaurantService.getRandLists());
-        System.out.println(restaurantService.getRandLists());
         return "/codechef/main";
     }
 
     // 카테고리별 or 키워드 검색, 페이지 처리
     @GetMapping("/search")
     public String search(@RequestParam("category") String category, @RequestParam("keyword") String keyword,
-                         Model model, @PageableDefault(page = 0, size = 6) Pageable pageable) {
+                         Model model, @PageableDefault(page = 0, size = 6, sort = "resName") Pageable pageable) {
         Page<RestaurantDTO> paging = restaurantService.getResultLists(category, keyword, pageable);
         model.addAttribute("resultLists", paging);
         model.addAttribute("keyword", keyword);
@@ -89,7 +88,9 @@ public class MainController {
 
     // 상세 페이지
     @GetMapping("/detail")
-    public String detail() {
+    public String detail(@RequestParam("chefNo") Long chefNo, Model model) {
+        // 식당 상세 조회
+        model.addAttribute("restaurant", restaurantService.getRestaurantByChefNo(chefNo));
         return "/codechef/detail";
     }
 
