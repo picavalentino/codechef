@@ -32,6 +32,8 @@ public class Restaurant {
     private String address;
     @Column(length = 200)
     private String bizHour;
+    @Column(length = 20)
+    private String closedDay;
     @Column(length = 10)
     private String category;
     @Column(length = 10)
