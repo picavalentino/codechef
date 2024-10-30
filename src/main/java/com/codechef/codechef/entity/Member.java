@@ -41,4 +41,6 @@ public class Member {
 
     public Member(Long memNo, String email, String phoneNo, String nickname, byte[] memImage, String password, String passwordCheck) {
     }
+
+
 }

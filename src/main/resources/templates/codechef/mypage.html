@@ -1,138 +1,144 @@
 <!DOCTYPE html>
 <html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>마이페이지</title>
+  <link rel="stylesheet" th:href="@{/css/layout.css}">
   <link rel="stylesheet" href="css/mypage.css">
 </head>
-<!-- 메인에 적용될 CSS -->
-<th:block layout:fragment="css"></th:block>
-<!-- 메인에 적용될 스크립트 -->
-<th:block layout:fragment="script"></th:block>
+
 <body>
 <th:block layout:fragment="content">
-  <div class="container">
-    <!-- 왼쪽 섹션: 유저 정보 및 예약 리스트 -->
-    <div class="left-section">
-      <h3 class="page-title">마이페이지</h3>
-      <div class="profile-card">
-        <div class="profile-info">
-          <img src="images/스크린샷 2023-12-05 185019.png" alt="프로필 이미지" class="profile-img">
-          <div class="user-details">
-            <p class="username">아진짜마싯서 <span class="user-title">님</span></p>
-            <hr>
-            <button class="btn edit-info-btn">회원정보 수정</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="reservation-list">
-        <h2>방문 예약 리스트</h2>
-        <button class="btn more-btn">더보기</button>
-        <div class="reservation-item">
-          <p class="reservationplace-name"><strong>남영탉</strong></p>
-          <p class="reservation-date">2024.10.30 / 18:00 예약</p>
-        </div>
-        <div class="reservation-item">
-          <p><strong class="reservationplace-name">본연</strong></p>
-          <p class="reservation-date"> 2024.11.02 / 12:00 예약</p>
-        </div>
-
-      </div>
-
-      <div class="completed-list">
-        <h2>방문 완료 리스트</h2>
-        <button class="btn more-btn">더보기</button>
-        <div class="completed-item">
-          <div class="left-content">
-            <p class="place-name"><strong>마마리마켓 & 펍</strong></p>
-            <p class="reservation-date">2024.05.10 / 1:00 방문 완료</p>
-          </div>
-          <div class="right-content">
-            <div class="ratings">
-              <div class="rating-item">
-                <span>맛</span>
-                <span><span class="star">⭐</span> 4.8</span>
-              </div>
-              <div class="rating-item">
-                <span>분위기</span>
-                <span><span class="star">⭐</span> 4.0</span>
-              </div>
-              <div class="rating-item">
-                <span>서비스</span>
-                <span><span class="star">⭐</span> 4.5</span>
-              </div>
+  <div class="content1">
+    <div class="container1">
+      <!-- 왼쪽 섹션: 유저 정보 및 예약 리스트 -->
+      <div class="left-section">
+        <h3 class="page-title">마이페이지</h3>
+        <div class="profile-card">
+          <div class="profile-info">
+            <img src="images/스크린샷 2023-12-05 185019.png" alt="프로필 이미지" class="profile-img">
+            <div class="user-details">
+              <p class="username">아진짜마싯서 <span class="user-title">님</span></p>
+              <hr>
+              <button class="btn edit-info-btn">회원정보 수정</button>
             </div>
           </div>
         </div>
-        <div class="completed-item">
-          <p><strong>키노 에다마메</strong></p>
-          <p class="reservation-date"> 2024.03.29 / 19:00 방문 완료</p>
-          <p>평가 전</p>
+
+        <div class="reservation-list">
+          <h2>방문 예약 리스트</h2>
+          <button class="btn more-btn">더보기</button>
+          <div class="reservation-item">
+            <p class="reservationplace-name"><strong>남영탉</strong></p>
+            <p class="reservation-date">2024.10.30 / 18:00 예약</p>
+          </div>
+          <div class="reservation-item">
+            <p><strong class="reservationplace-name">본연</strong></p>
+            <p class="reservation-date"> 2024.11.02 / 12:00 예약</p>
+          </div>
+
         </div>
 
+        <div class="completed-list">
+          <h2>방문 완료 리스트</h2>
+          <button class="btn more-btn">더보기</button>
+          <div class="completed-item">
+            <div class="left-content">
+              <p class="place-name"><strong>마마리마켓 & 펍</strong></p>
+              <p class="reservation-date">2024.05.10 / 1:00 방문 완료</p>
+            </div>
+            <div class="right-content">
+              <div class="ratings">
+                <div class="rating-item">
+                  <span>맛</span>
+                  <span><span class="star">⭐</span> 4.8</span>
+                </div>
+                <div class="rating-item">
+                  <span>분위기</span>
+                  <span><span class="star">⭐</span> 4.0</span>
+                </div>
+                <div class="rating-item">
+                  <span>서비스</span>
+                  <span><span class="star">⭐</span> 4.5</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="completed-item">
+            <div class="left-content">
+              <p class="place-name"><strong>에다마메</strong></p>
+              <p class="reservation-date">2024.05.10 / 1:00 방문 완료</p>
+            </div>
+            <p>평가 전</p>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- 오른쪽 섹션: 리뷰 리스트 -->
+      <div class="right-section">
+        <div class="review-header">
+          <p class="section-title">나의 작성 리뷰</p>
+          <button class="btn more-btn2">더보기</button>
+        </div>
+
+        <div class="review-card">
+          <div class="review-content">
+            <h2>마마리마켓 & 펍</h2>
+            <img src="images/마마리마켓&펍_리뷰사진4.webp" alt="리뷰 이미지" class="food-img">
+            <div class="rating-date-container">
+              <div class="rating">
+                <span class="star">⭐</span> 4.5
+              </div>
+              <div class="review-date">
+                <p >2024.05.10 / 10:00 방문</p>
+              </div>
+            </div>
+            <p class="review-text">연근 튀김과 함께 감칠맛 넘치는 요리를 맛보았습니다. 너무 좋아요!이탈리아에서 공수해온 특색있는 식기류와 올리브오일, 식전 빵에 곁들이는 올리브오일을 선택할 수 있는게 흥미로웠어요
+              그리고 제일 좋았던건 저는 일반적인 타 업장들 코스메뉴 속도가 벅차 접시에 쌓이는 편인데, 여기는 제가 서두르면 따라갈 수 있는 템포였습니다. 오픈키친이라 조리하는거 보며 일행과 적당한 스몰토크하며 음미할 수 있어서 좋았어요.
+              첫번째 파스타는 면 삶은 정도도 완벽했고 소스도 너무 맛있고 진짜 엄치척.두번째 리조또도 밥알 익힘이 너무 적당해요. 소스 맛도 중요하지만 메인이 되는 재료의 식감이 제일 중요한데 여긴 그게 군더더기 없습니다.
+              마지막으로 토마토소스 파스타는 맛있었으나 크게 임팩트는 없습니다.
+              전반적으로 이 가격대 이 뭘리티면 가성비 너무 좋아요. 가격 올리셔도 될 것 같아요. 게다가 와인 가격도 합리적</p>
+            <div class="button-container">
+              <button class="btn edit-btn">수정</button>
+              <button class="btn delete-btn">삭제</button>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-content">
+            <h2>디핀</h2>
+            <img src="images/디핀_리뷰사진2.webp" alt="리뷰 이미지" class="food-img">
+            <div class="rating-date-container">
+              <div class="rating">
+                <span class="star">⭐</span> 4.8
+              </div>
+              <div class="review-date">
+                <p >2024.01.10 / 10:00 방문</p>
+              </div>
+            </div>
+            <p class="review-text">너무 맛있었고 분위기 최고에 서비스도 좋았습니다! 쉐프님이 결정장애인 저희를 위해 메뉴를 골라주시고 추천해주셔서 정말 좋았어요! 그리고 제가 차를 가져와서 주류를 못하는 상황이었는데 저희를 배려해주신 것도 너무 감사했고요.
+              메뉴 하나하나 설명해주시는데 친절 그 자체…! 그리구 전부 너어어어무 맛났어요. 기억에 남는건 관자요리와 뇨끼인데요 , 제가 평소에 해산물을 별로 안좋아해서 메뉴 선정에서 배제하고 있었는데 쉐프님의 추천으로 먹게되었고 너무 맛도리였답니다.
+              해산물의 바다맛은 없고 상큼한 레몬맛에 바삭한 과자 식감이었고요. 위에 얹힌 체리가 시각적으로 조화로웠어요. 디핀의 노끼는 살면서 처음 먹어본 형태였어요. 겉바속촉 마치 과자같아서 바삭바삭 짭잘하고 소스랑 같이 먹으니까 너무 맛있더라구요
+              마지막 디저트로 올리브 아이스크림과 초코 아이스크림을 시켰는데 올리브 아이스크림은 처음 먹어봐서 충격이었어요. 올리브 오일 아이스크림이라니..! 오올맛과 밑에 깔린 올리브 사탕들이 올리브 탕후루를 찍어먹는 느낌이라고 같이 가 일행분이 그러시더군요.
+              초코 아이스크림은 제가 워낙 초코러버라서 맛있었답니다. 옥수 디핀도 다음달에 방문하는데 너무 기대돼요!</p>
+            <div class="button-container">
+              <button class="btn edit-btn">수정</button>
+              <button class="btn delete-btn">삭제</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-
-    <!-- 오른쪽 섹션: 리뷰 리스트 -->
-    <div class="right-section">
-      <div class="review-header">
-        <p class="section-title">나의 작성 리뷰</p>
-        <button class="btn more-btn2">더보기</button>
-      </div>
-
-      <div class="review-card">
-        <div class="review-content">
-          <h2>마마리마켓 & 펍</h2>
-          <img src="images/마마리마켓&펍_리뷰사진4.webp" alt="리뷰 이미지" class="food-img">
-          <div class="rating-date-container">
-            <div class="rating">
-              <span class="star">⭐</span> 4.5
-            </div>
-            <div class="review-date">
-              <p >2024.05.10 / 10:00 방문</p>
-            </div>
-          </div>
-          <p class="review-text">연근 튀김과 함께 감칠맛 넘치는 요리를 맛보았습니다. 너무 좋아요!이탈리아에서 공수해온 특색있는 식기류와 올리브오일, 식전 빵에 곁들이는 올리브오일을 선택할 수 있는게 흥미로웠어요
-            그리고 제일 좋았던건 저는 일반적인 타 업장들 코스메뉴 속도가 벅차 접시에 쌓이는 편인데, 여기는 제가 서두르면 따라갈 수 있는 템포였습니다. 오픈키친이라 조리하는거 보며 일행과 적당한 스몰토크하며 음미할 수 있어서 좋았어요.
-            첫번째 파스타는 면 삶은 정도도 완벽했고 소스도 너무 맛있고 진짜 엄치척.두번째 리조또도 밥알 익힘이 너무 적당해요. 소스 맛도 중요하지만 메인이 되는 재료의 식감이 제일 중요한데 여긴 그게 군더더기 없습니다.
-            마지막으로 토마토소스 파스타는 맛있었으나 크게 임팩트는 없습니다.
-            전반적으로 이 가격대 이 뭘리티면 가성비 너무 좋아요. 가격 올리셔도 될 것 같아요. 게다가 와인 가격도 합리적</p>
-          <div class="button-container">
-            <button class="btn edit-btn">수정</button>
-            <button class="btn delete-btn">삭제</button>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-content">
-          <h2>디핀</h2>
-          <img src="images/디핀_리뷰사진2.webp" alt="리뷰 이미지" class="food-img">
-          <div class="rating-date-container">
-            <div class="rating">
-              <span class="star">⭐</span> 4.8
-            </div>
-            <div class="review-date">
-              <p >2024.01.10 / 10:00 방문</p>
-            </div>
-          </div>
-          <p class="review-text">너무 맛있었고 분위기 최고에 서비스도 좋았습니다! 쉐프님이 결정장애인 저희를 위해 메뉴를 골라주시고 추천해주셔서 정말 좋았어요! 그리고 제가 차를 가져와서 주류를 못하는 상황이었는데 저희를 배려해주신 것도 너무 감사했고요.
-            메뉴 하나하나 설명해주시는데 친절 그 자체…! 그리구 전부 너어어어무 맛났어요. 기억에 남는건 관자요리와 뇨끼인데요 , 제가 평소에 해산물을 별로 안좋아해서 메뉴 선정에서 배제하고 있었는데 쉐프님의 추천으로 먹게되었고 너무 맛도리였답니다.
-            해산물의 바다맛은 없고 상큼한 레몬맛에 바삭한 과자 식감이었고요. 위에 얹힌 체리가 시각적으로 조화로웠어요. 디핀의 노끼는 살면서 처음 먹어본 형태였어요. 겉바속촉 마치 과자같아서 바삭바삭 짭잘하고 소스랑 같이 먹으니까 너무 맛있더라구요
-            마지막 디저트로 올리브 아이스크림과 초코 아이스크림을 시켰는데 올리브 아이스크림은 처음 먹어봐서 충격이었어요. 올리브 오일 아이스크림이라니..! 오올맛과 밑에 깔린 올리브 사탕들이 올리브 탕후루를 찍어먹는 느낌이라고 같이 가 일행분이 그러시더군요.
-            초코 아이스크림은 제가 워낙 초코러버라서 맛있었답니다. 옥수 디핀도 다음달에 방문하는데 너무 기대돼요!</p>
-          <div class="button-container">
-            <button class="btn edit-btn">수정</button>
-            <button class="btn delete-btn">삭제</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
+
 </th:block>
 </body>
 </html>
