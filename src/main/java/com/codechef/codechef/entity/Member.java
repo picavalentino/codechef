@@ -18,9 +18,9 @@ public class Member {
     private Long memNo;
     @Column(length = 50, nullable = false)
     private String email;
-    @Column(length = 20, nullable = false)
+    @Column(length = 100, nullable = false)
     private String password;
-    @Column(length = 20)
+    @Column(length = 100)
     private String passwordCheck;
     @Column(length = 20, nullable = false)
     private String phoneNo;
