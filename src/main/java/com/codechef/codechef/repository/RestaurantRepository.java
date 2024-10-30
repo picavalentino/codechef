@@ -15,7 +15,8 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     List<Restaurant> getRandRestaurant();
 
     // 키워드 혹은 카테고리 별 식당 조회
-    // Column명에 언더바(_) 포함된 경우, Query Method 사용 불가
-    @Query(value = "SELECT * FROM Restaurant WHERE category LIKE %:category% AND res_name LIKE %:keyword% ORDER BY res_name ASC", nativeQuery = true)
-    Page<Restaurant> findByLists(@Param("category")String category, @Param("keyword")String keyword, Pageable pageable);
+    Page<Restaurant> findByCategoryContainsAndResNameContains(String category, String keyword, Pageable pageable);
+
+    // chefNo로 식당 조회 메서드
+    Restaurant findByChefNo(Long chefNo);
 }
