@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
-<!--security 적용 후 아래 코드로 변경해주세요-->
-<!--<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">-->
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}"
+      xmlns:sec="www.thymeleaf.org/extras/spring-security">
 <head>
     <link rel="stylesheet" th:href="@{/css/login.css}">
     <meta charset="UTF-8">
@@ -23,20 +22,20 @@
     <br>
     <br>
     <div class="login_layout">
-        <form th:action="@{/loginMember}" method="post">
-            <input type="hidden" value="0">
+        <form th:action="@{/loginMember}" method="post" name="loginForm">
+            <input type="hidden" name="logout" value="0">
             <div class="emailbox">
-                <label class="email_name">이메일</label>
-                <input type="email" id="email" placeholder="Enter your Email">
+                <label for="email" class="email_name">이메일</label>
+                <input type="email" id="email" name="email" placeholder="Enter your Email">
             </div>
             <br>
             <div class="password_box">
-                <label class="password_name">비밀번호</label>
-                <input type="password" id="password" placeholder="Enter your password">
+                <label for="password" class="password_name">비밀번호</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password">
             </div>
             <br>
             <div >
-                <button type="submit" class="login_btn"><p id="login_btn">로그인</p></button>
+                <button type="submit" class="login_btn"><span id="login_btn">로그인</span></button>
             </div>
         </form>
         <div>

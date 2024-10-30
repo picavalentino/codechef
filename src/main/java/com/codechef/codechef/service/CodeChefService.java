@@ -4,17 +4,21 @@ import com.codechef.codechef.dto.MemberDto;
 import com.codechef.codechef.entity.Member;
 import com.codechef.codechef.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CodeChefService {
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     MemberRepository memberRepository;
 
     public void joinMember(MemberDto memberDTO) {
         Member data = new Member();
         data.setEmail(memberDTO.getEmail());
-        data.setPassword(memberDTO.getPassword());
+        data.setPassword(bCryptPasswordEncoder.encode(memberDTO.getPassword()));
         data.setPasswordCheck(memberDTO.getPasswordCheck());
         data.setNickname(memberDTO.getNickname());
         data.setPhoneNo(memberDTO.getPhoneNo());
@@ -22,14 +26,6 @@ public class CodeChefService {
         memberRepository.save(data);
     }
 
-    public void loginService(MemberDto memberDTO) {
-        Boolean isUser = memberRepository.existsByEmail(memberDTO.getEmail());
-        Boolean isPassword = memberRepository.existsByPassword(memberDTO.getPassword());
-
-        if (isUser && isPassword) {
-            return;
-        };
-    }
 
     public boolean isEmailDuplicated(String email) {
         return memberRepository.existsByEmail(email);
