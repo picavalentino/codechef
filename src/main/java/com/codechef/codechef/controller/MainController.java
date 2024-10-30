@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,13 +30,11 @@ import java.util.Map;
 @Slf4j
 public class MainController {
     // 서비스 연결
-    private final CodeChefService codeChefService;
     private final ReservationService reservationService;
     private final ReviewService reviewService;
     private final TimeSlotService timeSlotService;
 
-    public MainController(CodeChefService codeChefService, ReservationService reservationService, ReviewService reviewService, TimeSlotService timeSlotService) {
-        this.codeChefService = codeChefService;
+    public MainController(ReservationService reservationService, ReviewService reviewService, TimeSlotService timeSlotService) {
         this.reservationService = reservationService;
         this.reviewService = reviewService;
         this.timeSlotService = timeSlotService;
@@ -114,40 +113,7 @@ public class MainController {
         return "/codechef/mypage";
     }
 
-    // 로그인 페이지
-    @GetMapping("/login")
-    public String loginPage() {
-        return "/codechef/login";
-    }
 
-//    @PostMapping("/loginMember")
-//    public String login(MemberDTO memberDTO) {
-//        codeChefService.loginservice(memberDTO);
-//        return "redirect:/main";
-//    }
-
-    // 회원가입 페이지
-    @GetMapping("/join")
-    public String join() {
-        return "/codechef/join";
-    }
-
-    // 회원가입 저장
-    @PostMapping("/joinMember")
-    public String joinMember(MemberDto memberDTO) {
-        codeChefService.joinMember(memberDTO);
-        return "/codechef/main";
-    }
-
-    // 로그아웃
-//    @GetMapping("/logout")
-//    public String logout(HttpServletRequest request, HttpServletResponse response) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (!ObjectUtils.isEmpty(authentication)) {
-//            new SecurityContextLogoutHandler().logout(request, response, authentication);
-//        }
-//        return "redirect:/main";
-//    }
 
     // 방문예약 리스트 페이지
     @GetMapping("/visit-expected")

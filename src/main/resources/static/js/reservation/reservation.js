@@ -171,6 +171,23 @@ function toggleDate(element) {
     }
 }
 
+function toggleTime(element) {
+    const selectedTime = document.querySelector('.time_btn.selected');
+
+    if (selectedTime) {
+        if (selectedTime === element) {
+            // 이미 선택된 시간을 클릭하면 해제
+            selectedTime.classList.remove('selected');
+        } else {
+            // 다른 시간을 클릭하면 이전 선택 해제
+            selectedTime.classList.remove('selected');
+            element.classList.add('selected');
+        }
+    } else {
+        element.classList.add('selected');
+    }
+}
+
 function select_day(element) {
     const dateInfo = $('.date_info').text() + " " + element.textContent;
     const koreanDayOfWeek = getKoreanDayOfWeek(dateInfo);
@@ -183,6 +200,15 @@ function select_day(element) {
     $.getJSON('/reservation/timeSlot', queryParams, function(data){
         const str = data.timeSlotDTOS;
         const timeSlots = parseTimeSlotDTO(str);
+
+        $('.time_select').html('');
+        for(let i = 0; i < timeSlots.length; i++){
+            if(timeSlots[i].available === "false"){
+                $('.time_select').append('<button type="button" class="btn time_btn" onclick="toggleTime(this)">'+timeSlots[i].time+'</button>');
+            } else {
+                $('.time_select').append('<button type="button" class="btn time_btn" disabled>'+timeSlots[i].time+'예약</button>');
+            }
+        }
     });
 }
 
@@ -197,7 +223,11 @@ function parseTimeSlotDTO(str) {
             properties.forEach(prop => {
                 const [key, value] = prop.split('='); // 키와 값 분리
                 obj[key.trim()] = value.trim().replace(/^(false|true)$/, (match) => match === 'true'); // boolean 변환
-                if (!isNaN(value)) {
+
+                // 숫자 변환 및 ')' 제거
+                if (key.trim() === 'chefNo') {
+                    obj[key.trim()] = parseInt(value.trim().replace(/\D/g, '')); // 숫자로 변환하고 non-digit 제거
+                } else if (!isNaN(value)) {
                     obj[key.trim()] = parseInt(value); // 숫자 변환
                 }
             });

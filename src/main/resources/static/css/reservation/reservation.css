@@ -56,3 +56,12 @@
 .modal-footer .btn {
     flex: 1;
 }
+
+.time_btn.selected {
+    background-color: lightgray;
+}
+
+.time_btn.selected:hover {
+    background-color: lightgray;
+    color: white;
+}
