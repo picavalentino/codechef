@@ -57,4 +57,13 @@ public class ReviewService {
             reservationRepository.save(reservation);
         }
     }
+
+    // 리뷰 삭제
+    public void deleteReview(Long reviewNo) {
+        if (!reviewRepository.existsById(reviewNo)) {
+            throw new RuntimeException("리뷰가 존재하지 않습니다.");
+        }
+        reviewRepository.deleteById(reviewNo);
+        log.info("리뷰가 삭제되었습니다: {}", reviewNo);
+    }
 }

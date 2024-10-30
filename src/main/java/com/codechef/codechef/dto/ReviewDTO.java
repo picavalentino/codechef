@@ -1,6 +1,7 @@
 package com.codechef.codechef.dto;
 
 import com.codechef.codechef.entity.Member;
+import com.codechef.codechef.entity.Restaurant;
 import com.codechef.codechef.entity.Review;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class ReviewDTO {
     private String contents;
     private Member member;
     private String myReviewRating;
+    private Restaurant restaurant;
 
     public static ReviewDTO fromEntity(Review review){
         // 평균 점수 계산
@@ -38,7 +40,8 @@ public class ReviewDTO {
                 review.getServePoint(),
                 review.getContents(),
                 review.getMember(),
-                myReviewRating
+                myReviewRating,
+                review.getRestaurant()
         );
     }
 }
