@@ -3,6 +3,7 @@ package com.codechef.codechef.controller;
 import com.codechef.codechef.dto.MemberDto;
 import com.codechef.codechef.dto.RestaurantDTO;
 import com.codechef.codechef.dto.ReviewCreateDTO;
+import com.codechef.codechef.dto.TimeSlotDTO;
 import com.codechef.codechef.dto.ReviewDTO;
 import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.service.*;
@@ -36,11 +37,13 @@ public class MainController {
     // 서비스 연결
     private final ReservationService reservationService;
     private final ReviewService reviewService;
+    private final TimeSlotService timeSlotService;
     private final MemberService memberService;
 
-    public MainController(ReservationService reservationService, ReviewService reviewService, MemberService memberService) {
+    public MainController(ReservationService reservationService, ReviewService reviewService, TimeSlotService timeSlotService, MemberService memberService) {
         this.reservationService = reservationService;
         this.reviewService = reviewService;
+        this.timeSlotService = timeSlotService;
         this.memberService = memberService;
     }
 
@@ -235,7 +238,8 @@ public class MainController {
     @GetMapping("/reservation")
     public String reservation(Model model,
                               @RequestParam(value = "month", required = false) Integer month,
-                              @RequestParam(value = "year", required = false) Integer year) {
+                              @RequestParam(value = "year", required = false) Integer year,
+                              @RequestParam(value = "chefNo") Long chefNo) {
         LocalDate currentDate;
 
         if (month != null && year != null) {
@@ -249,10 +253,12 @@ public class MainController {
         model.addAttribute("month", month);
         model.addAttribute("monthName", Month.of(month).toString());
         model.addAttribute("days", DateUtil.daysInMonth(month, currentDate.getYear()));
+        model.addAttribute("chefNo", chefNo);
 
         return "/codechef/reservation";
     }
 
+    // 다음달 이동 기능
     @GetMapping("/reservation/ajax")
     @ResponseBody
     public Map<String, Object> reservationAjax(@RequestParam(value = "month") int month,
@@ -263,7 +269,36 @@ public class MainController {
         response.put("year", currentDate.getYear());
         response.put("month", Month.of(currentDate.getMonthValue()).toString());
         response.put("days", DateUtil.daysInMonth(currentDate.getMonthValue(), currentDate.getYear()));
+        response.put("week", currentDate.getDayOfWeek());
 
         return response;
+    }
+
+    // 날짜일 선택 기능
+    @GetMapping("/reservation/timeSlot")
+    public ResponseEntity<Map<String, String>> getTimeSlot(@RequestParam("chef_no") Long chefNo,
+                                                           @RequestParam("koreanDayOfWeek") String koreanDayOfWeek) {
+        Map<String, String> response = new HashMap<>();
+
+        List<TimeSlotDTO> timeSlotDTOS = timeSlotService.findTimeSlotByChefNo(chefNo, koreanDayOfWeek);
+
+        response.put("timeSlotDTOS", timeSlotDTOS.toString());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/reservation")
+    public String reservationPost(@RequestParam(value = "chefNo") Long chefNo,
+                                  @RequestParam(value = "selectedDay") String selectedDay,
+                                  @RequestParam(value = "numPeople") int numPeople,
+                                  @RequestParam(value = "select_time") String select_time) {
+
+        System.out.println("============================== "+chefNo);
+        System.out.println("============================== "+selectedDay);
+        System.out.println("============================== "+numPeople);
+        System.out.println("============================== "+select_time);
+
+//        reservationService.insertReservationInfo(numPeople, chefNo, selectedDay)
+
+        return "/codechef/reservation";
     }
 }

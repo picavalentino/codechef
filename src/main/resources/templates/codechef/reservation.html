@@ -20,7 +20,8 @@
 <div layout:fragment="content" class="content">
     <div class="py-5">
         <div class="container">
-            <form th:href="@{/reservation}" id="reservationForm" method="get">
+            <form th:action="@{/reservation}" id="reservationForm" method="post">
+                <input type="hidden" name="chefNo" id="chefNo" th:value="${chefNo}">
                 <div class="row reservation_content">
                     <div class="col-6">
                         <div class="text-center">
@@ -29,7 +30,7 @@
                         <div class="calendar_border">
                             <div class="mt-4">
                                 <div class="row align-items-center calendar_inside_content1">
-                                    <h3 class="header text-start col-9 date_info">[[ ${monthName} ]] [[ ${year} ]]</h3>
+                                    <h3 class="header text-start col-9 date_info"></h3>
                                     <div class="header text-end col-3 d-flex justify-content-end">
                                         <img class="rounded left_arrow arrow" src="/images/reservation/arrow-left-circle-fill.svg" alt="left_arrow" id="prevMonth">
                                         <img class="rounded right_arrow arrow" src="/images/reservation/arrow-right-circle-fill.svg" alt="right_arrow" id="nextMonth">
@@ -54,19 +55,8 @@
                     </div>
                     <div class="col-6">
                         <div class="time_select">
-                            <button type="button" class="btn time_btn">10:00</button>
-                            <button type="button" class="btn time_btn">10:00</button>
-                            <button type="button" class="btn time_btn">10:00</button>
-                            <button type="button" class="btn time_btn">10:00</button>
-                            <button type="button" class="btn time_btn">10:00</button>
-                            <button type="button" class="btn time_btn">10:00</button>
-                            <button type="button" class="btn time_btn">10:00</button>
-                            <button type="button" class="btn time_btn">10:00</button>
-                            <button type="button" class="btn time_btn">10:00</button>
-                            <button type="button" class="btn time_btn">10:00</button>
-                            <button type="button" class="btn time_btn">10:00</button>
-                            <button type="button" class="btn time_btn">10:00</button>
                         </div>
+                        <input type="hidden" name="select_time" id="select_time" value="">
                         <div class="bottom_right">
                             <label><b>인원 수</b></label> &nbsp;
                             <div class="btn-group select_num_people">
@@ -75,6 +65,7 @@
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" data-value="인원 수">인원수</a></li>
                                     <li><a class="dropdown-item" data-value="1">1</a></li>
                                     <li><a class="dropdown-item" data-value="2">2</a></li>
                                     <li><a class="dropdown-item" data-value="3">3</a></li>
@@ -87,6 +78,41 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title text-muted" id="confirmModalLabel">방문 일정을 다시 한번 확인해 주세요.</h6>
+                </div>
+                <div class="modal-body">
+                    <div style="text-align: center; font-size: 25px;">Pimfy 이태원</div>
+                    <div style="text-align: center; font-size: 15px; color: gray;">이태원.이탈리아음식</div>
+                    <div class="reservation-container">
+                        <div class="reservation-item">
+                            <img style="width: 30px; padding-bottom: 10px;" src="/images/reservation/calendar.svg">
+                            <br>
+                            <small id="reservation_date"></small>
+                        </div>
+                        <div class="reservation-item">
+                            <img style="width: 30px; padding-bottom: 10px;" src="/images/reservation/clock.svg">
+                            <br>
+                            <small id="reservation_time"></small>
+                        </div>
+                        <div class="reservation-item">
+                            <img style="width: 30px; padding-bottom: 10px;" src="/images/reservation/person.svg">
+                            <br>
+                            <small id="reservation_num"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary w-100" id="cancelButton">취소</button>
+                    <button type="button" class="btn btn-primary w-100" id="confirmButton">확인</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="/js/reservation/reservation.js"></script>
