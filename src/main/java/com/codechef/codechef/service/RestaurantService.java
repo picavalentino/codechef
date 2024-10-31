@@ -61,4 +61,8 @@ public class RestaurantService {
         Page<Review> reviews = reviewRepository.findByRestaurantChefNo(chefNo, pageable);
         return reviews.map(ReviewDTO::fromEntity); // ReviewDTO로 변환하여 반환
     }
+
+    public List<Restaurant> getRestaurantsByChefNos(List<Long> chefNos) {
+        return resRepository.findByChefNos(chefNos);
+    }
 }

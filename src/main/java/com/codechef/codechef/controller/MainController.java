@@ -1,11 +1,8 @@
 package com.codechef.codechef.controller;
 
-import com.codechef.codechef.dto.MemberDto;
-import com.codechef.codechef.dto.RestaurantDTO;
-import com.codechef.codechef.dto.ReviewCreateDTO;
-import com.codechef.codechef.dto.TimeSlotDTO;
-import com.codechef.codechef.dto.ReviewDTO;
+import com.codechef.codechef.dto.*;
 import com.codechef.codechef.entity.Reservation;
+import com.codechef.codechef.entity.Restaurant;
 import com.codechef.codechef.service.*;
 import com.codechef.codechef.util.DateUtil;
 import groovy.util.logging.Slf4j;
@@ -18,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +69,11 @@ public class MainController {
     public String main(Model model) {
         // 식당 3개 랜덤 출력
         model.addAttribute("randLists", restaurantService.getRandLists());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        String nickname = memberService.getNicknameByEmail(email);
+        model.addAttribute("nickname", nickname);
         return "/codechef/main";
     }
 
@@ -107,7 +111,6 @@ public class MainController {
                                 Model model) {
         // chefNo로 식당 정보를 가져옵니다.
         RestaurantDTO restaurantDTO = restaurantService.getRestaurantByChefNo(chefNo);
-
         // 리뷰를 페이징하여 가져옵니다.
         Page<ReviewDTO> reviewsPage = restaurantService.getReviewsByRestaurant(chefNo, pageable);
 
@@ -115,9 +118,12 @@ public class MainController {
         model.addAttribute("reviews", reviewsPage.getContent());
         model.addAttribute("reviewsPage", reviewsPage);  // 페이지 정보 추가
 
-        // 현재 페이지 수와 총 페이지 수를 추가 (선택 사항)
-        model.addAttribute("totalPages", reviewsPage.getTotalPages());
-        model.addAttribute("currentPage", reviewsPage.getNumber());
+        int totalPage = reviewsPage.getTotalPages();
+        int currentPage = reviewsPage.getNumber();
+
+        // 페이지 블럭 처리
+        List<Integer> pageNum = pagenationService.getPaginationBarNumber(currentPage, totalPage);
+        model.addAttribute("pageNum", pageNum);
 
         return "/codechef/reviewViewRes";
     }
@@ -150,8 +156,14 @@ public class MainController {
 
 
     // 방문예약 리스트 페이지
-    @GetMapping("/visit-expected")
-    public String visitExpected() {
+    @GetMapping("/visitExpected")
+    public String visitExpected(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Long memNo = memberService.getMemNoByEmail(email);
+        List<Long> chefNos = reservationService.getChefNosByMemNo(memNo);
+        List<Restaurant> restaurants = restaurantService.getRestaurantsByChefNos(chefNos);
+        model.addAttribute("restaurants", restaurants);
         return "/codechef/visit_expected";
     }
 
@@ -167,10 +179,42 @@ public class MainController {
         return "/codechef/mypage";
     }
 
-    //리뷰 보기 페이지
-    @GetMapping("/reviewView")
-    public String reviewView() {
-        return "/codechef/reviewView";
+    //리뷰 보기 페이지 - 내 리뷰 보기 페이지
+    @GetMapping("/review-my")
+    public String reviewViewMy(@RequestParam("memNo") Long memNo,
+                               @PageableDefault(size = 5) Pageable pageable,
+                               Model model) {
+        // memNo로 식당 정보를 가져옵니다.
+        MemberReviewDTO memberReviewDTO = memberService.getMemberByMemNo2(memNo);
+        // 리뷰를 페이징하여 가져옵니다.
+        Page<ReviewDTO> reviewsPage = memberService.getReviewsByMember(memNo, pageable);
+
+
+        model.addAttribute("member", memberReviewDTO);
+        model.addAttribute("reviews", reviewsPage.getContent());
+        model.addAttribute("reviewsPage", reviewsPage);  // 페이지 정보 추가
+
+        int totalPage = reviewsPage.getTotalPages();
+        int currentPage = reviewsPage.getNumber();
+
+        // 페이지 블럭 처리
+        List<Integer> pageNum = pagenationService.getPaginationBarNumber(currentPage, totalPage);
+        model.addAttribute("pageNum", pageNum);
+
+        return "/codechef/reviewViewMy";
+    }
+
+    // 내 리뷰 보기 페이지 - 삭제
+    @GetMapping("/review-my/delete/{reviewNo}")
+    public String deleteReview(@PathVariable("reviewNo") Long reviewNo,
+                               @RequestParam("memNo") Long memNo) {
+        try {
+            reviewService.deleteReview(reviewNo); // 서비스에서 리뷰 삭제 호출
+        } catch (Exception e) {
+            // 로그에 오류 메시지 기록 (옵션)
+            log.error("리뷰 삭제 중 오류 발생: {}", e.getMessage());
+        }
+        return "redirect:/review-my?memNo=" + memNo; // memNo를 쿼리 파라미터로 추가
     }
 
     // 프로필 수정 페이지

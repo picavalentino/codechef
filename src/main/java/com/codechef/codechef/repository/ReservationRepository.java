@@ -6,11 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     Reservation findByReservationNo(Long reservationNo);
+
+
+    @Query(value = "SELECT r.chef_no FROM Reservation r WHERE r.mem_no = :memNo AND r.visit_ox = false", nativeQuery = true)
+    List<Long> findChefNosByMemNo(@Param("memNo") Long memNo);
 
     // 예약정보 저장
     @Transactional

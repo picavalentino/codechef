@@ -13,15 +13,15 @@
 <!-- 우리가 작업할 공간 -->
 <body>
 <div layout:fragment="content" class="content">
-    <link rel="stylesheet" href="css/reviewViewRes.css">
+    <link rel="stylesheet" href="css/reviewViewMy.css">
     <div class="container1">
         <!-- 비아 톨레도 파스타바 섹션 -->
         <div class="review-container">
-            <div class="title" th:text="${restaurant.resName}">식당 이름</div>
+            <div class="title" th:text="${member.nickname}">회원 닉네임</div>
             <div class="review-info">
                 <div class="review-count" th:text="'리뷰 (' + ${reviews.size()} + ')'">리뷰 (0)</div>
                 <div class="rating">
-                    평균 <span class="star">⭐</span> <span th:text="${restaurant.reviewRating}">4.5</span>
+                    평균 <span class="star">⭐</span> <span th:text="${member.reviewRating}">4.5</span>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="review-content">
                     <div class="review-header">
-                        <h2 th:text="${review.member.nickname}">닉네임</h2>
+                        <h2 th:text="${review.restaurant.resName}">닉네임</h2>
                         <div class="rating">
                             <span class="star">⭐</span> <span th:text="${review.myReviewRating}">평균 점수</span>
                         </div>
@@ -48,25 +48,29 @@
                         <p th:text="${review.contents}">내용</p>
                     </div>
                 </div>
+                <!-- 취소 버튼 추가 -->
+                <div class="cancel-button-container">
+                    <a th:href="@{/review-my/delete/{reviewNo}(reviewNo=${review.reviewNo}, memNo=${member.memNo})}" class="cancel-button">삭제</a>
+                </div>
+
             </div>
         </div>
     </div>
-
 
     <!-- 페이지 영역 -->
     <nav aria-label="Page navigation example" th:unless="${reviewsPage.totalElements == 0}">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${reviewsPage.number}<=0 ? 'disabled'">
-                <a class="page-link" th:href="@{/review-restaurant(chefNo=${restaurant.chefNo},page=${reviewsPage.number-1})}"><</a>
+                <a class="page-link" th:href="@{/review-my(memNo=${member.memNo},page=${reviewsPage.number-1})}"><</a>
             </li>
             <th:block th:each="pageNumber : ${pageNum}">
                 <li class="page-item" th:classappend="${pageNumber == reviewsPage.number} ? 'active'">
-                    <a class="page-link" th:href="@{/review-restaurant(chefNo=${restaurant.chefNo},page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+                    <a class="page-link" th:href="@{/review-my(memNo=${member.memNo},page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
                 </li>
 
             </th:block>
             <li class="page-item" th:classappend="${reviewsPage.number+1} == ${reviewsPage.totalPages} ? 'disabled'">
-                <a class="page-link" th:href="@{/review-restaurant(chefNo=${restaurant.chefNo},page=${reviewsPage.number+1})}">></a>
+                <a class="page-link" th:href="@{/review-my(memNo=${member.memNo},page=${reviewsPage.number+1})}">></a>
             </li>
         </ul>
     </nav>

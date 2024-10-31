@@ -6,9 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     // 식당 3개 랜덤 출력
     @Query(value = "SELECT * FROM Restaurant ORDER BY RANDOM() limit 3" , nativeQuery = true)
@@ -19,4 +21,8 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
     // chefNo로 식당 조회 메서드
     Restaurant findByChefNo(Long chefNo);
+
+
+    @Query("SELECT r FROM Restaurant r WHERE r.chefNo IN :chefNos")
+    List<Restaurant> findByChefNos(@Param("chefNos") List<Long> chefNos);
 }

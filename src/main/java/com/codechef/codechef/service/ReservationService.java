@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+import java.util.List;
+
 @Service
 public class ReservationService {
     private final ReservationRepository reservationRepository;
@@ -21,5 +23,9 @@ public class ReservationService {
 
     public void insertReservationInfo(LocalDateTime reservationDate, int memberCount, boolean reviewOx, boolean visitOx, int memNo, Long chefNo) {
         reservationRepository.insertReservationInfo(reservationDate, memberCount, reviewOx, visitOx, memNo, chefNo);
+    }
+
+    public List<Long> getChefNosByMemNo(Long memNo) {
+        return reservationRepository.findChefNosByMemNo(memNo);
     }
 }
