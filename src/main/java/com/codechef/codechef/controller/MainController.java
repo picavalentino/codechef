@@ -2,6 +2,7 @@ package com.codechef.codechef.controller;
 
 import com.codechef.codechef.dto.*;
 import com.codechef.codechef.entity.Reservation;
+import com.codechef.codechef.entity.Restaurant;
 import com.codechef.codechef.service.*;
 import com.codechef.codechef.util.DateUtil;
 import groovy.util.logging.Slf4j;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +66,11 @@ public class MainController {
     public String main(Model model) {
         // 식당 3개 랜덤 출력
         model.addAttribute("randLists", restaurantService.getRandLists());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        String nickname = memberService.getNicknameByEmail(email);
+        model.addAttribute("nickname", nickname);
         return "/codechef/main";
     }
 
@@ -145,8 +153,14 @@ public class MainController {
 
 
     // 방문예약 리스트 페이지
-    @GetMapping("/visit-expected")
-    public String visitExpected() {
+    @GetMapping("/visitExpected")
+    public String visitExpected(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Long memNo = memberService.getMemNoByEmail(email);
+        List<Long> chefNos = reservationService.getChefNosByMemNo(memNo);
+        List<Restaurant> restaurants = restaurantService.getRestaurantsByChefNos(chefNos);
+        model.addAttribute("restaurants", restaurants);
         return "/codechef/visit_expected";
     }
 

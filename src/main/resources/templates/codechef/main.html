@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
-<!--security 적용 후 아래 코드로 변경해주세요-->
-<!--<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">-->
+
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">
 
 <meta charset="UTF-8">
 <title>CodeChef</title>
@@ -59,8 +59,9 @@
       </ul>
       <div class="col-lg-3 col-md-6 mx-auto">
         <h4 class="date" th:text="${#dates.format(#calendars.createNow(), 'yyyy.MM.dd')}"></h4>
-        <a th:href="@{/login}" class="btn btn-login">로그인</a>
-        <a th:href="@{/join}" class="btn btn-signup">회원가입</a>
+        <h3 sec:authorize="isAuthenticated()" class="welcome">환영합니다.<br>[[${nickname}]]님</h3>
+        <a th:href="@{/login}" class="btn btn-login" sec:authorize="isAnonymous()">로그인</a>
+        <a th:href="@{/join}" class="btn btn-signup" sec:authorize="isAnonymous()">회원가입</a>
       </div>
     </div>
   </section>
