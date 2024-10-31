@@ -40,4 +40,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT r FROM Reservation r WHERE r.member.memNo = :memNo AND r.visitOx = true ORDER BY r.reservationDate DESC")
     List<Reservation> findTop2ByMemberMemNoAndVisitOxTrueOrderByReservationDateDesc(@Param("memNo") Long memNo);
 
+    // 이전에 방문한 적이 있는지 확인
+    @Query("SELECT r FROM Reservation r WHERE r.restaurant.chefNo = :chefNo AND r.member.memNo = :memNo AND reservation_date < NOW()")
+    List<Reservation> visitOxFind(Long chefNo, Long memNo);
 }

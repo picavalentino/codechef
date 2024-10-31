@@ -382,6 +382,9 @@ public class MainController {
             review_ox = true;
         }
 
+        // 이전에 방문했는지 확인
+        List<ReservationDto> reservationDto = reservationService.visitOxFind(chefNo, memNo);
+
         // 예약정보 데이터베이스에 저장 (visit_ox 에 대한 정보가 필요함)
         reservationService.insertReservationInfo(reservationDate, memberCount, review_ox, false, memNo, chefNo);
 

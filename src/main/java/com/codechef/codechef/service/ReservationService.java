@@ -48,4 +48,10 @@ public class ReservationService {
                 .limit(2) // 최대 2개로 제한
                 .collect(Collectors.toList());
     }
+
+    public List<ReservationDto> visitOxFind(Long chefNo, Long memNo) {
+        reservationRepository.visitOxFind(chefNo, memNo);
+
+        return null;
+    }
 }
