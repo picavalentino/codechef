@@ -21,7 +21,7 @@ public class ReservationService {
                 new IllegalArgumentException("Reservation not found with ID: " + reservationNo));
     }
 
-    public void insertReservationInfo(LocalDateTime reservationDate, int memberCount, boolean reviewOx, boolean visitOx, int memNo, Long chefNo) {
+    public void insertReservationInfo(LocalDateTime reservationDate, int memberCount, boolean reviewOx, boolean visitOx, Long memNo, Long chefNo) {
         reservationRepository.insertReservationInfo(reservationDate, memberCount, reviewOx, visitOx, memNo, chefNo);
     }
 

@@ -29,6 +29,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             @Param("memberCount") int memberCount,
             @Param("reviewOx") boolean reviewOx,
             @Param("visitOx") boolean visitOx,
-            @Param("memNo") int memNo,
+            @Param("memNo") Long memNo,
             @Param("chefNo") Long chefNo);
 }

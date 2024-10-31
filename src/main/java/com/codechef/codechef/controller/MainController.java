@@ -28,10 +28,8 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.format.TextStyle;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -296,11 +294,14 @@ public class MainController {
             month = currentDate.getMonthValue();
         }
 
+        RestaurantDTO restaurantDTO = restaurantService.getRestaurantByChefNo(chefNo);
+
         model.addAttribute("year", currentDate.getYear());
         model.addAttribute("month", month);
         model.addAttribute("monthName", Month.of(month).toString());
         model.addAttribute("days", DateUtil.daysInMonth(month, currentDate.getYear()));
         model.addAttribute("chefNo", chefNo);
+        model.addAttribute("restaurantDTO", restaurantDTO);
 
         return "/codechef/reservation";
     }
@@ -334,19 +335,47 @@ public class MainController {
     }
 
     @PostMapping("/reservation")
-    public String reservationPost(@RequestParam(value = "selectedDay") LocalDateTime reservationDate,
+    public String reservationPost(Model model,
+                                  @RequestParam(value = "selectedDay") LocalDateTime reservationDate,
                                   @RequestParam(value = "numPeople") int memberCount,
-                                  @RequestParam(value = "chefNo") Long chefNo) {
+                                  @RequestParam(value = "chefNo") Long chefNo,
+                                  @RequestParam(value = "select_time") String select_time) {
 
-        System.out.println("============================== "+reservationDate);
-        System.out.println("============================== "+memberCount);
-        System.out.println("============================== "+chefNo);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Long memNo = memberService.getMemNoByEmail(email);
 
-        // 예약정보 데이터베이스에 저장 (review_ox, visit_ox, mem_no 에 대한 정보가 필요함)
-        reservationService.insertReservationInfo(reservationDate, memberCount, false, false, 7, chefNo);
+        Boolean review_ox = false;
 
-//        timeSlotService.availableCheck();
+        // 요일 정보를 가져오기
+        String dayOfWeek = reservationDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.KOREAN);
 
-        return "redirect:/codechef/detail?chefNo="+chefNo;
+        System.out.println("============================== reservationDate : "+reservationDate);
+        System.out.println("============================== memberCount: "+memberCount);
+        System.out.println("============================== chefNo : "+chefNo);
+        System.out.println("============================== memNo : "+memNo);
+        System.out.println("============================== select_time : "+select_time);
+        System.out.println("============================== dayOfWeek : "+dayOfWeek);
+
+        // 리뷰 작성했는지 확인
+        List<ReviewDTO> reviewDTOS = reviewService.findByChefNoAndMemNo(chefNo, memNo);
+
+        if (!reviewDTOS.isEmpty()) {
+            review_ox = true;
+        }
+
+        // 예약정보 데이터베이스에 저장 (visit_ox 에 대한 정보가 필요함)
+        reservationService.insertReservationInfo(reservationDate, memberCount, review_ox, false, memNo, chefNo);
+
+        // 예약 확인 체크 (1주월, 2주월, 3주월, 4주월, 5주월 6주월)
+        timeSlotService.availableCheck(chefNo, select_time, dayOfWeek);
+
+//        List<TimeSlotDTO> timeSlotDTOS = timeSlotService.selectTest(chefNo, select_time, dayOfWeek);
+//        timeSlotDTOS.forEach(x-> System.out.println("============================ "+x));
+
+        model.addAttribute("msg", "예약되었습니다.");
+        model.addAttribute("url", "/mypage");
+
+        return "/codechef/alert";
     }
 }
