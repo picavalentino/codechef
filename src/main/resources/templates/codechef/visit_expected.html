@@ -45,19 +45,19 @@
 
         <div class="list_box">
             <ul>
-                <li>
+                <li th:each="restaurant : ${restaurants}">
                     <!-- 첫번째 박스 -->
                     <div class="f">
                         <!-- 이미지 -->
-                        <div class="image_box"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MTJfMTYg%2FMDAxNjYwMzEwNDE5MDk3.sQR5UgAp-MquDpX_Xj25PLC85cLEy7n_B3dSJYKX1Lkg.5AbmasPWvwweMn5_tbuCeP8NEIH99OaIrH4blzr3pTQg.JPEG.amy9412%2F20220809%25A3%25DF202318.jpg&type=a340"></div>
+                        <div class="image_box"><img class="image" th:src="${restaurant.bannerImage}"></div>
 
                         <!-- 문구 -->
                         <div class="res_info">
                             <!-- 큰글자 -->
-                            <p>비아 톨레도 파스타바</p>
+                            <p th:text="${restaurant.resName}">비아 톨레도 파스타바</p>
                             <!-- 작은글자 -->
                             <div class="visit_date">
-                                <p2>서울특별시 용산구 한남대로27가길 15 2층</p2>
+                                <p2 th:text="${restaurant.address}">서울특별시 용산구 한남대로27가길 15 2층</p2>
                                 <p2>2024.10.22 - 14:02</p2>
                                 <p2>방문예정</p2>
                             </div>
@@ -67,110 +67,6 @@
                     </div>
 
 
-                    <!-- 두번째 박스 -->
-                    <button class="r">
-                        <!-- 이미지 -->
-                        <img th:src="@{/images/visit_expected/iconamoon_trash-fill.png}">
-                        <!-- 취소버튼 -->
-                        <h4>취소</h4>
-                    </button>
-                </li>
-                <li>
-                    <!-- 첫번째 박스 -->
-                    <div class="f">
-                        <!-- 이미지 -->
-                        <div class="image_box"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MTJfMTYg%2FMDAxNjYwMzEwNDE5MDk3.sQR5UgAp-MquDpX_Xj25PLC85cLEy7n_B3dSJYKX1Lkg.5AbmasPWvwweMn5_tbuCeP8NEIH99OaIrH4blzr3pTQg.JPEG.amy9412%2F20220809%25A3%25DF202318.jpg&type=a340"></div>
-
-                        <!-- 문구 -->
-                        <div class="res_info">
-                            <!-- 큰글자 -->
-                            <p>비아 톨레도 파스타바</p>
-                            <!-- 작은글자 -->
-                            <div class="visit_date">
-                                <p2>서울특별시 용산구 한남대로27가길 15 2층</p2>
-                                <p2>2024.10.22 - 14:02</p2>
-                                <p2>방문예정</p2>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 두번째 박스 -->
-                    <button class="r">
-                        <!-- 이미지 -->
-                        <img th:src="@{/images/visit_expected/iconamoon_trash-fill.png}">
-                        <!-- 취소버튼 -->
-                        <h4>취소</h4>
-                    </button>
-                </li>
-                <li>
-                    <!-- 첫번째 박스 -->
-                    <div class="f">
-                        <!-- 이미지 -->
-                        <div class="image_box"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MTJfMTYg%2FMDAxNjYwMzEwNDE5MDk3.sQR5UgAp-MquDpX_Xj25PLC85cLEy7n_B3dSJYKX1Lkg.5AbmasPWvwweMn5_tbuCeP8NEIH99OaIrH4blzr3pTQg.JPEG.amy9412%2F20220809%25A3%25DF202318.jpg&type=a340"></div>
-
-                        <!-- 문구 -->
-                        <div class="res_info">
-                            <!-- 큰글자 -->
-                            <p>비아 톨레도 파스타바</p>
-                            <!-- 작은글자 -->
-                            <div class="visit_date">
-                                <p2>서울특별시 용산구 한남대로27가길 15 2층</p2>
-                                <p2>2024.10.22 - 14:02</p2>
-                                <p2>방문예정</p2>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 두번째 박스 -->
-                    <button class="r">
-                        <!-- 이미지 -->
-                        <img th:src="@{/images/visit_expected/iconamoon_trash-fill.png}">
-                        <!-- 취소버튼 -->
-                        <h4>취소</h4>
-                    </button>
-                </li>
-                <li>
-                    <!-- 첫번째 박스 -->
-                    <div class="f">
-                        <!-- 이미지 -->
-                        <div class="image_box"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MTJfMTYg%2FMDAxNjYwMzEwNDE5MDk3.sQR5UgAp-MquDpX_Xj25PLC85cLEy7n_B3dSJYKX1Lkg.5AbmasPWvwweMn5_tbuCeP8NEIH99OaIrH4blzr3pTQg.JPEG.amy9412%2F20220809%25A3%25DF202318.jpg&type=a340"></div>
-
-                        <!-- 문구 -->
-                        <div class="res_info">
-                            <!-- 큰글자 -->
-                            <p>비아 톨레도 파스타바</p>
-                            <!-- 작은글자 -->
-                            <div class="visit_date">
-                                <p2>서울특별시 용산구 한남대로27가길 15 2층</p2>
-                                <p2>2024.10.22 - 14:02</p2>
-                                <p2>방문예정</p2>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 두번째 박스 -->
-                    <button class="r">
-                        <!-- 이미지 -->
-                        <img th:src="@{/images/visit_expected/iconamoon_trash-fill.png}">
-                        <!-- 취소버튼 -->
-                        <h4>취소</h4>
-                    </button>
-                </li>
-                <li>
-                    <!-- 첫번째 박스 -->
-                    <div class="f">
-                        <!-- 이미지 -->
-                        <div class="image_box"><img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MTJfMTYg%2FMDAxNjYwMzEwNDE5MDk3.sQR5UgAp-MquDpX_Xj25PLC85cLEy7n_B3dSJYKX1Lkg.5AbmasPWvwweMn5_tbuCeP8NEIH99OaIrH4blzr3pTQg.JPEG.amy9412%2F20220809%25A3%25DF202318.jpg&type=a340"></div>
-
-                        <!-- 문구 -->
-                        <div class="res_info">
-                            <!-- 큰글자 -->
-                            <p>비아 톨레도 파스타바</p>
-                            <!-- 작은글자 -->
-                            <div class="visit_date">
-                                <p2>서울특별시 용산구 한남대로27가길 15 2층</p2>
-                                <p2>2024.10.22 - 14:02</p2>
-                                <p2>방문예정</p2>
-                            </div>
-                        </div>
-                    </div>
                     <!-- 두번째 박스 -->
                     <button class="r">
                         <!-- 이미지 -->

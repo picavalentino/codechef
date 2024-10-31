@@ -67,4 +67,12 @@ public class MemberService {
         Page<Review> reviews = reviewRepository.findByMembermemNo(memNo, pageable);
         return reviews.map(ReviewDTO::fromEntity); // ReviewDTO로 변환하여 반환
     }
+
+    public String getNicknameByEmail(String email) {
+        return memberRepository.findNicknameByEmail(email);
+    }
+
+    public Long getMemNoByEmail(String email) {
+        return memberRepository.findMemNoByEmail(email);
+    }
 }
