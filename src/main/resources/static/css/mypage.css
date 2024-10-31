@@ -8,14 +8,29 @@
 body {
   background-color: #f4f4f4;
   width: 100vw;
- padding-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 .content1 {
- display: flex;
-  justify-content: center; /* 가로 가운데 정렬 */
-  align-items: center; /* 세로 가운데 정렬 */
+  display: flex;
+  flex-direction: column; /* 세로 정렬 */
+  align-items: center; /* 가로 가운데 정렬 */
 }
+
+h1 {
+  display: block;
+  padding: 9px 20px;
+  width: 150px;
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  border: 3px solid #444444;
+  border-radius: 17px;
+  background-color: #fff;
+  text-align: center; /* 텍스트 중앙 정렬 */
+  margin: 70px 0; /* 위 아래 여백 추가 */
+}
+
 .container1 {
   display: flex;
   flex-direction: row; /* 가로로 나열되도록 설정 */
@@ -30,41 +45,37 @@ body {
   background-color: #f4f4f4;
   padding: 20px;
   border-radius: 10px;
-
 }
 
 /* 왼쪽 섹션 */
 .left-section {
   flex: 1;
-  margin-right: 20px;
-  margin-top: 200px;
   min-width: 300px; /* 최소 너비 */
   max-width: 600px; /* 최대 너비 */
+  margin-left: 0;
 }
 
 .profile-card {
   background-color: #fff;
   padding: 20px;
+  padding-left: 40px;
   border-radius: 10px;
-  margin-left: 50px;
   border: 1px solid #c9c9c9;
   text-align: center;
   display: flex;
-  width: 370px;
-}
-
-.page-title {
-  font-size: 16px;
-  color: #cccccc;
-  margin-left: 60px;
-  margin-bottom: 10px;
+  flex-direction: column; /* 세로 정렬 */
+  ustify-content: center; /* 세로 중앙 정렬 */
+  width: 100%;
+  margin-bottom: 40px;
 }
 
 .profile-info {
   display: flex;
-  align-items: center;
-  margin-left: 20px;
-  margin-top: 5px;
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: flex-start;;
+  text-align: center; /* 텍스트 중앙 정렬 */
+  margin: 0; /* 가로 중앙 정렬을 위해 자동 여백 설정 */
+  width: 100%; /* 너비 100%로 설정 */
 }
 
 .profile-img {
@@ -72,32 +83,15 @@ body {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  margin-bottom: 10px;
 }
 
 .user-details {
-  text-align: center;
+  text-align: left;
   width: 100%;
 }
 
 .username {
-  font-size: 16px;
-  margin-left: 20px;
-  margin-bottom: -7px;
   font-weight: bold;
-}
-
-.user-title {
-  font-size: 14px;
-  margin-left: 10px;
-  color: #888;
-}
-
-hr {
-  width: 120%;
-  margin: 10px auto;
-  border: none;
-  border-top: 1px solid #ddd;
 }
 
 .btn.edit-info-btn {
@@ -110,87 +104,54 @@ hr {
   font-size: 14px;
   border-radius: 10px;
   cursor: pointer;
-  margin-top: 15px;
-  margin-left: 20px;
+  margin-top: 20px;
   font-family: 'Pretendard', sans-serif;
+  float: left; /* 버튼을 왼쪽으로 정렬 */
 }
 
 .btn.edit-info-btn:hover {
   background-color: #979797;
 }
 
-.reservation-list, .completed-list {
- background-color: #f4f4f4;
-  padding: 20px;
-  border-radius: 10px;
-  margin-left: 30px;
-  width: 410px;
-}
-
-
-
 .list-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  display: flex; /* 수평 정렬을 위한 flexbox 사용 */
+  justify-content: space-between; /* 요소 사이에 공간을 evenly 배분 */
+  align-items: center; /* 수직 가운데 정렬 */
+  margin-bottom: 20px; /* 아래쪽 여백 추가 */
 }
 
 .list-header h3 {
-  font-size: 18px;
   color: #333;
-
+  margin-right: 10px; /* 버튼과의 간격 추가 */
 }
 
-.btn.more-btn {
-  background-color: #3c3c3c;
-  color: #fff;
-  border: none;
-  padding: 5px 15px;
-  border-radius: 9px;
-  cursor: pointer;
-  font-size: 14px;
-  min-width: 80px; /* 버튼이 너무 작아지지 않도록 최소 너비 설정 */
-  text-align: center;
-  white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
-  margin-left: 287px;
-  margin-bottom: 10px;
-}
-.btn.more-btn2 {
-  background-color: #3c3c3c;
-  color: #fff;
-  border: none;
-  padding: 5px 15px;
-  border-radius: 9px;
-  cursor: pointer;
-  font-size: 14px;
-  min-width: 80px; /* 버튼이 너무 작아지지 않도록 최소 너비 설정 */
-  text-align: center;
-  white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
-  margin-left: 480px;
-  margin-bottom: 10px;
-}
-.btn.more-btn:hover {
-  background-color:#c0c0c0;
-}
-.btn.more-btn2:hover {
-  background-color: #c0c0c0;
-}
-.reservation-item {
-  background-color: #f5f5f5;
-  padding: 15px;
+.reservation-list, .completed-list {
   border-radius: 10px;
-  height: 90px;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.reservation-item {
+  background-color: #dfdfdf;
+  padding: 15px;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 10px;
+  height: 100px;
   margin-bottom: 10px;
   border: 1px solid #c9c9c9;
 }
-.reservationplace-name {
-  font-size: 20px;
-  margin-left: 10px;
+
+.reservation-date{
+    margin-bottom: 0px;
 }
+
+
 .completed-item {
-  background-color: #e5e3e3;
+  background-color: #dfdfdf;
   padding: 15px;
+  padding-left: 40px;
+  padding-right: 40px;
   border-radius: 10px;
   margin-bottom: 10px;
   border: 1px solid #c9c9c9;
@@ -199,125 +160,18 @@ hr {
   align-items: center; /* 수직 가운데 정렬 */
 }
 
-.left-content {
-  flex: 1;
-}
-
-.place-name {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-left: 10px;
-}
-
-.right-content {
-  display: flex;
-  flex-direction: column; /* 세로 정렬 */
-  align-items: flex-end; /* 텍스트와 별점 우측 정렬 */
-}
-
-/* 평점 묶음 */
-
-.ratings {
-  display: flex;
-  flex-direction: column; /* 세로 정렬 */
-  justify-content: space-between;
-  font-size: 14px;
-}
-
-.rating-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.rating-item span {
-  display: inline-block;
-}
-
-.star {
-  color: gold;
-  margin-left: 5px; /* 텍스트와 별 사이의 간격 */
-}
-
-.completed-item .reservation-date {
-  font-size: 15px;
-  color: #666;
-  margin-left: 10px;
-  margin-top: 40px;
-}
-.completed-item p {
-    margin-right : 10px;
-}
-.reservation-date {
-  font-size: 15px;
-  color: #666;
-  margin-left: 10px;
-  margin-top: 15px;
-}
-
-
-.pending {
-  font-size: 14px;
-  color: #999;
+.right-content{
+  margin-right: 10px;
   text-align: right;
 }
 
-
-
-.review-header p {
-  font-size: 34px;
-  font-weight: 700;
-}
-
-.section-title {
-  font-weight: bold; /* 글씨 굵게 */
-  text-align: center; /* 가운데 정렬 */
-  margin-bottom: 10px; /* 제목과 선 사이의 간격 */
-  position: relative;
-  display: block;
-  margin: 0 auto 30px; /* 중앙 배치 */
-}
-
-
-.section-title::after {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 1px;
-  background-color: #ccc; /* 선 색상 */
-  margin-top: 8px;
-  position: absolute;
-  left: 0;
-  bottom: -10px; /* 텍스트 아래 선 간격 */
-}
-/* 오른쪽 섹션 */
 .right-section {
   max-width: 600px; /* 최대 너비 설정 */
   width: 100%;
-background-color: #f4f4f4;
+  background-color: #f4f4f4;
   padding: 20px;
   border-radius: 10px;
   margin: 0 auto; /* 오른쪽 섹션 중앙 정렬 */
-}
-
-.section-title {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.section-title::after {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 1px;
-  background-color: #ccc;
-  margin-top: 8px;
-  position: relative;
-  bottom: -10px;
 }
 
 .review-card {
@@ -332,87 +186,52 @@ background-color: #f4f4f4;
   margin-bottom: 20px;
 }
 
-.review-card img {
-  width: 90%; /* 이미지를 전체 너비로 적용 */
-  height: auto;
-  border-radius: 10px;
-  object-fit: cover;
-  margin-bottom: 15px;
-  margin-left: 30px;
-  width: 400;
-  height: 300px;
-}
-
 .review-content {
   width: 100%; /* 콘텐츠 너비를 100%로 확장 */
 }
 
-.review-content h2 {
-  font-size: 28px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 5px;
+/* 요소 사이의 간격 조정 */
+.review-content > * {
+    margin-bottom: 10px; /* 각 요소의 아래쪽 여백을 10px로 설정 */
 }
 
-.rating-date-container {
-  display: flex;
-  justify-content: center; /* 가운데 정렬 */
-  align-items: center; /* 수직 정렬 */
-  gap: 10px; /* 별점과 날짜 사이 간격 */
+.review-content > *:last-child {
+    margin-bottom: 0; /* 마지막 요소는 아래 여백을 없앰 */
 }
 
-.rating {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  margin-right: 250px;
-}
-
-.rating .star {
-  color: gold;
-  margin-right: 5px;
-}
-
-.review-date {
-  font-size: 14px;
-  color: #888;
-  text-align: center;
-  margin-bottom: 10px;
+.review-img{
+    width: 528px;
+    height: 250px;
+    object-fit: cover;  /* 비율 유지하며 잘리도록 설정 */
+    border-radius: 10px; /* 이미지 테두리 둥글게 */
 }
 
 .review-text {
   font-size: 14px;
-  text-align: center;
+  text-align: left;
   margin-bottom: 15px;
   background-color: #f5f5f5;
   padding: 10px;
   border-radius: 10px;
 }
 
-.btn-wrapper {
-  display: flex;
-  justify-content: center;
-
-}
-.button-container {
-  text-align: center; /* 버튼을 가운데로 정렬 */
-  margin-top: 20px; /* 필요시 여백 추가 */
-}
-
-
-.btn.edit-btn, .btn.delete-btn {
-  background-color: #404040;
-  color: #ffffff;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 20px;
-  width: 100px;
-  margin: 0 10px;
-
-}
-
 .btn:hover {
   background-color: #c0c0c0;
+}
+
+.btn.more-btn, .btn.more-btn2 {
+  background-color: #404040; /* 버튼 배경색 변경 */
+  color: #fff; /* 버튼 글자색을 흰색으로 변경 */
+  border: none; /* 테두리 없애기 */
+  padding: 5px 15px; /* 버튼 안쪽 여백 */
+  border-radius: 9px; /* 모서리 둥글게 */
+  cursor: pointer; /* 커서가 손 모양으로 변경 */
+  font-size: 14px; /* 글자 크기 */
+  min-width: 80px; /* 최소 너비 설정 */
+  text-align: center; /* 중앙 정렬 */
+  white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+.btn.more-btn:hover, .btn.more-btn2:hover {
+  background-color: #c0c0c0; /* 마우스 오버 시 색상 변경 */
 }

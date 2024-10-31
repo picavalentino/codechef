@@ -16,7 +16,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     // memNo로 리뷰를 페이징하여 가져오는 쿼리
     @Query("SELECT r FROM Review r WHERE r.member.memNo = :memNo")
-    Page<Review> findByMembermemNo(@Param("memNo")Long memNo, Pageable pageable);
+    Page<Review> findByMembermemNo(@Param("memNo") Long memNo, Pageable pageable);
+
+    @Query("SELECT r FROM Review r WHERE r.member.memNo = :memNo ORDER BY r.date DESC")
+    List<Review> findTop2ByMemberMemNoOrderByDateDesc(@Param("memNo") Long memNo);
 
     // chefNo, memNo 조건으로 검색
     List<Review> findByRestaurant_ChefNoAndMember_MemNo(Long chefNo, Long memNo);

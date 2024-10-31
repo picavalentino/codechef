@@ -1,6 +1,7 @@
 package com.codechef.codechef.controller;
 
 import com.codechef.codechef.dto.*;
+import com.codechef.codechef.entity.Member;
 import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.entity.Restaurant;
 import com.codechef.codechef.service.*;
@@ -171,9 +172,26 @@ public class MainController {
         return "/codechef/visit_completion";
     }
 
-    //마이페이지
+    ///마이페이지
     @GetMapping("/mypage")
-    public String mypage() {
+    public String mypage(Model model, HttpSession session) {
+        Long memNo = (Long) session.getAttribute("loggedInUser"); // 세션에서 로그인한 사용자 ID 가져오기
+        if (memNo != null) {
+            // memNo로 사용자 정보를 가져오기
+            Member member = memberService.getMemberByMemNo(memNo); // 서비스에서 회원 정보 조회
+            // memNo로 최신 리뷰 2개 가져오기
+            List<ReviewDTO> latestReviews = memberService.getLatestReviews(memNo);
+            // memNo로 방문 예정 예약 2개 가져오기(오래된 날짜 순)
+            List<ReservationDto> earliestReservations = reservationService.getEarliestReservations(memNo);
+            // memNo로 방문 완료 예약 2개 가져오기(최근 날짜 순)
+            List<ReservationDto> latestReservations = reservationService.getLatestReservations(memNo);
+
+
+            model.addAttribute("member", member);               // 회원 정보
+            model.addAttribute("latestReviews", latestReviews); // 최신 리뷰 추가
+            model.addAttribute("earliestReservations", earliestReservations); // 방문 예정 예약 2개 가져오기
+            model.addAttribute("latestReservations", latestReservations); // 방문 완료 예약 2개 가져오기
+        }
         return "/codechef/mypage";
     }
 
@@ -182,7 +200,7 @@ public class MainController {
     public String reviewViewMy(@RequestParam("memNo") Long memNo,
                                @PageableDefault(size = 5) Pageable pageable,
                                Model model) {
-        // memNo로 식당 정보를 가져옵니다.
+        // memNo로 멤버 정보를 가져옵니다.
         MemberReviewDTO memberReviewDTO = memberService.getMemberByMemNo2(memNo);
         // 리뷰를 페이징하여 가져옵니다.
         Page<ReviewDTO> reviewsPage = memberService.getReviewsByMember(memNo, pageable);
