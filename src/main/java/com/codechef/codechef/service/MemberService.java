@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
@@ -74,5 +76,13 @@ public class MemberService {
 
     public Long getMemNoByEmail(String email) {
         return memberRepository.findMemNoByEmail(email);
+    }
+
+    // 사용자의 최신 리뷰 2개 가져오기
+    public List<ReviewDTO> getLatestReviews(Long memNo) {
+        // 사용자의 리뷰를 최신 순으로 가져오기 (최대 2개)
+        return reviewRepository.findTop2ByMemberMemNoOrderByDateDesc(memNo).stream()
+                .map(ReviewDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 }
