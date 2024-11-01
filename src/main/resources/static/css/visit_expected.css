@@ -61,3 +61,36 @@ a { text-decoration: none; color: black; } a:visited {color:black}
         width: 350px;
         height: 250px;
      }
+
+     .pagination {
+        display: flex;
+        justify-content: center;
+        padding-left: 0;
+        list-style: none;
+     }
+
+     .page-link {
+         color: #1c1c1c;
+         border-radius: 6px;
+         padding: 7px 16px 10px;
+         margin-right: 16px;
+         border-color: #1c1c1c;
+         font-family: 'Pretendard';
+         font-size: 18px;
+         font-weight: bold;
+     }
+
+     .page-link:hover {
+         z-index: 2;
+         color: #fff;
+         background-color: #1c1c1c;
+         border-color: #1c1c1c;
+     }
+
+     #search {
+         border-radius: 8px;
+         border: none;
+         background: url(/images/main/loc.png) no-repeat 18px #F5F5F5;
+         padding-left: 45px;
+         font-size: 17px;
+     }

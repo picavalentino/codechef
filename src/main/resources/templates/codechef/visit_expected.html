@@ -1,6 +1,5 @@
-<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
-<!--security 적용 후 아래 코드로 변경해주세요-->
-<!--<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="www.thymeleaf.org/extras/spring-security">-->
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}"
+      xmlns:sec="www.thymeleaf.org/extras/spring-security">
 
 <head>
     <link rel="stylesheet" th:href="@{/css/visit_expected.css}">
@@ -34,9 +33,9 @@
 
 <!-- 우리가 작업할 공간 -->
 <body>
-<div layout:fragment="content" class="content">
+<div layout:fragment="content" >
 
-    <div> <!-- 전체 -->
+    <div class="content"> <!-- 전체 -->
 
         <div class="main">
             <p4 class="visit_title">
@@ -45,20 +44,20 @@
 
         <div class="list_box">
             <ul>
-                <li th:each="restaurant : ${restaurants}">
+                <li th:each="visitExpected : ${visitExpected}">
                     <!-- 첫번째 박스 -->
                     <div class="f">
                         <!-- 이미지 -->
-                        <div class="image_box"><img class="image" th:src="${restaurant.bannerImage}"></div>
+                        <div class="image_box"><img class="image" th:src="${visitExpected.bannerImage}"></div>
 
                         <!-- 문구 -->
                         <div class="res_info">
                             <!-- 큰글자 -->
-                            <p th:text="${restaurant.resName}">비아 톨레도 파스타바</p>
+                            <p th:text="${visitExpected.resName}">비아 톨레도 파스타바</p>
                             <!-- 작은글자 -->
                             <div class="visit_date">
-                                <p2 th:text="${restaurant.address}">서울특별시 용산구 한남대로27가길 15 2층</p2>
-                                <p2>2024.10.22 - 14:02</p2>
+                                <p2 th:text="${visitExpected.address}">서울특별시 용산구 한남대로27가길 15 2층</p2>
+                                <p2 th:text="${#dates.format(visitExpected.reservationDate, 'yyyy.MM.dd')}">2024.10.22 - 14:02</p2>
                                 <p2>방문예정</p2>
                             </div>
 
@@ -68,7 +67,7 @@
 
 
                     <!-- 두번째 박스 -->
-                    <button class="r">
+                    <button class="r" th:onclick="|cancelReservation(${visitExpected.reservationNo})|">
                         <!-- 이미지 -->
                         <img th:src="@{/images/visit_expected/iconamoon_trash-fill.png}">
                         <!-- 취소버튼 -->
@@ -84,27 +83,51 @@
 
 
 
-        <nav aria-label="Page navigation example" style="display: flex; justify-content: center">
-            <ul class="pagination" style="display: flex;">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+
 
     </div>
+    <nav aria-label="Page navigation example" th:unless="${page.totalElements == 0}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${page.number <= 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/visitExpected(page=${page.number - 1})}">&lt;</a>
+            </li>
+
+            <th:block th:each="pageNumber : ${#numbers.sequence(0, page.totalPages - 1)}">
+                <li class="page-item" th:classappend="${pageNumber == page.number} ? 'active'">
+                    <a class="page-link" th:href="@{/visitExpected(page=${pageNumber})}"
+                       th:text="${pageNumber + 1}">1</a>
+                </li>
+            </th:block>
+
+            <li class="page-item" th:classappend="${page.number + 1 == page.totalPages} ? 'disabled'">
+                <a class="page-link" th:href="@{/visitExpected(page=${page.number + 1})}">&gt;</a>
+            </li>
+        </ul>
+    </nav>
+    <script th:src="@{/js/jQuery.js}"></script>
+    <script th:inline="javascript">
+        function cancelReservation(reservationNo) {
+    console.log("전달받은 예약 번호:", reservationNo);  // 예약 번호 확인
+
+    if (confirm("정말로 예약을 취소하시겠습니까?")) {
+        $.ajax({
+            url: '/api/cancel-reservation',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ reservationNo: reservationNo }),
+            success: function(response) {
+                console.log("서버 응답:", response);
+                alert(response);
+                location.reload();
+            },
+            error: function(error) {
+                console.error("에러 응답:", error.responseText);
+                alert("예약 취소 및 삭제에 실패했습니다.");
+            }
+        });
+    }
+}
+    </script>
 </div>
 </body>
 </html>

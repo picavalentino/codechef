@@ -35,7 +35,7 @@
                         <div class="user-details">
                             <h4 class="username" th:text="${member.nickname}">아진짜마싯서 <span> 님</span></h4>
                             <!--회원정보 수정 링크 연결 해야함!-->
-                            <a class="btn edit-info-btn" href="#">회원정보 수정</a>
+                            <a class="btn edit-info-btn" th:href="@{/profileEdit(memNo=${member.memNo})}">회원정보 수정</a>
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                     <span class="list-header">
                         <h3>방문 예약 리스트</h3>
                         <!--방문 예약 리스트 더보기 링크 연결 해야함!-->
-                        <a class="btn more-btn" href="#">더보기</a>
+                        <a class="btn more-btn" th:href="@{/visitExpected}">더보기</a>
                     </span>
                     <div class="reservation-item" th:each="reservation : ${earliestReservations}">
                         <h4 class="reservationplace-name" th:text="${reservation.restaurant.resName}">식당 이름</h4>

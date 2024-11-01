@@ -10,6 +10,7 @@ import com.codechef.codechef.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -18,6 +19,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
 
@@ -40,7 +44,7 @@ public class MemberService {
         Member member = memberRepository.findById(memNo)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid member ID: " + memNo));
 
-        member.setPassword(password);
+        member.setPassword(bCryptPasswordEncoder.encode(password));
         member.setPasswordCheck(passwordCheck);
         member.setPhoneNo(phoneNo);
         member.setNickname(nickname);
