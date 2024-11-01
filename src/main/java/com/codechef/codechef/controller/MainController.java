@@ -330,10 +330,5 @@ public class MainController {
         System.out.println("Reservations size: " + reservationsPage.getContent().size());
         return "/codechef/visit_completion";
     }
-
-
-
-
-
 }
 
