@@ -23,7 +23,8 @@ $(document).ready(function() {
                     endDate = new Date(currentYear, currentMonth, currentDate.getDate()); // 다음 달 같은 날
 
                     // endDate를 다음 달의 마지막 날로 설정
-                    endDate.setDate(endDate.getDate() + 1);
+//                    endDate.setDate(endDate.getDate() + 1);
+                    endDate.setDate(endDate.getDate());
                 }
 
                 let previousDate = new Date(currentDate); // 원본 날짜를 복사
@@ -95,6 +96,14 @@ $(document).ready(function() {
     $('.dropdown-item').click(function(event) {
         event.preventDefault(); // 링크 기본 동작 방지
         const numPeople = $(this).data('value'); // data-value 속성에서 인원 수 가져오기
+
+        const element = $("body > div:nth-of-type(2) > div:nth-of-type(1) > div > form > div > div:nth-of-type(2) > div:nth-of-type(2) > label > b");
+        if(numPeople !== "인원 수"){
+            element.text("인원 수");
+        } else {
+            element.text("");
+        }
+
         $('#numPeople').val(numPeople); // 숨겨진 input에 저장
         $('.btn-group .btn:first-child').html(`<b><small>${numPeople}</small></b>`); // 버튼 텍스트 업데이트
     });
@@ -134,11 +143,20 @@ $(document).ready(function() {
 
         const formattedDate = `${month}.${day}(${weekday})`;
 
+        const [hours, minutes] = reservation_time.split(":").map(Number);
+
+        // 주어진 날짜에 시간과 분을 설정합니다.
+        date.setHours(hours);
+        date.setMinutes(minutes);
+
+        const localDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)); // UTC로 변환
+        $('#selectedDay').val(localDateTime.toISOString().slice(0, 19)); // "2024-10-30T19:00:00" 형식으로 설정
+
+        $('#select_time').val(reservation_time);
+
         $('#reservation_date').html(formattedDate);
         $('#reservation_time').html(reservation_time);
         $('#reservation_num').html(reservation_num + "명");
-        $('#selectedDay').val(date);
-        $('#select_time').val(reservation_time);
 
         $('#confirmModal').modal('show');
     });
@@ -200,6 +218,34 @@ function select_day(element) {
     const koreanDayOfWeek = getKoreanDayOfWeek(dateInfo);
     const chefNo = $('#chefNo').val();
 
+////////// 현재 날짜를 선택했을 경우 예약시간이 현재 시간보다 이전인지 확인하는 부분
+   // dateInfo를 Date 객체로 변환
+   const [monthStr, yearStr, dayStr] = dateInfo.split(" ");
+   const month = new Date(`${monthStr} 1, ${yearStr}`).getMonth(); // 월을 숫자로 변환
+   const day = parseInt(dayStr, 10);
+   const year = parseInt(yearStr, 10);
+
+   const dateFromInfo = new Date(year, month, day);
+
+   // 현재 날짜 가져오기
+   const currentDate = new Date();
+   const currentHour = currentDate.getHours();
+   const currentMinute = currentDate.getMinutes();
+
+   // 현재 시간에서 1시간 더하기
+   const oneHourAfter = new Date(currentDate);
+   oneHourAfter.setHours(currentHour + 1);
+
+   // 한 시간 이후의 시간 객체로 만들기
+   const oneHourAfterTime = new Date(oneHourAfter.getFullYear(), oneHourAfter.getMonth(), oneHourAfter.getDate(), oneHourAfter.getHours(), oneHourAfter.getMinutes());
+
+   // 현재 날짜와 비교
+   const isCurrentDate =
+       dateFromInfo.getFullYear() === currentDate.getFullYear() &&
+       dateFromInfo.getMonth() === currentDate.getMonth() &&
+       dateFromInfo.getDate() === currentDate.getDate();
+//////////
+
     const queryParams = {
         chef_no: chefNo,
         koreanDayOfWeek: koreanDayOfWeek
@@ -212,6 +258,17 @@ function select_day(element) {
         $('.time_select').html('');
         for(let i = 0; i < timeSlots.length; i++){
             if(timeSlots[i].available === "false" && timeSlots[i].time !== "휴무"){
+                if(isCurrentDate){
+                    const timeSlotTime = timeSlots[i].time;
+
+                    const [hour, minute] = timeSlotTime.split(":");
+                    const timeSlotDate = new Date(oneHourAfterTime.getFullYear(), oneHourAfterTime.getMonth(), oneHourAfterTime.getDate(), hour, minute);
+
+                    // 예약가능 시간이 현재 시간보다 이전이면 넘어가기
+                    if(timeSlotDate < oneHourAfterTime){
+                        continue;
+                    }
+                }
                 $('.time_select').append('<button type="button" class="btn time_btn" onclick="toggleTime(this)">'+timeSlots[i].time+'</button>');
             } else if (timeSlots[i].time === "휴무"){
                 $('.time_select').append('<button type="button" class="btn time_btn" disabled>'+timeSlots[i].time+'</button>');

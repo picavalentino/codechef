@@ -21,4 +21,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("SELECT r FROM Review r WHERE r.member.memNo = :memNo ORDER BY r.date DESC")
     List<Review> findTop2ByMemberMemNoOrderByDateDesc(@Param("memNo") Long memNo);
 
+    // chefNo, memNo 조건으로 검색
+    List<Review> findByRestaurant_ChefNoAndMember_MemNo(Long chefNo, Long memNo);
 }
