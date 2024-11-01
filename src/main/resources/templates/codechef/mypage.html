@@ -28,12 +28,12 @@
                 </div>
                 <div class="profile-card">
                     <div class="profile-info">
-                        <img th:src="@{${member.memImage}}"
+                        <img th:src="@{${imageData}}"
                              alt="프로필 이미지"
                              class="profile-img"
                              onerror="this.onerror=null; this.src='/images/common/profileImg.png';">
                         <div class="user-details">
-                            <h4 class="username" th:text="${member.nickname}">아진짜마싯서 <span> 님</span></h4>
+                            <h4 class="username" th:text="${member.nickname}+' 님'">회원 닉네임</h4>
                             <!--회원정보 수정 링크 연결 해야함!-->
                             <a class="btn edit-info-btn" href="#">회원정보 수정</a>
                         </div>
@@ -46,10 +46,16 @@
                         <!--방문 예약 리스트 더보기 링크 연결 해야함!-->
                         <a class="btn more-btn" href="#">더보기</a>
                     </span>
-                    <div class="reservation-item" th:each="reservation : ${earliestReservations}">
+                    <!--방문 예약 리스트 있으면-->
+                    <div class="reservation-item" th:each="reservation : ${earliestReservations}" th:if="${#lists.size(earliestReservations) > 0}">
                         <h4 class="reservationplace-name" th:text="${reservation.restaurant.resName}">식당 이름</h4>
                         <p class="reservation-date"
                            th:text="${#dates.format(reservation.reservationDate, 'yyyy.MM.dd / HH:mm 예약')}">예약 시간</p>
+                    </div>
+                    <!--방문 예약 리스트 없으면-->
+                    <div class="reservation-item2" th:if="${#lists.isEmpty(earliestReservations)}">
+                        <p>예약 내역이 없습니다.</p>
+                        <a class="btn letsgomain" th:href="@{/main}"><h3>식당 예약하러 가기!</h3></a>
                     </div>
                 </div>
 
@@ -59,12 +65,12 @@
                         <!--방문 완료 리스트 더보기 링크 연결 해야함!-->
                         <a class="btn more-btn" th:href="@{/visit-completion/{memNo}(memNo=${member.memNo})}">더보기</a>
                     </span>
-                    <div class="completed-item" th:each="reservation : ${latestReservations}">
+                    <!--방문 완료 리스트 있으면-->
+                    <div class="completed-item" th:each="reservation : ${latestReservations}" th:if="${#lists.size(latestReservations) > 0}">
                         <div class="left-content">
                             <h4 class="place-name" th:text="${reservation.restaurant.resName}">식당 이름</h4>
                             <p class="reservation-date"
-                               th:text="${#dates.format(reservation.reservationDate, 'yyyy.MM.dd / HH:mm 방문 완료')}">예약
-                                시간</p>
+                               th:text="${#dates.format(reservation.reservationDate, 'yyyy.MM.dd / HH:mm 방문 완료')}">예약시간</p>
                         </div>
                         <div class="right-content" th:if="${reservation.reviewOx == true}">
                             <div class="ratings">
@@ -86,6 +92,10 @@
                             <span>평가 전</span>
                         </div>
                     </div>
+                    <!--방문 완료 리스트 없으면-->
+                    <div class="completed-item2" th:if="${#lists.isEmpty(latestReservations)}">
+                        <h4>방문 완료 내역이 없습니다.</h4>
+                    </div>
                 </div>
             </div>
 
@@ -98,7 +108,8 @@
                     </span>
                 </div>
 
-                <div class="review-card" th:each="review : ${latestReviews}">
+                <!--리뷰 내역 있을 때-->
+                <div class="review-card" th:each="review : ${latestReviews}" th:if="${#lists.size(latestReviews) > 0}">
                     <div class="review-content">
                         <h4 th:text="${review.restaurant.resName}">리뷰 레스토랑 이름</h4>
                         <img th:src="@{${review.reviewImage}}" alt="리뷰 이미지" class="review-img"
@@ -114,6 +125,12 @@
                         <p class="review-text" th:text="${review.contents}">리뷰 내용</p>
                     </div>
                 </div>
+                <!--리뷰 내역 없을 때-->
+                <div class="review-card" th:if="${#lists.isEmpty(latestReviews)}">
+                    <h4>리뷰 내역이 없습니다.</h4>
+                </div>
+
+
             </div>
         </div>
     </div>
