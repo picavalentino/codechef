@@ -232,6 +232,68 @@ h1 {
   white-space: nowrap; /* 줄바꿈 방지 */
 }
 
-.btn.more-btn:hover, .btn.more-btn2:hover {
+.btn.more-btn:hover, .btn.more-btn2:hover .btn.letsgomain:hover {
   background-color: #c0c0c0; /* 마우스 오버 시 색상 변경 */
+}
+
+.reservation-item2 {
+  background-color: #dfdfdf;
+  padding: 15px;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 10px;
+  height: height: auto;;
+  margin-bottom: 10px;
+  border: 1px solid #c9c9c9;
+  display: flex; /* Flexbox 사용하여 중앙 정렬 */
+  flex-direction: column; /* 수직 방향으로 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+}
+
+.reservation-item2 p {
+    font-size: 12px; /* 글자 크기 */
+    margin-bottom: 5px; /* p 태그 하단 여백 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.btn.letsgomain{
+    display: flex; /* Flexbox 사용 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    padding: 5px 15px; /* 버튼 안쪽 여백 */
+    border-radius: 9px; /* 모서리 둥글게 */
+    cursor: pointer; /* 커서가 손 모양으로 변경 */
+    text-align: center; /* 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+    border: none;
+    background-color: #000;
+    color: #fff;
+    width:60%;
+    height:80%;
+}
+
+.letsgomain h3{
+    margin-bottom: 0; /* p 태그 하단 여백 */
+}
+
+.completed-item2 {
+    background-color: #dfdfdf;
+      padding: 15px;
+      padding-left: 40px;
+      padding-right: 40px;
+      border-radius: 10px;
+      height: height: auto;;
+      margin-bottom: 10px;
+      border: 1px solid #c9c9c9;
+      display: flex; /* Flexbox 사용하여 중앙 정렬 */
+      flex-direction: column; /* 수직 방향으로 정렬 */
+      justify-content: center; /* 수평 중앙 정렬 */
+      align-items: center; /* 수직 중앙 정렬 */
+      text-align: center;
+}
+
+.completed-item2 h4{
+    margin-bottom: 0;
 }
