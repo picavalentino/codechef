@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.TextStyle;
+import java.time.temporal.WeekFields;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -119,12 +120,17 @@ public class ReservationController {
         // 요일 정보를 가져오기
         String dayOfWeek = reservationDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.KOREAN);
 
+        // 몇번째 주인지 가져오기
+        int weekNumber = getWeekOfMonth(reservationDate);
+
+        String dayOfWeekFormat = weekNumber+"주"+dayOfWeek;
+
         System.out.println("============================== reservationDate : "+reservationDate);
         System.out.println("============================== memberCount: "+memberCount);
         System.out.println("============================== chefNo : "+chefNo);
         System.out.println("============================== memNo : "+memNo);
         System.out.println("============================== select_time : "+select_time);
-        System.out.println("============================== dayOfWeek : "+dayOfWeek);
+        System.out.println("============================== dayOfWeek : "+dayOfWeekFormat);
 
         // 리뷰 작성했는지 확인
         List<ReviewDTO> reviewDTOS = reviewService.findByChefNoAndMemNo(chefNo, memNo);
@@ -146,7 +152,7 @@ public class ReservationController {
         reservationService.insertReservationInfo(++reservation_no, reservationDate, memberCount, review_ox, visit_ox, memNo, chefNo);
 
         // 예약 확인 체크
-        timeSlotService.availableCheck(chefNo, select_time, dayOfWeek);
+        timeSlotService.availableCheck(chefNo, select_time, dayOfWeekFormat);
 
 //        List<TimeSlotDTO> timeSlotDTOS = timeSlotService.selectTest(chefNo, select_time, dayOfWeek);
 //        timeSlotDTOS.forEach(x-> System.out.println("============================ "+x));
@@ -155,5 +161,11 @@ public class ReservationController {
         model.addAttribute("url", "/visitExpected");
 
         return "/codechef/alert";
+    }
+
+    private int getWeekOfMonth(LocalDateTime date) {
+        // 주의 시작일을 월요일로 설정
+        WeekFields weekFields = WeekFields.of(Locale.KOREA);
+        return date.get(weekFields.weekOfMonth());
     }
 }

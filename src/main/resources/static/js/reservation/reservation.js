@@ -213,10 +213,23 @@ function toggleTime(element) {
     }
 }
 
+function getMonthWeekNumber(date) {
+    const currentDate = date.getDate();
+    const firstDay = new Date(date.setDate(1)).getDay();
+
+    return Math.ceil((currentDate + firstDay) / 7);
+}
+
 function select_day(element) {
     const dateInfo = $('.date_info').text() + " " + element.textContent;
-    const koreanDayOfWeek = getKoreanDayOfWeek(dateInfo);
+
+    const week_find_date = new Date(dateInfo);
+    const weekNumber = getMonthWeekNumber(week_find_date);
+
+    const koreanDayOfWeek = weekNumber + "주" + getKoreanDayOfWeek(dateInfo);
     const chefNo = $('#chefNo').val();
+
+    console.log(koreanDayOfWeek);
 
 ////////// 현재 날짜를 선택했을 경우 예약시간이 현재 시간보다 이전인지 확인하는 부분
    // dateInfo를 Date 객체로 변환

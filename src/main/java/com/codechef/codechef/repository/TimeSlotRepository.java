@@ -23,7 +23,7 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, Long> {
 //    @Transactional
 //    @Modifying
 //    @Query(value = "INSERT INTO time_slot (available, chef_no, day, time) SELECT available, chef_no, day, time FROM time_slot WHERE time_no < 1338 ORDER BY time_no", nativeQuery = true)
-//    @Query(value = "UPDATE time_slot SET day = REPLACE(day, '1주', '5주') WHERE day LIKE '1주%' AND time_no > 8022", nativeQuery = true)
+//    @Query(value = "UPDATE time_slot SET day = REPLACE(day, '1주', '6주') WHERE day LIKE '1주%' AND time_no > 9359", nativeQuery = true)
 //    void updateTest();
 
 //    @Query(value = "SELECT * FROM time_slot WHERE chef_no = :chefNo AND time = :selectTime AND day = :dayOfWeek", nativeQuery = true)
