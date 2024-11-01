@@ -96,6 +96,7 @@ $(document).ready(function() {
     $('.dropdown-item').click(function(event) {
         event.preventDefault(); // 링크 기본 동작 방지
         const numPeople = $(this).data('value'); // data-value 속성에서 인원 수 가져오기
+        console.log(numPeople);
         $('#numPeople').val(numPeople); // 숨겨진 input에 저장
         $('.btn-group .btn:first-child').html(`<b><small>${numPeople}</small></b>`); // 버튼 텍스트 업데이트
     });
@@ -162,20 +163,7 @@ $(document).ready(function() {
      $('#cancelButton').on('click', function() {
         $('#confirmModal').modal('hide');
     });
-
-    const element = getElementByXpath("/html/body/div[2]/div[1]/div/form/div/div[2]/div[2]/div/button[1]/b/small");
-
-    if (element) {
-        console.log(element);
-    } else {
-        console.log("Element not found");
-    }
 });
-
-function getElementByXpath(xpath) {
-    const result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-    return result.singleNodeValue;
-}
 
 function toggleDate(element) {
     if ($(element).hasClass('disabled')) {
