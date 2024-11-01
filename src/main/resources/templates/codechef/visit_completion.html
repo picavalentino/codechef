@@ -57,7 +57,7 @@
         <!-- 리뷰 작성 완료 내역 (visitOx가 true이고 reviewOx가 true일 때) -->
         <li th:if="${reservation.visitOx} == true and ${reservation.reviewOx} == true" class="visit-true review-true">
           <div class="f" >
-            <a th:href="@{/review-create/{reservationNo}(reservationNo=${reservation.reservationNo})}">
+            <a>
               <!-- 이미지 -->
               <div class="image_box">
                 <img class="img" th:src="${reservation.mainImage}" alt="레스토랑 이미지">

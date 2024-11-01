@@ -59,24 +59,49 @@
     color:#ffffff;
     transform:translate(-50%, 0);
 }
-
+.col-lg-9 col-md-6 mx-auto category{
+    background-color: #404040;
+}
 .date {
     font-family: "Pretendard";
     font-weight: bold;
     margin: 20px 0 20px 0;
+    width: 250px;
+    height: 59px;
+    border-bottom: 2px solid #D9D9D9;
+}
+h5 {
+ width: 250px;
+ height: 100px;
+ border-bottom: 2px solid #D9D9D9;
+ font-weight : 900;
+ text-align: center;
 }
 
 .btn-login, .btn-signup {
     width: 250px;
     height: 59px;
-    margin: 15px 0 10px 0;
+    margin: 5px 0 20px 0;
     padding: 15px;
+
 }
 
 .btn-signup {
     background-color: #D9D9D9;
 }
+.rice {
+    margin-right: 10px;
+    weight: 27px;
+    height: 27px;
 
+}
+.nim {
+    font-size : 18px;
+}
+.inline {
+  display: inline-block;
+  margin: 0; /* 불필요한 여백을 제거하려면 추가 */
+}
 /* 식당 영역 */
 .card {
     border: solid 0px;
@@ -115,6 +140,7 @@
 .welcome {
     font-family: 'Pretendard';
     font-style: normal;
+    font-size: 20px;
 }
 
 

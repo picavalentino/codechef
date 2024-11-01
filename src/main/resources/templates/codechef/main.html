@@ -59,7 +59,8 @@
       </ul>
       <div class="col-lg-3 col-md-6 mx-auto">
         <h4 class="date" th:text="${#dates.format(#calendars.createNow(), 'yyyy.MM.dd')}"></h4>
-        <h3 sec:authorize="isAuthenticated()" class="welcome">환영합니다.<br>[[${nickname}]]님</h3>
+        <h5 sec:authorize="isAuthenticated()" class="welcome">
+          <img src="/images/main/rice.png" class="rice">  환영합니다 <br> <br> [[${nickname}]] 님</h5>
         <a th:href="@{/login}" class="btn btn-login" sec:authorize="isAnonymous()">로그인</a>
         <a th:href="@{/join}" class="btn btn-signup" sec:authorize="isAnonymous()">회원가입</a>
       </div>
