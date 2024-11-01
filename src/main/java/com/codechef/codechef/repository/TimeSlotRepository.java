@@ -20,6 +20,12 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, Long> {
     @Query(value = "UPDATE time_slot SET available = true WHERE chef_no = :chefNo AND time = :selectTime AND day = :dayOfWeek", nativeQuery = true)
     void availableCheck(@Param("chefNo") Long chefNo, @Param("selectTime") String selectTime, @Param("dayOfWeek") String dayOfWeek);
 
+    // 하루가 지나면 이전 예약 체크 해제
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE time_slot SET available = false WHERE day = :dayOfWeekFormat", nativeQuery = true)
+    void availableUpdate(@Param("dayOfWeekFormat") String dayOfWeekFormat);
+
 //    @Transactional
 //    @Modifying
 //    @Query(value = "INSERT INTO time_slot (available, chef_no, day, time) SELECT available, chef_no, day, time FROM time_slot WHERE time_no < 1338 ORDER BY time_no", nativeQuery = true)

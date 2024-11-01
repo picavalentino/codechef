@@ -8,6 +8,7 @@ import com.codechef.codechef.service.*;
 import com.codechef.codechef.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.TextStyle;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.WeekFields;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,8 @@ import java.util.Map;
 
 @Controller
 public class ReservationController {
+    private LocalDateTime lastExecutedDate = LocalDateTime.now();
+
     // 서비스 연결
     private final ReservationService reservationService;
     private final ReviewService reviewService;
@@ -125,13 +129,6 @@ public class ReservationController {
 
         String dayOfWeekFormat = weekNumber+"주"+dayOfWeek;
 
-        System.out.println("============================== reservationDate : "+reservationDate);
-        System.out.println("============================== memberCount: "+memberCount);
-        System.out.println("============================== chefNo : "+chefNo);
-        System.out.println("============================== memNo : "+memNo);
-        System.out.println("============================== select_time : "+select_time);
-        System.out.println("============================== dayOfWeek : "+dayOfWeekFormat);
-
         // 리뷰 작성했는지 확인
         List<ReviewDTO> reviewDTOS = reviewService.findByChefNoAndMemNo(chefNo, memNo);
 
@@ -163,9 +160,32 @@ public class ReservationController {
         return "/codechef/alert";
     }
 
+    // 하루가 지나면 이전 예약했던 정보를 업데이트
+    @Scheduled(fixedRate = 60000) // 1분마다 체크
+    public void checkDateAndPerformTask() {
+        LocalDateTime now = LocalDateTime.now();
+
+        // 하루가 지났는지 확인
+        if (ChronoUnit.DAYS.between(lastExecutedDate, now) >= 1) {
+            performTask();
+            lastExecutedDate = now; // 마지막 실행 시간 업데이트
+        }
+    }
+
     private int getWeekOfMonth(LocalDateTime date) {
         // 주의 시작일을 월요일로 설정
         WeekFields weekFields = WeekFields.of(Locale.KOREA);
         return date.get(weekFields.weekOfMonth());
+    }
+
+    private void performTask() {
+        System.out.println("하루가 지났습니다. 작업을 수행합니다.");
+
+        // 이전 예약정보 체크 해제
+        int weekNumber = getWeekOfMonth(lastExecutedDate);
+        String dayOfWeek = lastExecutedDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.KOREAN);
+        String dayOfWeekFormat = weekNumber+"주"+dayOfWeek;
+
+        timeSlotService.availableUpdate(dayOfWeekFormat);
     }
 }

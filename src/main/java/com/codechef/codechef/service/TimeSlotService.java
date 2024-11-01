@@ -33,6 +33,10 @@ public class TimeSlotService {
         }
     }
 
+    public void availableUpdate(String dayOfWeekFormat) {
+        timeSlotRepository.availableUpdate(dayOfWeekFormat);
+    }
+
 //    public void updateTest() {
 //        timeSlotRepository.updateTest();
 //    }
