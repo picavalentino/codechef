@@ -22,9 +22,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     // 예약정보 저장
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO reservation (reservation_date, member_count, review_ox, visit_ox, mem_no, chef_no) " +
-            "VALUES (:reservationDate, :memberCount, :reviewOx, :visitOx, :memNo, :chefNo)", nativeQuery = true)
+    @Query(value = "INSERT INTO reservation (reservation_no, reservation_date, member_count, review_ox, visit_ox, mem_no, chef_no) " +
+            "VALUES (:reservation_no, :reservationDate, :memberCount, :reviewOx, :visitOx, :memNo, :chefNo)", nativeQuery = true)
     void insertReservationInfo(
+            @Param("reservation_no") Long reservation_no,
             @Param("reservationDate") LocalDateTime reservationDate,
             @Param("memberCount") int memberCount,
             @Param("reviewOx") boolean reviewOx,
@@ -41,6 +42,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findTop2ByMemberMemNoAndVisitOxTrueOrderByReservationDateDesc(@Param("memNo") Long memNo);
 
     // 이전에 방문한 적이 있는지 확인
-    @Query("SELECT r FROM Reservation r WHERE r.restaurant.chefNo = :chefNo AND r.member.memNo = :memNo AND reservation_date < NOW()")
-    List<Reservation> visitOxFind(Long chefNo, Long memNo);
+    @Query("SELECT r FROM Reservation r WHERE r.restaurant.chefNo = :chefNo AND r.member.memNo = :memNo AND r.reservationDate < CURRENT_TIMESTAMP")
+    List<Reservation> visitOxFind(@Param("chefNo") Long chefNo, @Param("memNo") Long memNo);
+
+    @Query("SELECT MAX(r.reservationNo) FROM Reservation r")
+    Long maxReservationNo();
 }

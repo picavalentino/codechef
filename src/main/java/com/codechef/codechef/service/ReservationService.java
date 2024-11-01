@@ -4,9 +4,11 @@ import com.codechef.codechef.dto.ReservationDto;
 import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +25,8 @@ public class ReservationService {
                 new IllegalArgumentException("Reservation not found with ID: " + reservationNo));
     }
 
-    public void insertReservationInfo(LocalDateTime reservationDate, int memberCount, boolean reviewOx, boolean visitOx, Long memNo, Long chefNo) {
-        reservationRepository.insertReservationInfo(reservationDate, memberCount, reviewOx, visitOx, memNo, chefNo);
+    public void insertReservationInfo(Long reservation_no, LocalDateTime reservationDate, int memberCount, boolean reviewOx, boolean visitOx, Long memNo, Long chefNo) {
+        reservationRepository.insertReservationInfo(reservation_no, reservationDate, memberCount, reviewOx, visitOx, memNo, chefNo);
     }
 
     public List<Long> getChefNosByMemNo(Long memNo) {
@@ -50,8 +52,15 @@ public class ReservationService {
     }
 
     public List<ReservationDto> visitOxFind(Long chefNo, Long memNo) {
-        reservationRepository.visitOxFind(chefNo, memNo);
+        List<Reservation> reservations = reservationRepository.visitOxFind(chefNo, memNo);
+        if(ObjectUtils.isEmpty(reservations)){
+            return Collections.emptyList();
+        }
+        return reservations.stream()
+                .map(x->ReservationDto.fromEntity(x)).toList();
+    }
 
-        return null;
+    public Long maxReservationNo() {
+        return reservationRepository.maxReservationNo();
     }
 }

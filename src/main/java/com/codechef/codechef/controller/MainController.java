@@ -364,6 +364,7 @@ public class MainController {
         Long memNo = memberService.getMemNoByEmail(email);
 
         Boolean review_ox = false;
+        Boolean visit_ox = false;
 
         // 요일 정보를 가져오기
         String dayOfWeek = reservationDate.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.KOREAN);
@@ -385,17 +386,23 @@ public class MainController {
         // 이전에 방문했는지 확인
         List<ReservationDto> reservationDto = reservationService.visitOxFind(chefNo, memNo);
 
-        // 예약정보 데이터베이스에 저장 (visit_ox 에 대한 정보가 필요함)
-        reservationService.insertReservationInfo(reservationDate, memberCount, review_ox, false, memNo, chefNo);
+        if (!reservationDto.isEmpty()) {
+            visit_ox = true;
+        }
 
-        // 예약 확인 체크 (1주월, 2주월, 3주월, 4주월, 5주월 6주월)
-        timeSlotService.availableCheck(chefNo, select_time, dayOfWeek);
+        Long reservation_no = reservationService.maxReservationNo();
+
+        // 예약정보 데이터베이스에 저장
+//        reservationService.insertReservationInfo(++reservation_no, reservationDate, memberCount, review_ox, visit_ox, memNo, chefNo);
+
+        // 예약 확인 체크
+//        timeSlotService.availableCheck(chefNo, select_time, dayOfWeek);
 
 //        List<TimeSlotDTO> timeSlotDTOS = timeSlotService.selectTest(chefNo, select_time, dayOfWeek);
 //        timeSlotDTOS.forEach(x-> System.out.println("============================ "+x));
 
         model.addAttribute("msg", "예약되었습니다.");
-        model.addAttribute("url", "/mypage");
+        model.addAttribute("url", "/visitExpected");
 
         return "/codechef/alert";
     }

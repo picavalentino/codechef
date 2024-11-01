@@ -162,7 +162,20 @@ $(document).ready(function() {
      $('#cancelButton').on('click', function() {
         $('#confirmModal').modal('hide');
     });
+
+    const element = getElementByXpath("/html/body/div[2]/div[1]/div/form/div/div[2]/div[2]/div/button[1]/b/small");
+
+    if (element) {
+        console.log(element);
+    } else {
+        console.log("Element not found");
+    }
 });
+
+function getElementByXpath(xpath) {
+    const result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+    return result.singleNodeValue;
+}
 
 function toggleDate(element) {
     if ($(element).hasClass('disabled')) {
