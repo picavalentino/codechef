@@ -1,29 +1,39 @@
-a { text-decoration: none; color: black; } a:visited {color:black}
+a { text-decoration: none; color: black; display: flex; flex-direction: row; } a:visited {color:black}
     a:hover { text-decoration: none; }    a:focus { text-decoration: none; }    a:hover, a:active { text-decoration: none; }
 
-     .content ul {width: 500px;display: block;}
-     .content ul li {display: flex; width: 100%;    margin: 10px;}
+     .content1 ul {width: 900px;display: block;}
+     .content1 ul li {display: flex; width: 100%;    margin: 10px;}
      /* 첫번째 영역 */
-     .content ul li .f {width: 80%;display: flex;border-radius: 20px;border: 1px solid #000;padding: 10px;}
-     .content ul li .f img {border-radius: 10px;display: block;}
-     .content ul li .f p {font-size: 14px;padding: 0;margin: 0;}
-     .content ul li .f p2 {display: block;}
+     .content1 ul li .f {width: 80%; display: flex; border-radius: 20px;border: 1px solid #000;padding: 10px;}
+     .content1 ul li .f .img {border-radius: 10px; width: 350px; height: 220px; display: block; margin:10px;}
+     .content1 ul li .f p1 {font-size: 30px; width:250px;  padding: 0;margin-left: 10px; }
+     .content1 ul li .f p2 {display: block; width:250px; margin-left: 0px; font-size :25px;}
      /* 두번째 영역 */
-     .content ul li .r {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
+     .content1 ul li .r {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
      font-size: 12px;background: #000;border-radius: 20px;color: #fff;text-decoration: none;margin-left: 5px; flex-direction: column;}
-     .content ul li .r img {width: 40%;display: block;}
-     .content ul li .r p3 {}
-     .content ul li .r a {display: flex;flex-direction: column;align-items: center;}
+     .content1 ul li .r img {width:10% display: block;}
+     .content1 ul li .r p { font-size :25px; margin-top:19px;}
+     .content1 ul li .r a {display: flex;flex-direction: column;align-items: center;}
      .completion {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
-           font-size: 12px;background: #fff;border-radius: 20px;color: #000;text-decoration: none;margin-left: 5px; flex-direction: column;
+           font-size: 12px;background: #fff;border-radius: 20px;border: 1px solid #000;color: #000;text-decoration: none;margin-left: 5px; flex-direction: column;
            }
 
-
+    .*{
+        font-family: "SourceSansPro", "Pretendard";
+    }
+    .col {
+    display: flex; flex-direction: row;
+    }
 
      .main {
         text-align: center;
      }
-
+     .main p{
+     font-size : 34px;
+     }
+    p1 {
+     font-weight:900px;!important;
+    }
      .visit_title {
         padding:5px 10px;
         border-radius: 20px;
@@ -43,7 +53,8 @@ a { text-decoration: none; color: black; } a:visited {color:black}
      }
 
      .res_info{
-        padding-left: 5px;
+        padding-left: 150px;
+        width : 250px;
         display: flex;
         border-width:60%;
         align-items: flex-start;
@@ -51,19 +62,26 @@ a { text-decoration: none; color: black; } a:visited {color:black}
         align-content: center;
         justify-content: center;
      }
-
-     .visit_date{
+     .visit_end_info .visit_date{
         font-size: 11px;
-        padding-top: 10px;
+        padding-top: 15px; !important
+        width: 200px;
      }
 
+     .res_info .visit_date{
+            font-size: 11px;
+            padding-top: 30px; !important
+            width: 200px;
+         }
      .visit_end_info{
-        padding-left: 5px;
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
-        align-content: center;
-        justify-content: center;
+          padding-left: 150px;
+          width : 250px;
+          display: flex;
+          border-width:60%;
+          align-items: flex-start;
+          flex-direction: column;
+          align-content: center;
+          justify-content: center;
      }
 
      .visit_image{
@@ -75,10 +93,46 @@ a { text-decoration: none; color: black; } a:visited {color:black}
      }
 
      .star_image {
-        width: 15%;
+        width: 30px; !important;
+        height:30px; !important;
+        margin-top : 10px;
      }
 
      .completion {
         width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
           font-size: 12px;background: #fff;border-radius: 20px;color: #000;text-decoration: none;margin-left: 5px; flex-direction: column;
      }
+     .completion p{
+            font-size :25px;
+             margin-top:15px;
+     }
+   .pagination {
+       margin-top: 50px;
+   }
+
+   .page-link {
+       color: #1c1c1c;
+       border-radius: 6px;
+       padding: 7px 16px 10px;
+       margin-right: 16px;
+       border-color: #1c1c1c;
+       font-family: 'Pretendard';
+       font-size: 18px;
+       font-weight: bold;
+   }
+
+   .page-link:hover {
+       z-index: 2;
+       color: #fff;
+       background-color: #1c1c1c;
+       border-color: #1c1c1c;
+   }
+
+   .page-item.active .page-link {
+       background-color: #000; /* 배경색을 검은색으로 설정 */
+       color: #fff; /* 텍스트 색상을 흰색으로 설정 */
+       pointer-events: none; /* 클릭 방지 (비활성화 상태) */
+       cursor: default; /* 커서 기본 설정 */
+       border-color: #1c1c1c;
+   }
+

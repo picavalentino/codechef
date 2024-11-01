@@ -25,6 +25,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((auth) -> auth.requestMatchers("/mypage").authenticated()
+                .requestMatchers("/css/**" , "/js/**").permitAll()
                 .anyRequest().permitAll());
 
         http.formLogin((auth) -> auth.loginPage("/login").loginProcessingUrl("/loginMember").usernameParameter("email").defaultSuccessUrl("/main", true).successHandler(new CustomLoginSuccessHandler()).permitAll());

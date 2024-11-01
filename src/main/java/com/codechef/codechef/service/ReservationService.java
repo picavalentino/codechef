@@ -3,6 +3,11 @@ package com.codechef.codechef.service;
 import com.codechef.codechef.dto.ReservationDto;
 import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.repository.ReservationRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -12,8 +17,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import java.util.List;
+
+
 @Service
 public class ReservationService {
+    @PersistenceContext
+    private EntityManager entityManager;
+
     private final ReservationRepository reservationRepository;
 
     public ReservationService(ReservationRepository reservationRepository) {
@@ -50,6 +61,13 @@ public class ReservationService {
                 .limit(2) // 최대 2개로 제한
                 .collect(Collectors.toList());
     }
+    public Page<Reservation> getReservationsByMemberNo(Long memNo, Pageable pageable) {
+
+        return reservationRepository.findByMemberMemNo(memNo, pageable);
+    }
+
+
+
 
     public List<ReservationDto> visitOxFind(Long chefNo, Long memNo) {
         List<Reservation> reservations = reservationRepository.visitOxFind(chefNo, memNo);

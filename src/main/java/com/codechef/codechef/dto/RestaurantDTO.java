@@ -2,6 +2,8 @@ package com.codechef.codechef.dto;
 
 import com.codechef.codechef.entity.Restaurant;
 import com.codechef.codechef.entity.Review;
+import com.codechef.codechef.repository.ReservationRepository;
+import com.codechef.codechef.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RestaurantDTO {
+
     private Long chefNo;
     private String chefName;
     private String chefNickname;
@@ -32,6 +35,7 @@ public class RestaurantDTO {
 
     // 리뷰 맛+분위기+서비스 전체 평점
     private String reviewRating;
+
 
     public static RestaurantDTO fromEntity(Restaurant restaurant) {
         return new RestaurantDTO(
@@ -65,4 +69,21 @@ public class RestaurantDTO {
         double avg = (moodTotal+serveTotal+tasteTotal)/(reviewList.size()*3.0);
         return String.format("%.1f", avg);
     }
+    // getters and setters
+
+    private static String reviewCompletionRating(List<ReviewDTO> reviewList) {
+        // 리뷰 리스트가 비어 있는 경우 0으로 설정
+        if (reviewList.isEmpty()) {
+            return "0.0";
+        }
+
+        // 해당 컬럼의 전체 합을 구하고, 평점 구하기
+        int moodTotal = reviewList.stream().mapToInt(ReviewDTO::getMoodPoint).sum();
+        int serveTotal = reviewList.stream().mapToInt(ReviewDTO::getServePoint).sum();
+        int tasteTotal = reviewList.stream().mapToInt(ReviewDTO::getTastePoint).sum();
+
+        double avg = (moodTotal + serveTotal + tasteTotal) / (reviewList.size() * 3.0);
+        return String.format("%.1f", avg);
+    }
+
 }
