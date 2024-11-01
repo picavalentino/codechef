@@ -106,6 +106,13 @@ div.store-info p {
     align-items: center; /* 아이콘과 텍스트를 수직 중앙 정렬 */
 }
 
+#bizHour {
+    white-space: pre;
+    margin: 0;
+    padding: 0;
+
+}
+
 .info-icon {
     width: 20px;  /* 아이콘 크기 */
     height: 20px;

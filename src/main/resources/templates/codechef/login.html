@@ -37,12 +37,25 @@
                 <button type="submit" class="login_btn"><span id="login_btn">로그인</span></button>
             </div>
         </form>
+        <div th:if="${session.errorMessage}" id="errorMessage" class="alert alert-danger">
+            <p th:text="${session.errorMessage}"></p>
+        </div>
         <div>
             <a th:href="@{/join}"><button class="insert_btn">회원가입</button></a>
         </div>
     </div>
 </div>
+    <script th:src="@{/js/jQuery.js}"></script>
+    <script th:inline="javascript">
+        function hideErrorMessage() {
+         $("#errorMessage").hide();
+         fetch('/clear-error-message', { method: 'POST' });
+        }
 
+        $(document).on("click", hideErrorMessage);
+
+        setTimeout(hideErrorMessage, 5000);
+    </script>
 
 
 </div>

@@ -17,7 +17,13 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     List<Restaurant> getRandRestaurant();
 
     // 키워드 혹은 카테고리 별 식당 조회
-    Page<Restaurant> findByCategoryContainsAndResNameContains(String category, String keyword, Pageable pageable);
+    @Query("SELECT r FROM Restaurant r WHERE r.category LIKE %:category% AND " +
+            "(r.resName LIKE %:keyword% OR r.chefName LIKE %:keyword% OR r.chefNickname LIKE %:keyword%)")
+    Page<Restaurant> findByCategoryAndKeywordInFields(@Param("category") String category,
+                                                      @Param("keyword") String keyword,
+                                                      Pageable pageable);
+
+//    Page<Restaurant> findByCategoryContainsAndResNameContains(String category, String keyword, Pageable pageable);
 
     // chefNo로 식당 조회 메서드
     Restaurant findByChefNo(Long chefNo);

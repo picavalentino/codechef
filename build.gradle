@@ -37,7 +37,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
+	implementation 'net.coobird:thumbnailator:0.4.14'
 	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.300' // 버전은 최신으로 조정 가능
 }
 

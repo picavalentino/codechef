@@ -24,11 +24,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((auth) -> auth.requestMatchers("/mypage").authenticated()
-                .requestMatchers("/css/**" , "/js/**").permitAll()
+        http.authorizeHttpRequests((auth) -> auth.requestMatchers("/mypage", "/reservation").authenticated()
+                .requestMatchers("/css/**" , "/js/**", "/images/**").permitAll()
                 .anyRequest().permitAll());
 
-        http.formLogin((auth) -> auth.loginPage("/login").loginProcessingUrl("/loginMember").usernameParameter("email").defaultSuccessUrl("/main", true).successHandler(new CustomLoginSuccessHandler()).permitAll());
+        http.formLogin((auth) -> auth.loginPage("/login").loginProcessingUrl("/loginMember").usernameParameter("email").defaultSuccessUrl("/main", true)
+                .successHandler(new CustomLoginSuccessHandler()).failureHandler(new CustomAuthenticationFailureHandler()).permitAll());
         http.csrf((auth) -> auth.disable()); // csrf -> 악의적인 기계적 공격에서 방어하기 위해 사용(여기서는 사용하지 않겠다고 선언)
 
         http.logout((auth) -> auth.logoutUrl("/logout").logoutSuccessUrl("/main").permitAll());

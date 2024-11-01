@@ -40,7 +40,7 @@ public class RestaurantService {
 
     // 카테고리별 or 키워드 검색, 페이지 처리
     public Page<RestaurantDTO> getResultLists(String category, String keyword, Pageable pageable) {
-        Page<Restaurant> restaurants = resRepository.findByCategoryContainsAndResNameContains(category, keyword, pageable);
+        Page<Restaurant> restaurants = resRepository.findByCategoryAndKeywordInFields(category, keyword, pageable);
         if(ObjectUtils.isEmpty(restaurants)){
             return null;
         }

@@ -24,3 +24,7 @@ aws:
     secret-key: ${SECRET}
     region: ap-northeast-2
 
+logging:
+  level:
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+

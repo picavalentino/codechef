@@ -6,8 +6,9 @@ a { text-decoration: none; color: black; } a:visited {color:black}
      /* 첫번째 영역 */
      .content ul li .f {width: 80%;display: flex;border-radius: 20px;border: 1px solid #000;padding: 10px;}
      .content ul li .f img {border-radius: 10px;display: block;}
-     .content ul li .f p {font-size: 14px;padding: 0;margin: 0;}
-     .content ul li .f p2 {display: block;}
+     .content ul li .f p {font-size: 30px; width: 350px; padding: 0;margin-left: 10px;}
+     .content ul li .f p2 {display: block; width: 250px; margin-left: 0px; font-size: 25px;}
+     .content ul li .f p3 {display: block; width: 250px; margin-left: 0px; font-size: 15px;}
      /* 두번째 영역 */
      .content ul li .r {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
      font-size: 12px;background: #000;border-radius: 20px;color: #fff;text-decoration: none;margin-left: 5px; flex-direction: column;}
@@ -54,10 +55,44 @@ a { text-decoration: none; color: black; } a:visited {color:black}
 
      .visit_date{
         font-size: 11px;
-        padding-top: 10px;
+        padding-top: 30px; !important
+        width: 200px;
      }
 
      .image {
         width: 350px;
         height: 250px;
+     }
+
+     .pagination {
+        display: flex;
+        justify-content: center;
+        padding-left: 0;
+        list-style: none;
+     }
+
+     .page-link {
+         color: #1c1c1c;
+         border-radius: 6px;
+         padding: 7px 16px 10px;
+         margin-right: 16px;
+         border-color: #1c1c1c;
+         font-family: 'Pretendard';
+         font-size: 18px;
+         font-weight: bold;
+     }
+
+     .page-link:hover {
+         z-index: 2;
+         color: #fff;
+         background-color: #1c1c1c;
+         border-color: #1c1c1c;
+     }
+
+     #search {
+         border-radius: 8px;
+         border: none;
+         background: url(/images/main/loc.png) no-repeat 18px #F5F5F5;
+         padding-left: 45px;
+         font-size: 17px;
      }

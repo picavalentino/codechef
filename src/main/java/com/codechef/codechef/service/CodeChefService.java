@@ -16,6 +16,11 @@ public class CodeChefService {
     MemberRepository memberRepository;
 
     public void joinMember(MemberDto memberDTO) {
+        Boolean isUser = memberRepository.existsByEmail(memberDTO.getEmail());
+        if(isUser) {
+            return;
+        }
+
         Member data = new Member();
         data.setEmail(memberDTO.getEmail());
         data.setPassword(bCryptPasswordEncoder.encode(memberDTO.getPassword()));
