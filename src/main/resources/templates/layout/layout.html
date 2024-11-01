@@ -10,12 +10,12 @@
 </head>
 <body>
     <!-- header 넣기 -->
-    <th:block th:replace="fragments/header :: header"></th:block>
+    <th:block th:replace="~{fragments/header :: header}"></th:block>
 
     <!-- 우리가 작업한 내용 들어갈 곳, content만 작성해서 사용하면 됨 -->
     <th:block layout:fragment="content"></th:block>
 
     <!-- footer 넣기 -->
-    <th:block th:replace="fragments/footer :: footer"></th:block>
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
 </body>
 </html>

@@ -57,7 +57,7 @@
                     <span class="list-header">
                         <h3>방문 완료 리스트</h3>
                         <!--방문 완료 리스트 더보기 링크 연결 해야함!-->
-                        <a class="btn more-btn" href="#">더보기</a>
+                        <a class="btn more-btn" th:href="@{/visit-completion/{memNo}(memNo=${member.memNo})}">더보기</a>
                     </span>
                     <div class="completed-item" th:each="reservation : ${latestReservations}">
                         <div class="left-content">

@@ -65,4 +65,6 @@ public class RestaurantService {
     public List<Restaurant> getRestaurantsByChefNos(List<Long> chefNos) {
         return resRepository.findByChefNos(chefNos);
     }
+
+
 }

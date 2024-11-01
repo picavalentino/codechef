@@ -1,9 +1,15 @@
 package com.codechef.codechef.controller;
 
 import com.codechef.codechef.dto.*;
+import com.codechef.codechef.dto.MemberDto;
+import com.codechef.codechef.dto.RestaurantDTO;
+import com.codechef.codechef.dto.ReviewCreateDTO;
+import com.codechef.codechef.dto.TimeSlotDTO;
+import com.codechef.codechef.dto.ReviewDTO;
 import com.codechef.codechef.entity.Member;
 import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.entity.Restaurant;
+import com.codechef.codechef.repository.ReservationRepository;
 import com.codechef.codechef.service.*;
 import com.codechef.codechef.util.DateUtil;
 import groovy.util.logging.Slf4j;
@@ -39,13 +45,15 @@ public class MainController {
     private final ReviewService reviewService;
     private final TimeSlotService timeSlotService;
     private final MemberService memberService;
-
-    public MainController(ReservationService reservationService, ReviewService reviewService, TimeSlotService timeSlotService, MemberService memberService) {
+    private final ReservationRepository reservationRepository;
+    public MainController(ReservationService reservationService, ReviewService reviewService, TimeSlotService timeSlotService, MemberService memberService, ReservationRepository reservationRepository) {
         this.reservationService = reservationService;
         this.reviewService = reviewService;
         this.timeSlotService = timeSlotService;
         this.memberService = memberService;
+        this.reservationRepository = reservationRepository;
     }
+
 
     @Autowired
     RestaurantService restaurantService;
@@ -133,8 +141,8 @@ public class MainController {
         model.addAttribute("reservation", reservation);
         model.addAttribute("member", reservation.getMember());
         model.addAttribute("restaurant", reservation.getRestaurant());
-        log.info("================================="+reservation.getReservationDate());
-        log.info("================================="+reservation.getRestaurant().getResName());
+        log.info("=================================" + reservation.getReservationDate());
+        log.info("=================================" + reservation.getRestaurant().getResName());
         return "/codechef/reviewCreate";
     }
 
@@ -152,7 +160,6 @@ public class MainController {
     }
 
 
-
     // 방문예약 리스트 페이지
     @GetMapping("/visitExpected")
     public String visitExpected(Model model) {
@@ -165,11 +172,6 @@ public class MainController {
         return "/codechef/visit_expected";
     }
 
-    // 방문완료 리스트 페이지
-    @GetMapping("/visit-completion")
-    public String visitCompletion() {
-        return "/codechef/visit_completion";
-    }
 
     ///마이페이지
     @GetMapping("/mypage")
@@ -234,16 +236,17 @@ public class MainController {
 
     // 프로필 수정 페이지
     @GetMapping("/profileEdit")
-    public String getProfileEdit(Model model, HttpSession session) {
+    public String getProfileEdit(@RequestParam("memNo") Long memNo,
+            Model model, HttpSession session) {
 //        // 로그인된 상태로만 접근 가능하도록 확인
-//        Long loggedInUserId = (Long) session.getAttribute("loggedInUser");
-//        if (loggedInUserId == null) {
-//            return "redirect:/login";
-//        }
+        Long loggedInUserId = (Long) session.getAttribute("loggedInUser");
+       if (loggedInUserId == null) {
+            return "redirect:/login";
+        }
 //
 //        // mem_no로 회원 정보 조회
-//        Member member = memberService.getMemberByMemNo(memNo);
-//        model.addAttribute("member", member);
+        Member member = memberService.getMemberByMemNo(memNo);
+           model.addAttribute("member", member);
 
         // mem_no가 1인 회원 정보 조회
         MemberDto dto = MemberDto.fromEntity(memberService.getMemberWithMemNoOne());
@@ -271,10 +274,10 @@ public class MainController {
     public String updateMemberInfo(
             HttpSession session,
             @RequestParam("memNo") Long memNo,
-            @RequestParam(value ="password", required = false) String password,
-            @RequestParam(value ="passwordCheck", required = false) String passwordCheck,
-            @RequestParam(value ="phoneNo", required = false) String phoneNo,
-            @RequestParam(value ="nickname", required = false) String nickname,
+            @RequestParam(value = "password", required = false) String password,
+            @RequestParam(value = "passwordCheck", required = false) String passwordCheck,
+            @RequestParam(value = "phoneNo", required = false) String phoneNo,
+            @RequestParam(value = "nickname", required = false) String nickname,
             @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
             Model model) {
 
@@ -286,7 +289,7 @@ public class MainController {
             }
 
             // 회원 정보 업데이트
-            memberService.updateMemberInfo(memNo, password,passwordCheck, phoneNo, nickname, imageBytes);
+            memberService.updateMemberInfo(memNo, password, passwordCheck, phoneNo, nickname, imageBytes);
             model.addAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
             return "redirect:/mypage";
         } catch (IOException e) {
@@ -354,13 +357,65 @@ public class MainController {
                                   @RequestParam(value = "numPeople") int numPeople,
                                   @RequestParam(value = "select_time") String select_time) {
 
-        System.out.println("============================== "+chefNo);
-        System.out.println("============================== "+selectedDay);
-        System.out.println("============================== "+numPeople);
-        System.out.println("============================== "+select_time);
+        System.out.println("============================== " + chefNo);
+        System.out.println("============================== " + selectedDay);
+        System.out.println("============================== " + numPeople);
+        System.out.println("============================== " + select_time);
 
 //        reservationService.insertReservationInfo(numPeople, chefNo, selectedDay)
 
         return "/codechef/reservation";
     }
+
+
+    @GetMapping("/visit-completion/{memNo}")
+    public String visitCompletion(@PathVariable("memNo") Long memNo,
+                                  Model model,
+                                  @PageableDefault(page = 0,size = 5) Pageable pageable) {
+        // 회원의 예약 목록 조회 (조인된 레스토랑 정보 포함)
+        Page<Reservation> reservationsPage = reservationRepository.findByMemberMemNoAndVisitOxTrue(memNo, pageable);
+
+
+        if (reservationsPage.isEmpty()) {
+            model.addAttribute("message", "예약 정보가 없습니다.");
+            return "/codechef/visit_completion";
+        }
+
+        // 디버깅용 로그 출력
+        System.out.println("회원 번호: " + memNo);
+        for (Reservation reservation : reservationsPage.getContent()) {
+            System.out.println("예약 날짜: " + reservation.getReservationDate());
+            System.out.println("레스토랑 이름: " + reservation.getRestaurant().getResName());
+            System.out.println("리뷰 여부: " + reservation.getReviewOx());
+            System.out.println("방문 여부: " + reservation.getVisitOx());
+            System.out.println("레스토랑 이미지: " + reservation.getRestaurant().getMainImage());
+
+        }
+
+
+
+        int totalPage = reservationsPage.getTotalPages();
+        int currentPage = reservationsPage.getNumber();
+
+        // 페이지 블럭 처리
+        List<Integer> pageNum = pagenationService.getPaginationBarNumber(currentPage, totalPage);
+        model.addAttribute("pageNum", pageNum);
+        // 모델에 값 추가
+        model.addAttribute("memNo", memNo);
+        model.addAttribute("reservationsPage", reservationsPage);
+
+        // 남은 요소가 5개 미만이라도 페이지에 표시되도록 처리
+        model.addAttribute("totalElements", reservationsPage.getTotalElements());
+        model.addAttribute("hasContent", reservationsPage.hasContent());
+        System.out.println("Current page: " + pageable.getPageNumber());
+        System.out.println("Total pages: " + reservationsPage.getTotalPages());
+        System.out.println("Reservations size: " + reservationsPage.getContent().size());
+        return "/codechef/visit_completion";
+    }
+
+
+
+
+
 }
+
