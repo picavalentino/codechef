@@ -30,12 +30,12 @@
             <a>
               <!-- 이미지 -->
               <div class="image_box">
-                <img class="img" th:src="${reservation.restaurant.mainImage}" alt="레스토랑 이미지">
+                <img class="img" th:src="${reservation.mainImage}" alt="레스토랑 이미지">
               </div>
 
               <!-- 문구 -->
               <div class="res_info">
-                <p1 th:text="${reservation.restaurant.resName}" style="font-weight: 900 !important;">레스토랑 이름 표시</p1>
+                <p1 th:text="${reservation.resName}" style="font-weight: 900 !important;">레스토랑 이름 표시</p1>
                 <div class="visit_date">
                   <p2 th:text="${#dates.format(reservation.reservationDate, 'yyyy.MM.dd - HH:mm')}">2024.10.22 - 14:02</p2>
                   <p2>방문완료</p2>
@@ -56,20 +56,22 @@
 
         <!-- 리뷰 작성 완료 내역 (visitOx가 true이고 reviewOx가 true일 때) -->
         <li th:if="${reservation.visitOx} == true and ${reservation.reviewOx} == true" class="visit-true review-true">
-          <div class="f" th:if="${reservation.restaurant != null}">
+          <div class="f" >
             <a th:href="@{/review-create/{reservationNo}(reservationNo=${reservation.reservationNo})}">
               <!-- 이미지 -->
               <div class="image_box">
-                <img class="img" th:src="${reservation.restaurant.mainImage}" alt="레스토랑 이미지">
+                <img class="img" th:src="${reservation.mainImage}" alt="레스토랑 이미지">
               </div>
-              <div class="visit_end_info">
-                <p1 th:text="${reservation.restaurant.resName}" style="font-weight: 900 !important;">레스토랑 이름 표시</p1>
-                <div class="visit_date">
-                  <p2 th:text="${#dates.format(reservation.reservationDate, 'yyyy.MM.dd - HH:mm')}">2024.10.22 - 14:02</p2>
-                  <p2>방문완료</p2>
-                  <div class="col">
-                    <img class="star_image" th:src="@{/images/visit_completion/ic_round-star.png}" alt="별점 이미지">
-                    <p1 class="star">4.7</p1>
+              <div>
+                <div class="visit_end_info">
+                  <p1 th:text="${reservation.resName}" style="font-weight: 900 !important;">레스토랑 이름 표시</p1>
+                  <div class="visit_date">
+                    <p2 th:text="${#dates.format(reservation.reservationDate, 'yyyy.MM.dd - HH:mm')}">2024.10.22 - 14:02</p2>
+                    <p2>방문완료</p2>
+                    <div class="col">
+                      <img class="star_image" th:src="@{/images/visit_completion/ic_round-star.png}" alt="별점 이미지">
+                      <p1 class="star" th:text="${reservation.reviewRating}">평점</p1>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -8,7 +8,9 @@ import com.codechef.codechef.dto.ReviewDTO;
 import com.codechef.codechef.entity.Member;
 import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.entity.Restaurant;
+import com.codechef.codechef.entity.Review;
 import com.codechef.codechef.repository.ReservationRepository;
+import com.codechef.codechef.repository.RestaurantRepository;
 import com.codechef.codechef.service.*;
 import groovy.util.logging.Slf4j;
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
@@ -27,6 +30,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static com.codechef.codechef.dto.VisitCompletionDTO.calculateReviewRating;
+
 
 @Controller
 @Slf4j
@@ -36,12 +49,14 @@ public class MainController {
     private final ReviewService reviewService;
     private final MemberService memberService;
     private final ReservationRepository reservationRepository;
+    private final RestaurantRepository restaurantRepository;
 
-    public MainController(ReservationService reservationService, ReviewService reviewService, MemberService memberService, ReservationRepository reservationRepository) {
+    public MainController(ReservationService reservationService, ReviewService reviewService, MemberService memberService, ReservationRepository reservationRepository, RestaurantRepository restaurantRepository) {
         this.reservationService = reservationService;
         this.reviewService = reviewService;
         this.memberService = memberService;
         this.reservationRepository = reservationRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     @Autowired
@@ -293,47 +308,53 @@ public class MainController {
         }
     }
 
+
     @GetMapping("/visit-completion/{memNo}")
     public String visitCompletion(@PathVariable("memNo") Long memNo,
                                   Model model,
-                                  @PageableDefault(page = 0,size = 5) Pageable pageable) {
+                                  @PageableDefault(page = 0, size = 5) Pageable pageable) {
         // 회원의 예약 목록 조회 (조인된 레스토랑 정보 포함)
         Page<Reservation> reservationsPage = reservationRepository.findByMemberMemNoAndVisitOxTrue(memNo, pageable);
-
 
         if (reservationsPage.isEmpty()) {
             model.addAttribute("message", "예약 정보가 없습니다.");
             return "/codechef/visit_completion";
         }
 
-        // 디버깅용 로그 출력
-        System.out.println("회원 번호: " + memNo);
-        for (Reservation reservation : reservationsPage.getContent()) {
-            System.out.println("예약 날짜: " + reservation.getReservationDate());
-            System.out.println("레스토랑 이름: " + reservation.getRestaurant().getResName());
-            System.out.println("리뷰 여부: " + reservation.getReviewOx());
-            System.out.println("방문 여부: " + reservation.getVisitOx());
-            System.out.println("레스토랑 이미지: " + reservation.getRestaurant().getMainImage());
+        // DTO로 변환 및 리뷰 평점 계산
+        List<VisitCompletionDTO> visitCompletionDTOs = reservationsPage.getContent().stream().map(reservation -> {
+            Review review = reservation.getReview();
+            String reviewRating = "0.0";
+            if (review != null) {
+                ReviewDTO reviewDTO = ReviewDTO.fromEntity(review);
+                reviewRating = calculateReviewRating(List.of(reviewDTO));
+            }
+            return VisitCompletionDTO.fromEntity(reservation, reviewRating);
+        }).collect(Collectors.toList());
 
-        }
-
-        int totalPage = reservationsPage.getTotalPages();
-        int currentPage = reservationsPage.getNumber();
+        // Page 객체로 변환
+        Page<VisitCompletionDTO> visitCompletionDTOPage = new PageImpl<>(visitCompletionDTOs, pageable, reservationsPage.getTotalElements());
 
         // 페이지 블럭 처리
+        int totalPage = visitCompletionDTOPage.getTotalPages();
+        int currentPage = visitCompletionDTOPage.getNumber();
         List<Integer> pageNum = pagenationService.getPaginationBarNumber(currentPage, totalPage);
-        model.addAttribute("pageNum", pageNum);
+
         // 모델에 값 추가
-        model.addAttribute("memNo", memNo);
-        model.addAttribute("reservationsPage", reservationsPage);
+        model.addAttribute("pageNum", pageNum);
+        model.addAttribute("memberNo", memNo);
+        model.addAttribute("reservationsPage", visitCompletionDTOPage);
 
         // 남은 요소가 5개 미만이라도 페이지에 표시되도록 처리
-        model.addAttribute("totalElements", reservationsPage.getTotalElements());
-        model.addAttribute("hasContent", reservationsPage.hasContent());
-        System.out.println("Current page: " + pageable.getPageNumber());
-        System.out.println("Total pages: " + reservationsPage.getTotalPages());
-        System.out.println("Reservations size: " + reservationsPage.getContent().size());
+        model.addAttribute("totalElements", visitCompletionDTOPage.getTotalElements());
+        model.addAttribute("hasContent", visitCompletionDTOPage.hasContent());
+
         return "/codechef/visit_completion";
     }
-}
 
+
+
+
+
+
+}
