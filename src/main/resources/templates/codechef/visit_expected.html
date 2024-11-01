@@ -53,10 +53,10 @@
                         <!-- 문구 -->
                         <div class="res_info">
                             <!-- 큰글자 -->
-                            <p th:text="${visitExpected.resName}">비아 톨레도 파스타바</p>
+                            <p th:text="${visitExpected.resName}" style="font-weight: 900 !important;">비아 톨레도 파스타바</p>
                             <!-- 작은글자 -->
                             <div class="visit_date">
-                                <p2 th:text="${visitExpected.address}">서울특별시 용산구 한남대로27가길 15 2층</p2>
+                                <p3 th:text="${visitExpected.address}">서울특별시 용산구 한남대로27가길 15 2층</p3>
                                 <p2 th:text="${#dates.format(visitExpected.reservationDate, 'yyyy.MM.dd')}">2024.10.22 - 14:02</p2>
                                 <p2>방문예정</p2>
                             </div>

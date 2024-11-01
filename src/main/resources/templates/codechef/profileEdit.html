@@ -20,7 +20,7 @@
       <div class="image_button">
         <div class="profile">
           <!-- 이미지가 없는 경우 기본 이미지를 표시하고, 있는 경우 Base64로 인코딩된 데이터를 표시 -->
-          <img id="profilePreview" th:src="${member.memImage ?: '/images/default-placeholder.png'}" alt="프로필 이미지" style="width: 100px; height: 100px; object-fit: cover;">
+          <img id="profilePreview" th:src="${member.memImage ?: '/images/common/profileImg.png'}" alt="프로필 이미지">
         </div>
         <input type="file" id="profileImage" name="profileImage" accept="image/*">
       </div>
