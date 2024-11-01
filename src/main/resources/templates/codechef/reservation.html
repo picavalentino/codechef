@@ -58,9 +58,9 @@
                         </div>
                         <input type="hidden" name="select_time" id="select_time" value="">
                         <div class="bottom_right">
-                            <label><b>인원 수</b></label> &nbsp;
+                            <label><b></b></label> &nbsp;
                             <div class="btn-group select_num_people">
-                                <button type="button" class="btn"><b><small>인원 수</small></b></button>
+                                <button type="button" class="btn" data-bs-toggle="dropdown"><b><small>인원 수</small></b></button>
                                 <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
@@ -88,8 +88,8 @@
                     <h6 class="modal-title text-muted" id="confirmModalLabel">방문 일정을 다시 한번 확인해 주세요.</h6>
                 </div>
                 <div class="modal-body">
-                    <div style="text-align: center; font-size: 25px;">Pimfy 이태원</div>
-                    <div style="text-align: center; font-size: 15px; color: gray;">이태원.이탈리아음식</div>
+                    <div style="text-align: center; font-size: 25px;">[[ ${restaurantDTO.resName} ]]</div>
+                    <div style="text-align: center; font-size: 15px; color: gray;">[[ ${restaurantDTO.localArea} ]].[[ ${restaurantDTO.category} ]]</div>
                     <div class="reservation-container">
                         <div class="reservation-item">
                             <img style="width: 30px; padding-bottom: 10px;" src="/images/reservation/calendar.svg">

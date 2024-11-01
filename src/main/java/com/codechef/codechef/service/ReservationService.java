@@ -9,7 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.time.LocalDateTime;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +34,10 @@ public class ReservationService {
     public Reservation getReservationById(Long reservationNo) {
         return reservationRepository.findById(reservationNo).orElseThrow(() ->
                 new IllegalArgumentException("Reservation not found with ID: " + reservationNo));
+    }
+
+    public void insertReservationInfo(Long reservation_no, LocalDateTime reservationDate, int memberCount, boolean reviewOx, boolean visitOx, Long memNo, Long chefNo) {
+        reservationRepository.insertReservationInfo(reservation_no, reservationDate, memberCount, reviewOx, visitOx, memNo, chefNo);
     }
 
     public List<Long> getChefNosByMemNo(Long memNo) {
@@ -53,11 +61,22 @@ public class ReservationService {
                 .limit(2) // 최대 2개로 제한
                 .collect(Collectors.toList());
     }
+
     public Page<Reservation> getReservationsByMemberNo(Long memNo, Pageable pageable) {
 
         return reservationRepository.findByMemberMemNo(memNo, pageable);
     }
 
+    public List<ReservationDto> visitOxFind(Long chefNo, Long memNo) {
+        List<Reservation> reservations = reservationRepository.visitOxFind(chefNo, memNo);
+        if(ObjectUtils.isEmpty(reservations)){
+            return Collections.emptyList();
+        }
+        return reservations.stream()
+                .map(x->ReservationDto.fromEntity(x)).toList();
+    }
 
-
+    public Long maxReservationNo() {
+        return reservationRepository.maxReservationNo();
+    }
 }

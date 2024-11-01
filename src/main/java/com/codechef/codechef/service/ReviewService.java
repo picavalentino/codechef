@@ -1,6 +1,7 @@
 package com.codechef.codechef.service;
 
 import com.codechef.codechef.dto.ReviewCreateDTO;
+import com.codechef.codechef.dto.ReviewDTO;
 import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.entity.Review;
 import com.codechef.codechef.repository.ReservationRepository;
@@ -8,8 +9,11 @@ import com.codechef.codechef.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -65,5 +69,14 @@ public class ReviewService {
         }
         reviewRepository.deleteById(reviewNo);
         log.info("리뷰가 삭제되었습니다: {}", reviewNo);
+    }
+
+    public List<ReviewDTO> findByChefNoAndMemNo(Long chefNo, Long memNo) {
+        List<Review> reviews = reviewRepository.findByRestaurant_ChefNoAndMember_MemNo(chefNo, memNo);
+        if(ObjectUtils.isEmpty(reviews)){
+            return Collections.emptyList();
+        }
+        return reviews.stream()
+                .map(ReviewDTO::fromEntity).toList();
     }
 }
