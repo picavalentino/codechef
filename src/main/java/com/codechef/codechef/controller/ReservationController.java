@@ -50,6 +50,9 @@ public class ReservationController {
                               @RequestParam(value = "month", required = false) Integer month,
                               @RequestParam(value = "year", required = false) Integer year,
                               @RequestParam(value = "chefNo") Long chefNo) {
+        // test
+//        timeSlotService.updateTest();
+
         LocalDate currentDate;
 
         if (month != null && year != null) {
