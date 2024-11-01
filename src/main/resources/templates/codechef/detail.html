@@ -83,10 +83,7 @@
                         <img src="/images/detail/mdi_location.png" alt="주소 아이콘" class="info-icon">
                         [[${restaurant.address}]]
                     </p>
-                    <p>
-                        <img src="/images/detail/mdi_clock.png" alt="운영시간 아이콘" class="info-icon">
-                        [[${restaurant.bizHour}]]
-                    </p>
+                    <p id="bizHour"><img src="/images/detail/mdi_clock.png" alt="운영시간 아이콘" class="info-icon" th:utext="${restaurant.bizHour}"></p>
                     <p>
                         <img src="/images/detail/ion_restaurant-sharp.png" alt="휴무일 아이콘" class="info-icon">
                         휴무일: [[${restaurant.closedDay}]]

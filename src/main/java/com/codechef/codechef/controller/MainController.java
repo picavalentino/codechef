@@ -12,6 +12,7 @@ import com.codechef.codechef.repository.ReservationRepository;
 import com.codechef.codechef.service.*;
 import groovy.util.logging.Slf4j;
 import jakarta.servlet.http.HttpSession;
+import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -60,6 +62,17 @@ public class MainController {
     }
 
     // 메인 페이지
+    @GetMapping("/")
+    public String mainPage(Model model) {
+        model.addAttribute("randLists", restaurantService.getRandLists());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        String nickname = memberService.getNicknameByEmail(email);
+        model.addAttribute("nickname", nickname);
+        return "/codechef/main";
+    }
+
     @GetMapping("/main")
     public String main(Model model) {
         // 식당 3개 랜덤 출력
@@ -151,16 +164,25 @@ public class MainController {
 
     // 방문예약 리스트 페이지
     @GetMapping("/visitExpected")
-    public String visitExpected(Model model) {
+    public String visitExpected(Model model, @PageableDefault(page = 0, size = 6, sort = "reservationDate") Pageable pageable) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         Long memNo = memberService.getMemNoByEmail(email);
-        List<Long> chefNos = reservationService.getChefNosByMemNo(memNo);
-        List<Restaurant> restaurants = restaurantService.getRestaurantsByChefNos(chefNos);
-        model.addAttribute("restaurants", restaurants);
+        Page<VisitExpectedDto> visitExpectedPage = reservationService.findReservationDataByMemNo(memNo, pageable);
+        model.addAttribute("visitExpected", visitExpectedPage.getContent());
+        model.addAttribute("page", visitExpectedPage);
+//        List<Long> chefNos = reservationService.getChefNosByMemNo(memNo);
+//        List<Restaurant> restaurants = restaurantService.getRestaurantsByChefNos(chefNos);
+//        model.addAttribute("restaurants", restaurants);
         return "/codechef/visit_expected";
     }
 
+
+    // 방문완료 리스트 페이지
+    @GetMapping("/visit-completion")
+    public String visitCompletion() {
+        return "/codechef/visit_completion";
+    }
 
     ///마이페이지
     @GetMapping("/mypage")
@@ -243,7 +265,7 @@ public class MainController {
            model.addAttribute("member", member);
 
         // mem_no가 1인 회원 정보 조회
-        MemberDto dto = MemberDto.fromEntity(memberService.getMemberWithMemNoOne());
+        MemberDto dto = MemberDto.fromEntity(memberService.getMemberByMemNo(memNo));
         System.out.println("회원 번호 (mem_no): " + dto.getMemNo());
         System.out.println("이메일 (email): " + dto.getEmail());
         System.out.println("닉네임 (nickname): " + dto.getNickname());
@@ -254,6 +276,7 @@ public class MainController {
         if (dto.getMemImage() != null) {
             imageData = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(dto.getMemImage());
         }
+
 
         // 조회한 회원 정보를 모델에 추가하여 뷰로 전달
         log.info("###########################dto : " + dto.toString());

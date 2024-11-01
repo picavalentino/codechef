@@ -88,32 +88,48 @@
   <!-- 페이지 영역 -->
   <nav aria-label="Page navigation example" th:unless="${resultLists.totalElements == 0}">
     <ul class="pagination justify-content-center">
+      <!-- 이전 페이지 링크 -->
       <li class="page-item" th:classappend="${resultLists.number}<=0 ? 'disabled'">
-        <a class="page-link" th:href="@{/search(category=${category},keyword=${keyword},page=${resultLists.number-1})}"><</a>
+        <a class="page-link" th:href="@{/search(category=${category},keyword=${keyword},page=${resultLists.number-1})}">&lt;</a>
       </li>
+
+      <!-- 페이지 번호 링크 -->
       <th:block th:each="pageNumber : ${pageNum}">
-        <li class="page-item">
-          <a class="page-link" th:href="@{/search(category=${category},keyword=${keyword},page=${pageNumber})}" th:text="${pageNumber+1}">
-          </a>
+        <li class="page-item" th:classappend="${pageNumber} == ${resultLists.number} ? 'active'">
+          <a class="page-link" th:href="@{/search(category=${category},keyword=${keyword},page=${pageNumber})}" th:text="${pageNumber+1}"></a>
         </li>
       </th:block>
+
+      <!-- 다음 페이지 링크 -->
       <li class="page-item" th:classappend="${resultLists.number+1} == ${resultLists.totalPages} ? 'disabled'">
-        <a class="page-link" th:href="@{/search(category=${category},keyword=${keyword},page=${resultLists.number+1})}">></a>
+        <a class="page-link" th:href="@{/search(category=${category},keyword=${keyword},page=${resultLists.number+1})}">&gt;</a>
       </li>
     </ul>
   </nav>
 
   <script th:inline="javascript">
-    // 키워드 검색
-    $(document).on("click", ".btn-search", function(){
-      let inputVal = $("#search").val();
-      if(inputVal == ""){
-        alert("검색어를 입력하세요");
-        $("#search").focus();
-        return;
-      }
-      location.href = "/search?category=&keyword=" + inputVal;
-    });
+    // 검색 버튼 클릭 이벤트
+  $(document).on("click", ".btn-search", function() {
+    searchAction();
+  });
+
+  // Enter 키 이벤트 추가
+  $("#search").on("keypress", function(event) {
+    if (event.keyCode === 13) {  // Enter 키 코드 13
+      searchAction();
+    }
+  });
+
+  // 검색 실행 함수
+  function searchAction() {
+    let inputVal = $("#search").val();
+    if (inputVal === "") {
+      alert("검색어를 입력하세요");
+      $("#search").focus();
+      return;
+    }
+    location.href = "/search?category=&keyword=" + inputVal;
+  }
   </script>
 </div>
 </body>
