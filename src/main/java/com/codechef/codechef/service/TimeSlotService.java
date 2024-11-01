@@ -33,6 +33,14 @@ public class TimeSlotService {
         }
     }
 
+    public void availableUpdate(String dayOfWeekFormat) {
+        timeSlotRepository.availableUpdate(dayOfWeekFormat);
+    }
+
+//    public void updateTest() {
+//        timeSlotRepository.updateTest();
+//    }
+
 //    public List<TimeSlotDTO> selectTest(Long chefNo, String selectTime, String dayOfWeek) {
 //        List<TimeSlot> timeSlots = timeSlotRepository.selectTest(chefNo, selectTime, dayOfWeek);
 //        if(ObjectUtils.isEmpty(timeSlots)){
