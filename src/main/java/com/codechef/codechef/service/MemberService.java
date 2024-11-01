@@ -83,6 +83,7 @@ public class MemberService {
         // 사용자의 리뷰를 최신 순으로 가져오기 (최대 2개)
         return reviewRepository.findTop2ByMemberMemNoOrderByDateDesc(memNo).stream()
                 .map(ReviewDTO::fromEntity)
+                .limit(2) // 최대 2개로 제한
                 .collect(Collectors.toList());
     }
 }
