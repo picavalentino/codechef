@@ -4,14 +4,12 @@ import com.codechef.codechef.dto.*;
 import com.codechef.codechef.dto.MemberDto;
 import com.codechef.codechef.dto.RestaurantDTO;
 import com.codechef.codechef.dto.ReviewCreateDTO;
-import com.codechef.codechef.dto.TimeSlotDTO;
 import com.codechef.codechef.dto.ReviewDTO;
 import com.codechef.codechef.entity.Member;
 import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.entity.Restaurant;
 import com.codechef.codechef.repository.ReservationRepository;
 import com.codechef.codechef.service.*;
-import com.codechef.codechef.util.DateUtil;
 import groovy.util.logging.Slf4j;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -20,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -30,12 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
 import java.util.*;
 
 @Controller
@@ -44,14 +34,12 @@ public class MainController {
     // 서비스 연결
     private final ReservationService reservationService;
     private final ReviewService reviewService;
-    private final TimeSlotService timeSlotService;
     private final MemberService memberService;
     private final ReservationRepository reservationRepository;
 
-    public MainController(ReservationService reservationService, ReviewService reviewService, TimeSlotService timeSlotService, MemberService memberService, ReservationRepository reservationRepository) {
+    public MainController(ReservationService reservationService, ReviewService reviewService, MemberService memberService, ReservationRepository reservationRepository) {
         this.reservationService = reservationService;
         this.reviewService = reviewService;
-        this.timeSlotService = timeSlotService;
         this.memberService = memberService;
         this.reservationRepository = reservationRepository;
     }

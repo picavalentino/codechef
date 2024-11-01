@@ -96,7 +96,14 @@ $(document).ready(function() {
     $('.dropdown-item').click(function(event) {
         event.preventDefault(); // 링크 기본 동작 방지
         const numPeople = $(this).data('value'); // data-value 속성에서 인원 수 가져오기
-        console.log(numPeople);
+
+        const element = $("body > div:nth-of-type(2) > div:nth-of-type(1) > div > form > div > div:nth-of-type(2) > div:nth-of-type(2) > label > b");
+        if(numPeople !== "인원 수"){
+            element.text("인원 수");
+        } else {
+            element.text("");
+        }
+
         $('#numPeople').val(numPeople); // 숨겨진 input에 저장
         $('.btn-group .btn:first-child').html(`<b><small>${numPeople}</small></b>`); // 버튼 텍스트 업데이트
     });
