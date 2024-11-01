@@ -74,18 +74,6 @@ body {
     font-weight: 700;
 
 }
-.review-container .star {
-    font-size: 22px;
-    color: gold;
-
-}
-
-
-
-
-
-
-
 
 .reviews-wrapper {
     width: 100%;
@@ -128,7 +116,7 @@ body {
 
 .review-header {
     gap: 10px;
-
+    margin-bottom: 7px;
     display: flex;
     align-items: center;
 }
@@ -158,7 +146,7 @@ body {
     margin-top: 50px;
 }
 .review-card .rating{
-    margin-right: 265px;
+    font-size: 18px;
     margin-bottom: 2px;
     font-weight: 700px;
     display: flex;
@@ -195,4 +183,12 @@ body {
     pointer-events: none; /* 클릭 방지 (비활성화 상태) */
     cursor: default; /* 커서 기본 설정 */
     border-color: #1c1c1c;
+}
+
+.review-date2 {
+    font-size: 14px;
+    color: #888;
+    text-align: right;
+    margin: 0;
+    margin-left: auto; /* 왼쪽 여백을 자동으로 설정하여 오른쪽으로 밀어냄 */
 }

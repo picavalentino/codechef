@@ -173,7 +173,7 @@ public class MainController {
             log.error("리뷰 저장 중 오류 발생: {}", e.getMessage());
             // 오류 페이지로 리다이렉트할 수도 있습니다.
         }
-        return "/codechef/mypage";
+        return "redirect:/mypage";
     }
 
 
