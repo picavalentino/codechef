@@ -31,7 +31,16 @@ public class ReviewService {
 
     public void createReview(ReviewCreateDTO dto) {
         try {
-            String imageUrl = s3Service.uploadFile(dto.getReviewImage());
+            String imageUrl = null;
+
+            // S3에 업로드할 파일이 있는지 체크
+            if (dto.getReviewImage() != null && !dto.getReviewImage().isEmpty()) {
+                // 파일이 선택된 경우
+                imageUrl = s3Service.uploadFile(dto.getReviewImage());
+            } else {
+                // 파일이 선택되지 않은 경우 기본 이미지 URL 또는 null 설정
+                imageUrl = "기본이미지URL"; // 기본 이미지 URL로 설정
+            }
 
             Review review = ReviewCreateDTO.fromDto(dto);
             review.setReviewImage(imageUrl);
@@ -67,8 +76,24 @@ public class ReviewService {
         if (!reviewRepository.existsById(reviewNo)) {
             throw new RuntimeException("리뷰가 존재하지 않습니다.");
         }
+
+        Review review = reviewRepository.findById(reviewNo).orElseThrow(() -> new RuntimeException("리뷰가 존재하지 않습니다."));
+
+        //리뷰 삭제
         reviewRepository.deleteById(reviewNo);
         log.info("리뷰가 삭제되었습니다: {}", reviewNo);
+
+        // 예약의 reviewOx 값을 false로 업데이트
+        updateReservationReviewOx(review.getReservation());
+    }
+
+    // 예약의 reviewOx 값을 false로 업데이트하는 메서드
+    private void updateReservationReviewOx(Reservation reservation) {
+        if (reservation != null) {
+            reservation.setReviewOx(false); // reviewOx 값을 false로 변경
+            reservationRepository.save(reservation); // 변경사항 저장
+            log.info("예약의 reviewOx가 false로 변경되었습니다: {}", reservation.getReservationNo());
+        }
     }
 
     public List<ReviewDTO> findByChefNoAndMemNo(Long chefNo, Long memNo) {

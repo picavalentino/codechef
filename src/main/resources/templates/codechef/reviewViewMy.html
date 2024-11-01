@@ -15,7 +15,7 @@
 <div layout:fragment="content" class="content">
     <link rel="stylesheet" href="css/reviewViewMy.css">
     <div class="container1">
-        <!-- 비아 톨레도 파스타바 섹션 -->
+        <!-- 회원정보 섹션 -->
         <div class="review-container">
             <div class="title" th:text="${member.nickname}">회원 닉네임</div>
             <div class="review-info">
@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <!-- 또리하는 요라이 리뷰 카드 섹션 -->
+        <!-- 리뷰 카드 섹션 -->
         <div class="reviews-wrapper">
             <!-- 반복되는 리뷰 카드 -->
             <div th:each="review : ${reviews}" class="review-card">
@@ -39,11 +39,16 @@
                 <div class="review-content">
                     <div class="review-header">
                         <h2 th:text="${review.restaurant.resName}">닉네임</h2>
-                        <div class="rating">
-                            <span class="star">⭐</span> <span th:text="${review.myReviewRating}">평균 점수</span>
+                        <div>
+                            <span th:text="${'⭐'+review.myReviewRating}" class="rating">평균 점수</span>
                         </div>
+                        <p class="review-date2" th:text="${#dates.format(review.date, 'yyyy-MM-dd')}">날짜</p>
                     </div>
-                    <p class="review-date" th:text="${#dates.format(review.date, 'yyyy-MM-dd')}">날짜</p>
+                    <span>
+                        <span>맛🍽</span><span th:text="${review.tastePoint}">맛 점수</span>&nbsp&nbsp
+                        <span>분위기✨</span><span th:text="${review.moodPoint}">분위기 점수</span>&nbsp&nbsp
+                        <span>서비스😀</span><span th:text="${review.servePoint}">서비스 점수</span>
+                    </span>
                     <div class="review-text">
                         <p th:text="${review.contents}">내용</p>
                     </div>
