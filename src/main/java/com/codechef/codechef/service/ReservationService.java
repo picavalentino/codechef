@@ -61,13 +61,11 @@ public class ReservationService {
                 .limit(2) // 최대 2개로 제한
                 .collect(Collectors.toList());
     }
+
     public Page<Reservation> getReservationsByMemberNo(Long memNo, Pageable pageable) {
 
         return reservationRepository.findByMemberMemNo(memNo, pageable);
     }
-
-
-
 
     public List<ReservationDto> visitOxFind(Long chefNo, Long memNo) {
         List<Reservation> reservations = reservationRepository.visitOxFind(chefNo, memNo);
