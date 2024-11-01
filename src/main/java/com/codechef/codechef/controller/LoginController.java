@@ -6,6 +6,7 @@ import groovy.util.logging.Log;
 import groovy.util.logging.Slf4j;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,12 +38,12 @@ public class LoginController {
         return "/codechef/login";
     }
 
-//    @PostMapping("/loginMember")
-//    public String login(@RequestParam("email") String email, Model model) {
-//        model.addAttribute("logoutValue", email);
-//        log.info("=================" + email);
-//        return "/main";
-//    }
+    // 로그인 에러메시지 삭제
+    @PostMapping("/clear-error-message")
+    @ResponseBody
+    public void clearErrorMessage(HttpSession session) {
+        session.removeAttribute("errorMessage");
+    }
 
     // 회원가입 페이지
     @GetMapping("/join")
@@ -56,6 +58,7 @@ public class LoginController {
         return "/codechef/main";
     }
 
+    // 이메일 중복체크 기능
     @GetMapping("/checkEmail")
     public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam("email") String email) {
         boolean isDuplicated = codeChefService.isEmailDuplicated(email);
@@ -63,7 +66,6 @@ public class LoginController {
         response.put("isDuplicated", isDuplicated);
         return ResponseEntity.ok(response);
     }
-
 
     // 로그아웃
     @GetMapping("/logout")

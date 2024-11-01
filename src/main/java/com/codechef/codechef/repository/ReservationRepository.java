@@ -3,6 +3,10 @@ package com.codechef.codechef.repository;
 import com.codechef.codechef.dto.ReservationDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.codechef.codechef.dto.VisitExpectedDto;
+import com.codechef.codechef.entity.Reservation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.codechef.codechef.entity.Reservation;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.codechef.codechef.entity.Reservation;
 
 
+import java.util.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,6 +35,12 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query(value = "SELECT r.chef_no FROM Reservation r WHERE r.mem_no = :memNo AND r.visit_ox = false", nativeQuery = true)
     List<Long> findChefNosByMemNo(@Param("memNo") Long memNo);
+
+
+    @Query("SELECT new com.codechef.codechef.dto.VisitExpectedDto(r.reservationNo, r.restaurant.chefNo, r.reservationDate, rt.bannerImage, rt.resName, rt.address) " +
+            "FROM Reservation r JOIN Restaurant rt ON r.restaurant.chefNo = rt.chefNo " +
+            "WHERE r.member.memNo = :memNo AND r.visitOx = false")
+    Page<VisitExpectedDto> findReservationDataByMemNo(@Param("memNo") Long memNo, Pageable pageable);
 
     // 예약정보 저장
     @Transactional
@@ -52,6 +63,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     // memNo로 방문 완료 예약을 최근 날짜 순으로 가져오는 쿼리 (visitOx가 true인 경우만) - 리뷰 정보 가져옴
     @Query("SELECT r FROM Reservation r WHERE r.member.memNo = :memNo AND r.visitOx = true ORDER BY r.reservationDate DESC")
     List<Reservation> findTop2ByMemberMemNoAndVisitOxTrueOrderByReservationDateDesc(@Param("memNo") Long memNo);
+
+    List<Reservation> findByReservationDateBeforeAndVisitOxFalse(Date date);
 
     // 이전에 방문한 적이 있는지 확인
     @Query("SELECT r FROM Reservation r WHERE r.restaurant.chefNo = :chefNo AND r.member.memNo = :memNo AND r.reservationDate < CURRENT_TIMESTAMP")

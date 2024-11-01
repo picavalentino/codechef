@@ -85,16 +85,28 @@
   </section>
 
   <script th:inline="javascript">
-    // 키워드 검색
-    $(document).on("click", ".btn-search", function(){
-      let inputVal = $("#search").val();
-      if(inputVal == ""){
-        alert("검색어를 입력하세요");
-        $("#search").focus();
-        return;
-      }
-      location.href = "/search?category=&keyword=" + inputVal;
-    });
+    // 검색 버튼 클릭 이벤트
+  $(document).on("click", ".btn-search", function() {
+    searchAction();
+  });
+
+  // Enter 키 이벤트 추가
+  $("#search").on("keypress", function(event) {
+    if (event.keyCode === 13) {  // Enter 키 코드 13
+      searchAction();
+    }
+  });
+
+  // 검색 실행 함수
+  function searchAction() {
+    let inputVal = $("#search").val();
+    if (inputVal === "") {
+      alert("검색어를 입력하세요");
+      $("#search").focus();
+      return;
+    }
+    location.href = "/search?category=&keyword=" + inputVal;
+  }
   </script>
 </div>
 </body>
