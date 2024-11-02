@@ -1,24 +1,32 @@
-a { text-decoration: none; color: black; } a:visited {color:black}
-    a:hover { text-decoration: none; }    a:focus { text-decoration: none; }    a:hover, a:active { text-decoration: none; }
+a { text-decoration: none; color: black; }
+a:visited {color:black}
+a:hover { text-decoration: none; }
+a:focus { text-decoration: none; }
+a:hover, a:active { text-decoration: none; }
 
-     .content ul {width: 900px;display: block;}
-     .content ul li {display: flex; width: 100%;    margin: 10px;}
-     /* 첫번째 영역 */
-     .content ul li .f {width: 80%;display: flex;border-radius: 20px;border: 1px solid #000;padding: 10px;}
-     .content ul li .f img {border-radius: 10px;display: block;}
-     .content ul li .f p {font-size: 30px; width: 350px; padding: 0;margin-left: 10px;}
-     .content ul li .f p2 {display: block; width: 250px; margin-left: 0px; font-size: 25px;}
-     .content ul li .f p3 {display: block; width: 250px; margin-left: 0px; font-size: 15px;}
-     /* 두번째 영역 */
-     .content ul li .r {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
-     font-size: 12px;background: #000;border-radius: 20px;color: #fff;text-decoration: none;margin-left: 5px; flex-direction: column;}
+.content ul {width: 900px;display: block;}
+.content ul li {display: flex; width: 100%;    margin: 10px;}
+
+/* 첫번째 영역 */
+.content ul li .f {width: 80%;display: flex;border-radius: 20px;border: 2px solid #000;padding: 10px;}
+.content ul li .f img {border-radius: 10px; width: 350px; height: 220px; display: block; margin:10px; object-fit: cover;}
+/* 두번째 영역 */
+.content ul li .r {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
+font-size: 12px;background: #000;border-radius: 20px;color: #fff;text-decoration: none;margin-left: 5px; flex-direction: column;}
      .content ul li .r img {width: 40%;display: block;}
-     .content ul li .r p3 {}
      .content ul li .r a {display: flex;flex-direction: column;align-items: center;}
-     .completion {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
-           font-size: 12px;background: #fff;border-radius: 20px;color: #000;text-decoration: none;margin-left: 5px; flex-direction: column;
+.completion {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
+           font-size: 12px;background: #fff;border: none; color: #000;text-decoration: none;margin-left: 5px; flex-direction: column;
            }
 
+           .completion p{
+            font-size :25px;
+             margin-top:15px;
+     }
+
+      *{
+         font-family: "SourceSansPro", "Pretendard";
+      }
 
 
      .main {
@@ -43,30 +51,41 @@ a { text-decoration: none; color: black; } a:visited {color:black}
      }
 
      .list_box {
-        margin-top: 50px;
         display: flex;
         justify-content: center;
      }
 
      .image_box{
-        width: 40%;
+        width: 380px;
      }
+
+     .image_box img {
+      width: 100%
+   }
 
      .res_info{
-        padding-left: 120px;
-        display: flex;
-        border-width:60%;
-        align-items: flex-start;
-        flex-direction: column;
-        align-content: center;
-        justify-content: center;
+         margin-top: 20px;
+         padding-left: 30px;
+         width : 280px;
+         display: flex;
+         align-items: flex-start;
+         flex-direction: column;
+         align-content: center;
+         justify-content: center;
      }
 
+     .res_info h4{
+         font-weight:bold;
+   }
+
      .visit_date{
-        font-size: 11px;
-        padding-top: 30px; !important
+        padding-top: 15px; !important
         width: 200px;
      }
+
+     .visit_date p{
+      margin-bottom: 8px;
+   }
 
      .image {
         width: 350px;
@@ -74,10 +93,7 @@ a { text-decoration: none; color: black; } a:visited {color:black}
      }
 
      .pagination {
-        display: flex;
-        justify-content: center;
-        padding-left: 0;
-        list-style: none;
+        margin-top: 50px;
      }
 
      .page-link {
@@ -98,34 +114,14 @@ a { text-decoration: none; color: black; } a:visited {color:black}
          border-color: #1c1c1c;
      }
 
-     #search {
-         border-radius: 8px;
-         border: none;
-         background: url(/images/main/loc.png) no-repeat 18px #F5F5F5;
-         padding-left: 45px;
-         font-size: 17px;
-     }
 
-     .btn.letsgomain{
-         display: inline-block; /* 버튼을 블록으로 처리 */
-         justify-content: center; /* 수평 중앙 정렬 */
-         align-items: center; /* 수직 중앙 정렬 */
-         padding: 5px 15px; /* 버튼 안쪽 여백 */
-         border-radius: 9px; /* 모서리 둥글게 */
-         cursor: pointer; /* 커서가 손 모양으로 변경 */
-         text-align: center; /* 중앙 정렬 */
-         align-items: center; /* 수직 중앙 정렬 */
-         white-space: nowrap; /* 줄바꿈 방지 */
-         border: none;
-         background-color: #000;
-         color: #fff;
-         width:245px;
-         margin-top: 20px;
-     }
-
-     .letsgomain h3{
-         margin-bottom: 0; /* p 태그 하단 여백 */
-     }
+     .page-item.active .page-link {
+      background-color: #000; /* 배경색을 검은색으로 설정 */
+      color: #fff; /* 텍스트 색상을 흰색으로 설정 */
+      pointer-events: none; /* 클릭 방지 (비활성화 상태) */
+      cursor: default; /* 커서 기본 설정 */
+      border-color: #1c1c1c;
+  }
 
     .list_box2 {
         margin-top: 50px;
