@@ -1,28 +1,27 @@
-a { text-decoration: none; color: black; display: flex; flex-direction: row; } a:visited {color:black}
-    a:hover { text-decoration: none; }    a:focus { text-decoration: none; }    a:hover, a:active { text-decoration: none; }
+a { text-decoration: none; color: black; display: flex; flex-direction: row; }
+a:visited {color:black}
+a:hover { text-decoration: none; }
+a:focus { text-decoration: none; }
+a:hover, a:active { text-decoration: none; }
 
-     .content1 ul {width: 900px;display: block;}
-     .content1 ul li {display: flex; width: 100%;    margin: 10px;}
-     /* 첫번째 영역 */
-     .content1 ul li .f {width: 80%; display: flex; border-radius: 20px;border: 1px solid #000;padding: 10px;}
-     .content1 ul li .f .img {border-radius: 10px; width: 350px; height: 220px; display: block; margin:10px;}
-     .content1 ul li .f p1 {font-size: 30px; width:250px;  padding: 0; }
-     .content1 ul li .f p2 {display: block; width:250px; margin-left: 0px; font-size :25px;}
-     /* 두번째 영역 */
-     .content1 ul li .r {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
-     font-size: 12px;background: #000;border-radius: 20px;color: #fff;text-decoration: none;margin-left: 5px; flex-direction: column;}
-     .content1 ul li .r img {width:10% display: block;}
-     .content1 ul li .r p { font-size :25px; margin-top:19px;}
-     .content1 ul li .r a {display: flex;flex-direction: column;align-items: center;}
-     .completion {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
-           font-size: 12px;background: #fff;border-radius: 20px;border: 1px solid #000;color: #000;text-decoration: none;margin-left: 5px; flex-direction: column;
-           }
+.content1 ul {width: 900px;display: block;}
+.content1 ul li {display: flex; width: 100%;    margin: 10px;}
+
+/* 첫번째 영역 */
+.content1 ul li .f {width: 80%; display: flex; border-radius: 20px;border: 2px solid #000;padding: 10px;}
+.content1 ul li .f .img {border-radius: 10px; width: 350px; height: 220px; display: block; margin:10px; object-fit: cover;}
+/* 두번째 영역 */
+.content1 ul li .r {width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
+font-size: 12px;background: #000;border-radius: 20px;color: #fff;text-decoration: none;margin-left: 5px; flex-direction: column;}
+.content1 ul li .r p { font-size :25px; margin-top:19px;}
+.content1 ul li .r a {display: flex;flex-direction: column;align-items: center;}
 
     .*{
         font-family: "SourceSansPro", "Pretendard";
     }
+
     .col {
-    display: flex; flex-direction: row;
+        display: flex; flex-direction: row;
     }
 
      .main {
@@ -31,9 +30,6 @@ a { text-decoration: none; color: black; display: flex; flex-direction: row; } a
         justify-content: center;
         display: flex
      }
-    p1 {
-     font-weight:900px;!important;
-    }
 
      .visit_title {
        display: block;
@@ -50,13 +46,12 @@ a { text-decoration: none; color: black; display: flex; flex-direction: row; } a
      }
 
      .list_box {
-        margin-top: 50px;
         display: flex;
         justify-content: center;
      }
 
      .image_box{
-        width: 40%;
+        width: 380px;
      }
 
      .res_info{
@@ -70,51 +65,55 @@ a { text-decoration: none; color: black; display: flex; flex-direction: row; } a
         align-content: center;
         justify-content: center;
      }
-     .visit_end_info .visit_date{
-        font-size: 11px;
+
+     .visit_date{
         padding-top: 15px; !important
         width: 200px;
      }
 
-     .res_info .visit_date{
-            font-size: 11px;
-            padding-top: 40px; !important
-            width: 200px;
-         }
+     .visit_date p{
+        margin-bottom: 8px;
+     }
+
      .visit_end_info{
           margin-top: 20px;
-          padding-left: 150px;
-          width : 250px;
+          padding-left: 30px;
+          width : 280px;
           display: flex;
-          border-width:60%;
           align-items: flex-start;
           flex-direction: column;
           align-content: center;
           justify-content: center;
      }
 
-     .visit_image{
-        width: 40%;
+     .visit_end_info h4{
+     font-weight:bold;
      }
 
      .image_box img {
         width: 100%
      }
 
-     .star_image {
-        width: 30px; !important;
-        height:30px; !important;
-        margin-top : 10px;
+     .completion {
+        width: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 5px;
+        font-size: 12px;
+        background: #fff;
+        border: none;
+        color: #000;
+        text-decoration: none;
+        margin-left: 5px;
+        flex-direction: column;
      }
 
-     .completion {
-        width: 20%;display: flex;align-items: center;justify-content: center;padding-left: 5px;
-          font-size: 12px;background: #fff;border-radius: 20px;color: #000;text-decoration: none;margin-left: 5px; flex-direction: column;
-     }
      .completion p{
             font-size :25px;
              margin-top:15px;
      }
+
    .pagination {
        margin-top: 50px;
    }
