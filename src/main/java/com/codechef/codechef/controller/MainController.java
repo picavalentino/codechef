@@ -238,6 +238,7 @@ public class MainController {
 
 
         model.addAttribute("member", memberReviewDTO);
+        log.info("====================="+memberReviewDTO.getReviewRating());
         model.addAttribute("reviews", reviewsPage.getContent());
         model.addAttribute("reviewsPage", reviewsPage);  // 페이지 정보 추가
 

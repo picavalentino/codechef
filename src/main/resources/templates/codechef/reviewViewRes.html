@@ -29,7 +29,7 @@
         <!-- 또리하는 요라이 리뷰 카드 섹션 -->
         <div class="reviews-wrapper">
             <!-- 반복되는 리뷰 카드 -->
-            <div th:each="review : ${reviews}" class="review-card">
+            <div th:each="review : ${reviews}" class="review-card" th:if="${#lists.size(reviews) > 0}">
                 <div class="image-container">
                     <img th:src="@{${review.reviewImage}}"
                          alt="요리 이미지"
@@ -53,6 +53,11 @@
                         <p th:text="${review.contents}">내용</p>
                     </div>
                 </div>
+            </div>
+
+            <!--식당 리뷰 없을 때-->
+            <div class="review-card2" th:if="${#lists.isEmpty(reviews)}">
+                <h4>리뷰 내역이 없습니다.</h4>
             </div>
         </div>
     </div>
