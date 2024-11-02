@@ -32,6 +32,9 @@ public class MemberReviewDTO {
     }
 
     private static String reviewRating(List<Review> reviewList) {
+        if (reviewList.isEmpty()) {
+            return " "; // 리스트가 비어 있을 경우 기본값 반환
+        }
         // 해당 컬럼의 전체 합을 구하고, 평점 구하기
         int moodTotal = reviewList.stream().mapToInt(Review::getMoodPoint).sum();
         int serveTotal = reviewList.stream().mapToInt(Review::getServePoint).sum();

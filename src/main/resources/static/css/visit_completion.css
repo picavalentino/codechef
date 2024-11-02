@@ -27,19 +27,26 @@ a { text-decoration: none; color: black; display: flex; flex-direction: row; } a
 
      .main {
         text-align: center;
-     }
-     .main p{
-     font-size : 34px;
+        align-item: center;
+        justify-content: center;
+        display: flex
      }
     p1 {
      font-weight:900px;!important;
     }
+
      .visit_title {
-        padding:5px 10px;
-        border-radius: 20px;
-        margin-top: 70px;
-        border: 1px solid #000;
-        display: inline-block;
+       display: block;
+       padding: 9px 20px;
+       width: 150px;
+       font-size: 20px;
+       font-weight: bold;
+       color: black;
+       border: 3px solid #444444;
+       border-radius: 17px;
+       background-color: #fff;
+       text-align: center; /* 텍스트 중앙 정렬 */
+       margin: 70px 0; /* 위 아래 여백 추가 */
      }
 
      .list_box {
@@ -143,4 +150,13 @@ a { text-decoration: none; color: black; display: flex; flex-direction: row; } a
        color: black;
        text-decoration: none;
    }
+
+    .list_box2 {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column; /* 세로로 배치 */
+        align-items: center; /* 수평 중앙 정렬 */
+        text-align: center;
+    }
 
