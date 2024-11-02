@@ -138,3 +138,9 @@ a { text-decoration: none; color: black; display: flex; flex-direction: row; } a
        border-color: #1c1c1c;
    }
 
+   .footer a {
+       display: inline; /* footer 내부에서는 inline으로 설정하여 줄바꿈 문제 해결 */
+       color: black;
+       text-decoration: none;
+   }
+
