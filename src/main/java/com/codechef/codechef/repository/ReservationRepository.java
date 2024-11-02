@@ -72,6 +72,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("SELECT MAX(r.reservationNo) FROM Reservation r")
     Long maxReservationNo();
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM Reservation WHERE reservation.mem_no = :memNum", nativeQuery = true)
+    void deleteReservationMemNum(@Param("memNum") Long memNum);
 }
 
 

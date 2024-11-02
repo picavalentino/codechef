@@ -117,4 +117,8 @@ public class ReservationService {
     public Long maxReservationNo() {
         return reservationRepository.maxReservationNo();
     }
+
+    public void deleteReservationMemNum(Long memNum) {
+        reservationRepository.deleteReservationMemNum(memNum);
+    }
 }

@@ -387,8 +387,8 @@ public class MainController {
 
             Long memNum = memberService.getMemNoByEmail(email);
 
-            // reservation 테이블의 예약정보 삭제
-//        reservationService.deleteReservation(memNum);
+            // reservation 테이블의 예약정보 삭제 (성공)
+//            reservationService.deleteReservationMemNum(memNum);
 
             // member 테이블에 사용자 정보 삭제 (성공)
 //            memberService.deleteMember(email);
