@@ -57,10 +57,17 @@
   </div>
 </form>
 
+<div style="margin-top: 20px;">
+  <form action="/deleteMember" method="post" onsubmit="confirmSubmission(event)" style="text-align-last: center;">
+    <input type="submit" value="회원탈퇴" style="border: none; color: gray; text-decoration: underline;" >
+  </form>
+</div>
+
 
 <script src="/js/jQuery.js"></script>
 <script th:inline="javascript">
   $(document).ready(function() {
+
   // 프로필 이미지 미리보기
   const imageData = /*[[${imageData}]]*/ '';
   if (imageData) {
@@ -150,6 +157,13 @@
   event.preventDefault(); updateMemberInfo();
   });
 });
+
+function confirmSubmission(event) {
+    const confirmation = confirm("정말로 탈퇴하시겠습니까?");
+    if (!confirmation) {
+        event.preventDefault(); // 전송을 취소
+    }
+}
 
 </script>
 </body>

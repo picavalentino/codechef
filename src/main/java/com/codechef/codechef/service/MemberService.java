@@ -90,4 +90,8 @@ public class MemberService {
                 .limit(2) // 최대 2개로 제한
                 .collect(Collectors.toList());
     }
+
+    public void deleteMember(String email) {
+        memberRepository.deleteMember(email);
+    }
 }

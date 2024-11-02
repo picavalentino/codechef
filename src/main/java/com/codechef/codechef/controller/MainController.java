@@ -13,6 +13,8 @@ import com.codechef.codechef.repository.ReservationRepository;
 import com.codechef.codechef.repository.RestaurantRepository;
 import com.codechef.codechef.service.*;
 import groovy.util.logging.Slf4j;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
@@ -375,7 +377,34 @@ public class MainController {
         return "/codechef/visit_completion";
     }
 
+    @PostMapping("/deleteMember")
+    public String deleteMember(Model model, HttpServletRequest request, HttpServletResponse response){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            String email = authentication.getName();
 
+            //// 사용자 삭제 부분 ////
+
+            Long memNum = memberService.getMemNoByEmail(email);
+
+            // reservation 테이블의 예약정보 삭제
+//        reservationService.deleteReservation(memNum);
+
+            // member 테이블에 사용자 정보 삭제 (성공)
+//            memberService.deleteMember(email);
+
+            // 인증 정보 제거
+            SecurityContextHolder.clearContext();
+
+            // 세션 무효화
+            request.getSession().invalidate();
+        }
+
+        model.addAttribute("msg", "탈퇴처리가 완료 되었습니다.");
+        model.addAttribute("url", "/");
+
+        return "/codechef/alert";
+    }
 
 
 
