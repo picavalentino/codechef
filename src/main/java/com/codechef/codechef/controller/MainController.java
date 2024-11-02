@@ -338,8 +338,9 @@ public class MainController {
         // 회원의 예약 목록 조회 (조인된 레스토랑 정보 포함)
         Page<Reservation> reservationsPage = reservationRepository.findByMemberMemNoAndVisitOxTrue(memNo, pageable);
 
-        if (reservationsPage.isEmpty()) {
+        if (reservationsPage == null || reservationsPage.isEmpty()) {
             model.addAttribute("message", "예약 정보가 없습니다.");
+            model.addAttribute("reservationsPage", Page.empty());
             return "/codechef/visit_completion";
         }
 
