@@ -14,7 +14,6 @@ import com.codechef.codechef.repository.RestaurantRepository;
 import com.codechef.codechef.service.*;
 import groovy.util.logging.Slf4j;
 import jakarta.servlet.http.HttpSession;
-import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -199,7 +198,7 @@ public class MainController {
         return "/codechef/visit_completion";
     }
 
-    ///마이페이지
+    //마이페이지
     @GetMapping("/mypage")
     public String mypage(Model model, HttpSession session) {
         Long memNo = (Long) session.getAttribute("loggedInUser"); // 세션에서 로그인한 사용자 ID 가져오기
