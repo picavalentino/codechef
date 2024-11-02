@@ -174,7 +174,9 @@ body {
 .review-text {
     margin-top: 50px;
     margin-top: 50px;
+    word-break: break-word;
 }
+
 .review-card .rating{
     font-size: 18px;
     margin-bottom: 2px;
