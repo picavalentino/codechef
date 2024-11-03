@@ -391,9 +391,6 @@ public class MainController {
 
             Long memNum = memberService.getMemNoByEmail(email);
 
-            // reservation 테이블의 예약정보 삭제 (성공)
-            reservationService.deleteReservationMemNum(memNum);
-
             // time_slot 테이블 예약정보 초기화
             LocalDateTime now = LocalDateTime.now();
 
@@ -447,6 +444,9 @@ public class MainController {
 
                 timeSlotService.availableClear(x.getRestaurant().getChefNo(), weekDayFormat, formattedTime);
             });
+
+            // reservation 테이블의 예약정보 삭제 (성공)
+            reservationService.deleteReservationMemNum(memNum);
 
             // member 테이블에 사용자 정보 삭제 (성공)
             memberService.deleteMember(email);
