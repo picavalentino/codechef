@@ -16,7 +16,6 @@ import groovy.util.logging.Slf4j;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -204,7 +203,7 @@ public class MainController {
         return "/codechef/visit_completion";
     }
 
-    ///마이페이지
+    //마이페이지
     @GetMapping("/mypage")
     public String mypage(Model model, HttpSession session) {
         Long memNo = (Long) session.getAttribute("loggedInUser"); // 세션에서 로그인한 사용자 ID 가져오기
@@ -244,6 +243,7 @@ public class MainController {
 
 
         model.addAttribute("member", memberReviewDTO);
+        log.info("====================="+memberReviewDTO.getReviewRating());
         model.addAttribute("reviews", reviewsPage.getContent());
         model.addAttribute("reviewsPage", reviewsPage);  // 페이지 정보 추가
 
@@ -344,8 +344,9 @@ public class MainController {
         // 회원의 예약 목록 조회 (조인된 레스토랑 정보 포함)
         Page<Reservation> reservationsPage = reservationRepository.findByMemberMemNoAndVisitOxTrue(memNo, pageable);
 
-        if (reservationsPage.isEmpty()) {
+        if (reservationsPage == null || reservationsPage.isEmpty()) {
             model.addAttribute("message", "예약 정보가 없습니다.");
+            model.addAttribute("reservationsPage", Page.empty());
             return "/codechef/visit_completion";
         }
 

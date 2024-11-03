@@ -55,7 +55,7 @@ public class LoginController {
     @PostMapping("/joinMember")
     public String joinMember(MemberDto memberDTO) {
         codeChefService.joinMember(memberDTO);
-        return "/codechef/main";
+        return "redirect:/main";
     }
 
     // 이메일 중복체크 기능

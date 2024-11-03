@@ -99,6 +99,9 @@ body {
 .image-container {
     margin: 0 auto; /* 중앙 정렬 */
     max-width: 100%;
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
 }
 
 .food-image {
@@ -191,4 +194,19 @@ body {
     text-align: right;
     margin: 0;
     margin-left: auto; /* 왼쪽 여백을 자동으로 설정하여 오른쪽으로 밀어냄 */
+}
+
+.review-card2 {
+    display: flex;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%; /* 부모 너비에 맞춤 */
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #e0e0e0;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+
 }

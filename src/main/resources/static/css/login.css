@@ -186,3 +186,9 @@
         .content {
             margin-bottom: 60px;
         }
+
+        .footer .mb-0 {
+              float: left;
+                  display: inline;
+                  padding-left: 5px;
+           }

@@ -60,3 +60,8 @@ body, input::placeholder {
 
 /* footer 영역 */
 /* footer 관련 css, 해당 영역에 기재해주세요 */
+.footer a {
+       display: inline; /* footer 내부에서는 inline으로 설정하여 줄바꿈 문제 해결 */
+       color: black;
+       text-decoration: none;
+   }
