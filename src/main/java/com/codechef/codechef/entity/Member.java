@@ -33,10 +33,10 @@ public class Member {
     @Column(length = 500)
     private String memImageDownName;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Reservation> reservationList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Review> reviewList = new ArrayList<>();
 
     public Member(Long memNo, String email, String phoneNo, String nickname, byte[] memImage, String password, String passwordCheck) {

@@ -21,6 +21,8 @@
         <div class="profile">
           <!-- 이미지가 없는 경우 기본 이미지를 표시하고, 있는 경우 Base64로 인코딩된 데이터를 표시 -->
           <img id="profilePreview" th:src="${member.memImage ?: '/images/common/profileImg.png'}" alt="프로필 이미지">
+          <input type="hidden" id="csrfToken" th:value="${_csrf.token}" />
+          <input type="hidden" id="csrfHeader" th:value="${_csrf.headerName}" />
         </div>
         <input type="file" id="profileImage" name="profileImage" accept="image/*">
       </div>
@@ -142,6 +144,11 @@
       data: formData,
       processData: false,
       contentType: false,
+      beforeSend: function(xhr) {
+        const token = $('#csrfToken').val();
+        const header = $('#csrfHeader').val();
+        xhr.setRequestHeader(header, token);
+      },
       success: function(response) {
         alert("회원 정보가 성공적으로 수정되었습니다.");
         window.location.href = "/mypage";

@@ -17,7 +17,7 @@ public class TimeSlot {
     @ColumnDefault("false")
     private Boolean available;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chefNo")
     private Restaurant restaurant;
 }
