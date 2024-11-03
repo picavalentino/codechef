@@ -72,6 +72,17 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Query("SELECT MAX(r.reservationNo) FROM Reservation r")
     Long maxReservationNo();
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM Reservation WHERE reservation.mem_no = :memNum", nativeQuery = true)
+    void deleteReservationMemNum(@Param("memNum") Long memNum);
+
+//    @Query(value = "SELECT r FROM Reservation r WHERE r.reservation_date > :now AND r.member.memNo = :memNum", nativeQuery = true)
+//    List<Reservation> getCurTimeAfter(@Param("now") LocalDateTime now, @Param("memNum") Long memNum);
+
+    @Query("SELECT r FROM Reservation r WHERE r.reservationDate > :now AND r.member.memNo = :memNum")
+    List<Reservation> getCurTimeAfter(@Param("now") LocalDateTime now, @Param("memNum") Long memNum);
 }
 
 

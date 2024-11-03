@@ -13,6 +13,8 @@ import com.codechef.codechef.repository.ReservationRepository;
 import com.codechef.codechef.repository.RestaurantRepository;
 import com.codechef.codechef.service.*;
 import groovy.util.logging.Slf4j;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +32,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.WeekFields;
 import java.util.*;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -51,13 +54,15 @@ public class MainController {
     private final MemberService memberService;
     private final ReservationRepository reservationRepository;
     private final RestaurantRepository restaurantRepository;
+    private final TimeSlotService timeSlotService;
 
-    public MainController(ReservationService reservationService, ReviewService reviewService, MemberService memberService, ReservationRepository reservationRepository, RestaurantRepository restaurantRepository) {
+    public MainController(ReservationService reservationService, ReviewService reviewService, MemberService memberService, ReservationRepository reservationRepository, RestaurantRepository restaurantRepository, TimeSlotService timeSlotService) {
         this.reservationService = reservationService;
         this.reviewService = reviewService;
         this.memberService = memberService;
         this.reservationRepository = reservationRepository;
         this.restaurantRepository = restaurantRepository;
+        this.timeSlotService = timeSlotService;
     }
 
     @Autowired
@@ -376,7 +381,94 @@ public class MainController {
         return "/codechef/visit_completion";
     }
 
+    @PostMapping("/deleteMember")
+    public String deleteMember(Model model, HttpServletRequest request, HttpServletResponse response){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            String email = authentication.getName();
 
+            //// 사용자 삭제 부분 ////
+
+            Long memNum = memberService.getMemNoByEmail(email);
+
+            // time_slot 테이블 예약정보 초기화
+            LocalDateTime now = LocalDateTime.now();
+
+            List<ReservationDto> reservationDtos = reservationService.getCurTimeAfter(now, memNum);
+
+            reservationDtos.forEach(x-> {
+                // Date를 Instant로 변환
+                Instant instant = x.getReservationDate().toInstant();
+
+                // Instant를 LocalDateTime으로 변환 (기본 타임존 사용)
+                LocalDateTime localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+                int weekDay = getWeekOfMonth(localDateTime);
+
+                // 요일 정보를 가져옴
+                DayOfWeek dayOfWeek = localDateTime.getDayOfWeek();
+
+                // 요일을 한글로 변환
+                String koreanDay = "";
+                switch (dayOfWeek) {
+                    case MONDAY:
+                        koreanDay = "월";
+                        break;
+                    case TUESDAY:
+                        koreanDay = "화";
+                        break;
+                    case WEDNESDAY:
+                        koreanDay = "수";
+                        break;
+                    case THURSDAY:
+                        koreanDay = "목";
+                        break;
+                    case FRIDAY:
+                        koreanDay = "금";
+                        break;
+                    case SATURDAY:
+                        koreanDay = "토";
+                        break;
+                    case SUNDAY:
+                        koreanDay = "일";
+                        break;
+                }
+
+                // DateTimeFormatter 정의
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+                // 시분 형식으로 변환
+                String formattedTime = localDateTime.format(formatter);
+
+                String weekDayFormat = weekDay+"주"+koreanDay;
+
+                timeSlotService.availableClear(x.getRestaurant().getChefNo(), weekDayFormat, formattedTime);
+            });
+
+            // reservation 테이블의 예약정보 삭제 (성공)
+            reservationService.deleteReservationMemNum(memNum);
+
+            // member 테이블에 사용자 정보 삭제 (성공)
+            memberService.deleteMember(email);
+
+            // 인증 정보 제거
+            SecurityContextHolder.clearContext();
+
+            // 세션 무효화
+            request.getSession().invalidate();
+        }
+
+        model.addAttribute("msg", "탈퇴처리가 완료 되었습니다.");
+        model.addAttribute("url", "/");
+
+        return "/codechef/alert";
+    }
+
+    private int getWeekOfMonth(LocalDateTime date) {
+        // 주의 시작일을 월요일로 설정
+        WeekFields weekFields = WeekFields.of(Locale.KOREA);
+        return date.get(weekFields.weekOfMonth());
+    }
 
 
 
