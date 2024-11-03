@@ -23,15 +23,15 @@ public class Reservation {
     @ColumnDefault("false")
     private Boolean visitOx;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memNo")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chefNo")
     private Restaurant restaurant;
 
-    @OneToOne(mappedBy = "reservation")
+    @OneToOne(mappedBy = "reservation", fetch = FetchType.LAZY)
     private Review review;
 
 

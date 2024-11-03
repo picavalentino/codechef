@@ -39,7 +39,7 @@ public class ReviewService {
                 imageUrl = s3Service.uploadFile(dto.getReviewImage());
             } else {
                 // 파일이 선택되지 않은 경우 기본 이미지 URL 또는 null 설정
-                imageUrl = "기본이미지URL"; // 기본 이미지 URL로 설정
+                imageUrl = null; // 기본 이미지 URL로 설정
             }
 
             Review review = ReviewCreateDTO.fromDto(dto);

@@ -22,7 +22,7 @@ public class Menu {
     @Column(length = 500)
     private String menuExplain;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chefNo")
     private Restaurant restaurant;
 }
