@@ -37,6 +37,14 @@ public class TimeSlotService {
         timeSlotRepository.availableUpdate(dayOfWeekFormat);
     }
 
+    public void availableClear(Long chefNo, String weekDayFormat, String formattedTime) {
+        try {
+            timeSlotRepository.availableClear(chefNo, weekDayFormat, formattedTime);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
 //    public void updateTest() {
 //        timeSlotRepository.updateTest();
 //    }

@@ -121,4 +121,13 @@ public class ReservationService {
     public void deleteReservationMemNum(Long memNum) {
         reservationRepository.deleteReservationMemNum(memNum);
     }
+
+    public List<ReservationDto> getCurTimeAfter(LocalDateTime now, Long memNum) {
+        List<Reservation> reservations = reservationRepository.getCurTimeAfter(now, memNum);
+        if(ObjectUtils.isEmpty(reservations)){
+            return Collections.emptyList();
+        }
+        return reservations.stream()
+                .map(x->ReservationDto.fromEntity(x)).toList();
+    }
 }

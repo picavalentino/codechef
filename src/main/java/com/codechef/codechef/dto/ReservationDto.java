@@ -4,11 +4,10 @@ import com.codechef.codechef.entity.Member;
 import com.codechef.codechef.entity.Reservation;
 import com.codechef.codechef.entity.Restaurant;
 import com.codechef.codechef.entity.Review;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.util.Date;
+
 
 @Getter
 @Setter
